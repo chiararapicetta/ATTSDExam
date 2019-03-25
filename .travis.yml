@@ -5,3 +5,7 @@ install: true
 
 script:
 - mvn -f spring-project/pom.xml clean verify
+
+cache:
+  directories:
+    - $HOME/.m2
