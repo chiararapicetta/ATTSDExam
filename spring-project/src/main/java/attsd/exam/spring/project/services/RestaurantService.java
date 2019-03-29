@@ -2,6 +2,7 @@ package attsd.exam.spring.project.services;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.IntPredicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,10 @@ public class RestaurantService {
 
 	public List<Restaurant> getAllRestaurants() {
 		return restaurantRepository.retrieveAll();
+	}
+
+	public Restaurant getRestaurantById(long id) {
+		return restaurantRepository.retrieveRestaurant(id);
 	}
 
 }

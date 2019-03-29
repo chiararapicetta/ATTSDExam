@@ -15,4 +15,9 @@ public class RestaurantRepository {
 		
 	}
 
+	public Restaurant retrieveRestaurant(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

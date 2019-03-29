@@ -48,5 +48,13 @@ public class RestaurantServiceWithMockBeanTest {
 		verify(restaurantRepository).retrieveAll();
 	}
 	
+	@Test
+	public void testGetRestaurantByIdFound() {
+		Restaurant restaurant = new Restaurant(1, "first", 20);
+		when(restaurantRepository.retrieveRestaurant(1)).thenReturn(restaurant);
+		assertThat(restaurantService.getRestaurantById(1)).isSameAs(restaurant);
+		verify(restaurantRepository).retrieveRestaurant(1);
+	}
+	
 
 }
