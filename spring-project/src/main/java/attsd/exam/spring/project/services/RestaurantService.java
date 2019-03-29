@@ -24,4 +24,8 @@ public class RestaurantService {
 		return restaurants.stream().max(Comparator.comparing(Restaurant::getAveragePrice)).orElse(null);
 	}
 
+	public List<Restaurant> getAllRestaurants() {
+		return restaurantRepository.retrieveAll();
+	}
+
 }
