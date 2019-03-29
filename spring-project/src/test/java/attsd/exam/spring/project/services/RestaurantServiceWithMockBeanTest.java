@@ -41,5 +41,12 @@ public class RestaurantServiceWithMockBeanTest {
 		assertThat(restaurantService.getAllRestaurants()).containsExactly(restaurant1, restaurant2);
 		verify(restaurantRepository).retrieveAll();
 	}
+	
+	@Test
+	public void testGetAllRestaurantsEmpty() {
+		assertThat(restaurantService.getAllRestaurants()).isEmpty();
+		verify(restaurantRepository).retrieveAll();
+	}
+	
 
 }
