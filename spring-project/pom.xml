@@ -38,7 +38,7 @@
 						<version>0.7.7.201606060606</version>
 						<configuration>
 							<excludes>
-								<exclude>**/Restaurant.java</exclude>
+								<exclude>**/Restaurant.*</exclude>
 							</excludes>
 						</configuration>
 						<executions>
