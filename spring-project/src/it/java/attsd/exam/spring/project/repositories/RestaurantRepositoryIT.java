@@ -8,11 +8,16 @@ import org.apache.thrift.transport.TTransportException;
 import org.cassandraunit.utils.EmbeddedCassandraServerHelper;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.datastax.driver.core.Session;
 
 import attsd.exam.spring.project.CassandraConnector;
 
+@RunWith(SpringRunner.class)
+@ContextConfiguration(classes=RestaurantRepository.class)
 public class RestaurantRepositoryIT {
 
 	private KeyspaceRepository schemaRepository;
