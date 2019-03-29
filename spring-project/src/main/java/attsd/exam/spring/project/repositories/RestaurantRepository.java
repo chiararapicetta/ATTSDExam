@@ -11,6 +11,8 @@ import attsd.exam.spring.project.model.Restaurant;
 @Repository
 public class RestaurantRepository {
 
+	private static final String TABLE_NAME = "RESTAURANTS";
+	
 	private Session session;
 
 	public RestaurantRepository(Session session) {
@@ -28,5 +30,11 @@ public class RestaurantRepository {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public void createTable() {
+        StringBuilder sb = new StringBuilder("CREATE TABLE IF NOT EXISTS ").append(TABLE_NAME).append("(").append("id uuid PRIMARY KEY, ").append("Name text,");
+        final String query = sb.toString();
+        session.execute(query);
+    }
 
 }
