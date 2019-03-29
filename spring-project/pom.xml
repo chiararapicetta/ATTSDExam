@@ -22,6 +22,7 @@
 		<jacoco.report.path>${project.reporting.outputDirectory}/jacoco.xml</jacoco.report.path>
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
+		<sonar.coverage.exclusions>**/Restaurant.*</sonar.coverage.exclusions>
 	</properties>
 	
 	<profiles>
@@ -85,7 +86,7 @@
 							<artifactId>coveralls-maven-plugin</artifactId>
 							<configuration>
 								<jacocoReports>
-									<jacocoReport>${jacoco.report.path}</jacocoReport>
+									<jacocoReport>${jacoco.report.path}/jacoco.xml</jacocoReport>
 								</jacocoReports>
 							</configuration>
 						</plugin>
