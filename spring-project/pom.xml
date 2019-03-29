@@ -85,7 +85,7 @@
 							<artifactId>coveralls-maven-plugin</artifactId>
 							<configuration>
 								<jacocoReports>
-									<jacocoReport>${jacoco.report.path}/jacoco.xml</jacocoReport>
+									<jacocoReport>${jacoco.report.path}</jacocoReport>
 								</jacocoReports>
 							</configuration>
 						</plugin>
