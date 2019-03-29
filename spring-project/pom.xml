@@ -38,7 +38,7 @@
 						<version>0.7.7.201606060606</version>
 						<configuration>
 							<excludes>
-								<exclude>attsd.exam.spring.project.model.*</exclude>
+								<exclude>**/model/**</exclude>
 							</excludes>
 						</configuration>
 						<executions>
