@@ -33,6 +33,7 @@ public class RestaurantRepositoryIT {
 	@Autowired
 	private RestaurantRepository restaurantRepository;
 
+	@Autowired
 	private Session session;
 
 	final String KEYSPACE_NAME = "testRestaurant";

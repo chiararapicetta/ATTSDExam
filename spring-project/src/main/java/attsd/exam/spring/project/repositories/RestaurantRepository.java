@@ -3,6 +3,7 @@ package attsd.exam.spring.project.repositories;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import com.datastax.driver.core.Session;
