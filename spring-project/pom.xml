@@ -23,8 +23,6 @@
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
 		<sonar.coverage.exclusions>**/Restaurant.*</sonar.coverage.exclusions>
-		<cassandra-driver-core.version>3.6.0</cassandra-driver-core.version>
-		<cassandra-unit.version>3.1.1.0</cassandra-unit.version>
 	</properties>
 
 	<profiles>
@@ -103,6 +101,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -113,25 +112,10 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Cassandra -->
+		
 		<dependency>
-			<groupId>com.datastax.cassandra</groupId>
-			<artifactId>cassandra-driver-core</artifactId>
-			<version>${cassandra-driver-core.version}</version>
-			<optional>true</optional>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.cassandraunit/cassandra-unit -->
-		<dependency>
-			<groupId>org.cassandraunit</groupId>
-			<artifactId>cassandra-unit</artifactId>
-			<version>${cassandra-unit.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>io.dropwizard.metrics</groupId>
-			<artifactId>metrics-jmx</artifactId>
-			<version>4.0.2</version>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-cassandra</artifactId>
 		</dependency>
 
 	</dependencies>
