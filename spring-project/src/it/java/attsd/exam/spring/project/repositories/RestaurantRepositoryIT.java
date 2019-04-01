@@ -25,9 +25,10 @@ import com.datastax.driver.core.Session;
 
 
 import attsd.exam.spring.project.CassandraConnector;
+import attsd.exam.spring.project.services.RestaurantService;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = RestaurantRepository.class)
+@ContextConfiguration(classes = {RestaurantRepository.class, RestaurantService.class})
 public class RestaurantRepositoryIT {
 
 	private KeyspaceRepository schemaRepository;
