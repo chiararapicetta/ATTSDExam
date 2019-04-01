@@ -16,7 +16,6 @@ public class RestaurantRepository {
 
 	private Session session;
 
-	@Autowired
 	public RestaurantRepository(Session session) {
 		// TODO Auto-generated constructor stub
 		this.session = session;

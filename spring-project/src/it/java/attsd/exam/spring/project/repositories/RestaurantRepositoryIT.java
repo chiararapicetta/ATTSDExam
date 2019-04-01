@@ -22,6 +22,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.datastax.driver.core.ResultSet;
 import com.datastax.driver.core.Session;
 
+
+
 import attsd.exam.spring.project.CassandraConnector;
 
 @RunWith(SpringRunner.class)
