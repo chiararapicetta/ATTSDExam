@@ -1,8 +1,5 @@
 package attsd.exam.spring.project.model;
 
-import org.springframework.data.cassandra.core.mapping.Table;
-
-@Table
 public class Restaurant {
 	
 	private long id;
