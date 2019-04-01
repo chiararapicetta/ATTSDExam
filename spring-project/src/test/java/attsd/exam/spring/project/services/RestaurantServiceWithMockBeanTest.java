@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,31 +31,24 @@ public class RestaurantServiceWithMockBeanTest {
 	@Test
 	public void testGetMaxAveregePriceRestaurantwithNoRestaurants() {
 		assertNull(restaurantService.getMaxAveragePriceRestaurant());
-		verify(restaurantRepository).retrieveAll();
+		verify(restaurantRepository).findAll();
 	} 
 	
 	@Test
 	public void testGetAllRestaurantswithRestaurants() {
 		Restaurant restaurant1 = new Restaurant(1, "first", 20);
 		Restaurant restaurant2 = new Restaurant(2, "second", 28);
-		when(restaurantRepository.retrieveAll()).thenReturn(Arrays.asList(restaurant1, restaurant2));
+		when(restaurantRepository.findAll()).thenReturn(Arrays.asList(restaurant1, restaurant2));
 		assertThat(restaurantService.getAllRestaurants()).containsExactly(restaurant1, restaurant2);
-		verify(restaurantRepository).retrieveAll();
+		verify(restaurantRepository).findAll();
 	}
 	
 	@Test
 	public void testGetAllRestaurantsEmpty() {
 		assertThat(restaurantService.getAllRestaurants()).isEmpty();
-		verify(restaurantRepository).retrieveAll();
+		verify(restaurantRepository).findAll();
 	}
 	
-	@Test
-	public void testGetRestaurantByIdFound() {
-		Restaurant restaurant = new Restaurant(1, "first", 20);
-		when(restaurantRepository.retrieveRestaurant(1)).thenReturn(restaurant);
-		assertThat(restaurantService.getRestaurantById(1)).isSameAs(restaurant);
-		verify(restaurantRepository).retrieveRestaurant(1);
-	}
 	
 
 }

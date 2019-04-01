@@ -1,8 +1,12 @@
 package attsd.exam.spring.project.model;
 
+import org.springframework.data.annotation.Id;
+
 public class Restaurant {
 	
+	@Id
 	private long id;
+	
 	private String name;
 	private int averagePrice;
 	
