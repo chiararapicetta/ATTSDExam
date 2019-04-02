@@ -1,22 +1,35 @@
 package attsd.exam.spring.project.model;
 
-import org.springframework.data.annotation.Id;
+import java.math.BigInteger;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.cassandra.core.mapping.Column;
+import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
+import org.springframework.data.cassandra.core.mapping.Table;
+
+@Table
 public class Restaurant {
 	
-	@Id
-	private long id;
+	@PrimaryKeyColumn
+	private BigInteger id;
 	
+	@Column
 	private String name;
+	
+	@Column
 	private int averagePrice;
 	
-	public Restaurant(long id, String name, int averagePrice) {
+	public Restaurant() {
+		
+	}
+	
+	public Restaurant(BigInteger id, String name, int averagePrice) {
 		this.id = id;
 		this.name = name;
 		this.averagePrice = averagePrice;
 	}
 
-	public long getId() {
+	public BigInteger getId() {
 		return id;
 	}
 
@@ -38,7 +51,7 @@ public class Restaurant {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + averagePrice;
-		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -54,7 +67,10 @@ public class Restaurant {
 		Restaurant other = (Restaurant) obj;
 		if (averagePrice != other.averagePrice)
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -63,6 +79,8 @@ public class Restaurant {
 			return false;
 		return true;
 	}
+
+
 	
 
 }

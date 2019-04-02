@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -36,8 +37,8 @@ public class RestaurantServiceWithMockBeanTest {
 	
 	@Test
 	public void testGetAllRestaurantswithRestaurants() {
-		Restaurant restaurant1 = new Restaurant(1, "first", 20);
-		Restaurant restaurant2 = new Restaurant(2, "second", 28);
+		Restaurant restaurant1 = new Restaurant(BigInteger.ONE, "first", 20);
+		Restaurant restaurant2 = new Restaurant(BigInteger.valueOf(2), "second", 28);
 		when(restaurantRepository.findAll()).thenReturn(Arrays.asList(restaurant1, restaurant2));
 		assertThat(restaurantService.getAllRestaurants()).containsExactly(restaurant1, restaurant2);
 		verify(restaurantRepository).findAll();
