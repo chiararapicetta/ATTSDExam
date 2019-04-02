@@ -80,6 +80,14 @@ public class Restaurant {
 		return true;
 	}
 
+	public void setName(String name2) {
+		this.name = name2;
+	}
+
+	public void setAveragePrice(int avgPrice) {
+		this.averagePrice = avgPrice;		
+	}
+
 
 	
 
