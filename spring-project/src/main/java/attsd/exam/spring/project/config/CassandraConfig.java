@@ -14,23 +14,9 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
 	@Autowired
 	private Environment environment;
 	
-	@Bean
-	public CassandraClusterFactoryBean cluster() {
-		CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
-		cluster.setContactPoints("127.0.0.1");
-		cluster.setPort(9142);
-		return cluster;
-	}
-
 	@Override
 	protected String getKeyspaceName() {
 		return environment.getProperty("spring.data.cassandra.keyspace-name");
 	}
 	
-
-	@Override
-	public SchemaAction getSchemaAction() {
-		return SchemaAction.NONE;
-	}
-
 }
