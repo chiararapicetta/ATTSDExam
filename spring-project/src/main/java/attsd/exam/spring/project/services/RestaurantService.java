@@ -1,8 +1,8 @@
 package attsd.exam.spring.project.services;
 
+import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.IntPredicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,25 +12,31 @@ import attsd.exam.spring.project.repositories.RestaurantRepository;
 
 @Service
 public class RestaurantService {
-	
-	private RestaurantRepository restaurantRepository;
-	
+
 	@Autowired
-	public RestaurantService(RestaurantRepository restaurantRepository) {
-		this.restaurantRepository = restaurantRepository;
-	}
+	private RestaurantRepository restaurantRepository;
 
 	public Restaurant getMaxAveragePriceRestaurant() {
-		List<Restaurant> restaurants = restaurantRepository.retrieveAll();
+		List<Restaurant> restaurants = restaurantRepository.findAll();
 		return restaurants.stream().max(Comparator.comparing(Restaurant::getAveragePrice)).orElse(null);
 	}
 
 	public List<Restaurant> getAllRestaurants() {
-		return restaurantRepository.retrieveAll();
+		return restaurantRepository.findAll();
 	}
 
 	public Restaurant getRestaurantById(long id) {
-		return restaurantRepository.retrieveRestaurant(id);
+		BigInteger toBig = BigInteger.valueOf(id);
+		return restaurantRepository.findById(toBig).get();
+
+	}
+
+	public void storeInDb(String name, int avgPrice) {
+		Restaurant r = new Restaurant();
+		r.setName(name);
+		r.setAveragePrice(avgPrice);
+		restaurantRepository.save(r);
+
 	}
 
 }

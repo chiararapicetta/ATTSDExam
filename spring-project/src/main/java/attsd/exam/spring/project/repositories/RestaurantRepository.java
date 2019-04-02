@@ -1,23 +1,14 @@
 package attsd.exam.spring.project.repositories;
 
-import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import java.math.BigInteger;
+
+import org.springframework.data.cassandra.repository.CassandraRepository;
+
 
 import attsd.exam.spring.project.model.Restaurant;
 
-@Repository
-public class RestaurantRepository {
-
-	public List<Restaurant> retrieveAll() {
-		// TODO Auto-generated method stub
-		return null;
-		
-	}
-
-	public Restaurant retrieveRestaurant(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+public interface RestaurantRepository extends CassandraRepository<Restaurant, BigInteger>{
+	
+	
 }
