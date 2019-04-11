@@ -1,14 +1,11 @@
 package attsd.exam.spring.project.repositories;
 
-
 import java.math.BigInteger;
 
 import org.springframework.data.cassandra.repository.CassandraRepository;
 
-
 import attsd.exam.spring.project.model.Restaurant;
 
 public interface RestaurantRepository extends CassandraRepository<Restaurant, BigInteger>{
-	
-	
+
 }

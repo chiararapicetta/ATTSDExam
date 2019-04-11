@@ -3,6 +3,7 @@ package attsd.exam.spring.project.model;
 import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
@@ -10,7 +11,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Table
 public class Restaurant {
 	
-	@PrimaryKeyColumn
+	@PrimaryKeyColumn(name = "id", type=PrimaryKeyType.PARTITIONED, ordinal = 2)
 	private BigInteger id;
 	
 	@Column
