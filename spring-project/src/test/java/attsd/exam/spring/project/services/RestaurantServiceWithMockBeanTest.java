@@ -40,7 +40,7 @@ public class RestaurantServiceWithMockBeanTest {
 		verify(restaurantRepository, Mockito.times(1)).findAll();
 	}
 
-	/*@Test
+	@Test
 	public void testGetMaxAveragePriceRestaurantwithOneRestaurant() {
 		Restaurant r;
 		when(restaurantRepository.findAll())
@@ -107,5 +107,4 @@ public class RestaurantServiceWithMockBeanTest {
 		assertEquals("test", passedToRepository.getName());
 		assertEquals(10, passedToRepository.getAveragePrice());
 	}
-*/
 }
