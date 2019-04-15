@@ -2,6 +2,10 @@ language: java
 
 #skip installation step
 install: true
+  - docker pull mongo
+
+services:
+  - docker
 
 addons:
   sonarcloud:
