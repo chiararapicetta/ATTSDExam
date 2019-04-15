@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
 
-@EnableCassandraRepositories(basePackages = { "attsd.exam.spring.project.repositories"})
 @Service
 public class RestaurantService {
 	
