@@ -39,8 +39,8 @@ public class RestControllerTest {
 	@Test
 	public void testAllEmployees() throws Exception {
 		when(restaurantService.getAllRestaurants())
-				.thenReturn(Arrays.asList(new Restaurant(BigInteger.ONE, "LaVillaDeiLimoni", 25),
-						new Restaurant(BigInteger.TWO, "Oleandro", 45)));
+				.thenReturn(Arrays.asList(new Restaurant(BigInteger.valueOf(1), "LaVillaDeiLimoni", 25),
+						new Restaurant(BigInteger.valueOf(2), "Oleandro", 45)));
 		this.mvc.perform(get("/api/restaurants").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(jsonPath("$[0].id", is(1))).andExpect(jsonPath("$[0].name", is("LaVillaDeiLimoni")))
 				.andExpect(jsonPath("$[0].averagePrice", is(25))).andExpect(jsonPath("$[1].id", is(2)))
@@ -54,5 +54,22 @@ public class RestControllerTest {
 				.andExpect(content().json("[]"));
 		// the above checks that the content is an empty JSON list
 		verify(restaurantService, times(1)).getAllRestaurants();
+	}
+
+	@Test
+	public void testFindByIdWithExistingRestaurant() throws Exception {
+		when(restaurantService.getRestaurantById(BigInteger.valueOf(1))).thenReturn(new Restaurant(BigInteger.valueOf(1), "Africhella", 50));
+		this.mvc.perform(get("/api/restaurants/1").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(jsonPath("$.id", is(1)))
+				.andExpect(jsonPath("$.name", is("Africhella")))
+				.andExpect(jsonPath("$.averagePrice", is(50)));
+		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(1));
+	}
+
+	@Test
+	public void testFindByIdWithNotFoundRestaurant() throws Exception {
+		this.mvc.perform(get("/api/restaurants/1").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+				.andExpect(content().string(""));
+		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(1));
 	}
 }
