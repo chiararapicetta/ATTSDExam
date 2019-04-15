@@ -86,13 +86,13 @@ public class RestaurantServiceWithMockBeanTest {
 		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "first", 20);
 		Optional<Restaurant> expected = Optional.of(restaurant);
 		when(restaurantRepository.findById(BigInteger.ONE)).thenReturn(expected);
-		assertThat(restaurantService.getRestaurantById(1)).isSameAs(restaurant);
+		assertThat(restaurantService.getRestaurantById(BigInteger.ONE)).isSameAs(restaurant);
 		verify(restaurantRepository, Mockito.times(1)).findById(BigInteger.ONE);
 	}
 
 	@Test(expected = NoSuchElementException.class)
 	public void testGetRestaurantByIdNotFound() {
-		Optional<Restaurant> actual = Optional.of(restaurantService.getRestaurantById(0));
+		Optional<Restaurant> actual = Optional.of(restaurantService.getRestaurantById(BigInteger.ZERO));
 		assertNotNull(actual);
 		actual.get();
 		verify(restaurantRepository, Mockito.times(1)).findById(BigInteger.ZERO);

@@ -25,9 +25,8 @@ public class RestaurantService {
 		return restaurantRepository.findAll();		
 	}
 
-	public Restaurant getRestaurantById(long id) {
-		BigInteger toBig = BigInteger.valueOf(id);
-		return restaurantRepository.findById(toBig).get();
+	public Restaurant getRestaurantById(BigInteger id) {
+		return restaurantRepository.findById(id).get();
 
 	}
 
