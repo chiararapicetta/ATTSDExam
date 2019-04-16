@@ -82,6 +82,10 @@ public class Restaurant {
 		this.averagePrice = avgPrice;		
 	}
 
+	public void setId(BigInteger id) {
+		this.id = id;
+	}
+
 
 	
 
