@@ -5,13 +5,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 import org.springframework.stereotype.Service;
 
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
 
-@EnableCassandraRepositories(basePackages = { "attsd.exam.spring.project.repositories"})
 @Service
 public class RestaurantService {
 	
@@ -27,18 +25,19 @@ public class RestaurantService {
 		return restaurantRepository.findAll();		
 	}
 
-	public Restaurant getRestaurantById(long id) {
-		BigInteger toBig = BigInteger.valueOf(id);
-		return restaurantRepository.findById(toBig).get();
+	public Restaurant getRestaurantById(BigInteger id) {
+		return restaurantRepository.findById(id).get();
 
 	}
 
-	public void storeInDb(String name, int avgPrice) {
-		Restaurant r = new Restaurant();
-		r.setName(name);
-		r.setAveragePrice(avgPrice);
+	public Restaurant storeInDb(Restaurant r) {
 		restaurantRepository.save(r);
-
+		return r;
+	}
+	
+	public void delete(BigInteger id) {
+		Restaurant r = restaurantRepository.findById(id).get();
+		restaurantRepository.delete(r);
 	}
 
 }

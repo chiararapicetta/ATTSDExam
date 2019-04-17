@@ -3,25 +3,14 @@ package attsd.exam.spring.project.model;
 import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
-import org.springframework.data.cassandra.core.mapping.Column;
-import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
-import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table
 public class Restaurant {
 	
-	@PrimaryKeyColumn(name = "id", type=PrimaryKeyType.PARTITIONED, ordinal = 2)
 	private BigInteger id;
-	
-	@Column
 	private String name;
-	
-	@Column
 	private int averagePrice;
 	
 	public Restaurant() {
-		
 	}
 	
 	public Restaurant(BigInteger id, String name, int averagePrice) {
@@ -87,6 +76,10 @@ public class Restaurant {
 
 	public void setAveragePrice(int avgPrice) {
 		this.averagePrice = avgPrice;		
+	}
+
+	public void setId(BigInteger id) {
+		this.id = id;
 	}
 
 

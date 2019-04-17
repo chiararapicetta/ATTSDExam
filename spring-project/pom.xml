@@ -159,10 +159,44 @@
 							</execution>
 						</executions>
 					</plugin>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.17.2</version>
+						<configuration>
+							<images>
+								<image>
+									<name>mongo</name>
+									<run>
+										<ports>
+											<port>27017:27017</port>
+										</ports>
+									</run>
+								</image>
+							</images>
+							<showLogs>true</showLogs>
+						</configuration>
+						<executions>
+							<execution>
+								<id>docker:start</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>docker:stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
 				</plugins>
 			</build>
 		</profile>
-		
+
 	</profiles>
 
 	<dependencies>
@@ -185,30 +219,32 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-cassandra</artifactId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>com.datastax.cassandra</groupId>
-			<artifactId>cassandra-driver-core</artifactId>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-cassandra</artifactId>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>spring-mock-mvc</artifactId>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>org.apache-extras.cassandra-jdbc</groupId>
-			<artifactId>cassandra-jdbc</artifactId>
-			<version>1.2.5</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 
 	</dependencies>

@@ -43,7 +43,8 @@ public class RestaurantServiceWithMockBeanTest {
 	@Test
 	public void testGetMaxAveragePriceRestaurantwithOneRestaurant() {
 		Restaurant r;
-		when(restaurantRepository.findAll()).thenReturn(Arrays.asList(r = new Restaurant(BigInteger.valueOf(1), "test", 20)));
+		when(restaurantRepository.findAll())
+			.thenReturn(Arrays.asList(r = new Restaurant(BigInteger.valueOf(1), "test", 20)));
 		assertEquals(r, restaurantService.getMaxAveragePriceRestaurant());
 		verify(restaurantRepository, Mockito.times(1)).findAll();
 	}
@@ -85,13 +86,13 @@ public class RestaurantServiceWithMockBeanTest {
 		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "first", 20);
 		Optional<Restaurant> expected = Optional.of(restaurant);
 		when(restaurantRepository.findById(BigInteger.ONE)).thenReturn(expected);
-		assertThat(restaurantService.getRestaurantById(1)).isSameAs(restaurant);
+		assertThat(restaurantService.getRestaurantById(BigInteger.ONE)).isSameAs(restaurant);
 		verify(restaurantRepository, Mockito.times(1)).findById(BigInteger.ONE);
 	}
 
 	@Test(expected = NoSuchElementException.class)
 	public void testGetRestaurantByIdNotFound() {
-		Optional<Restaurant> actual = Optional.of(restaurantService.getRestaurantById(0));
+		Optional<Restaurant> actual = Optional.of(restaurantService.getRestaurantById(BigInteger.ZERO));
 		assertNotNull(actual);
 		actual.get();
 		verify(restaurantRepository, Mockito.times(1)).findById(BigInteger.ZERO);
@@ -100,11 +101,11 @@ public class RestaurantServiceWithMockBeanTest {
 	@Test
 	public void testSave() {
 		ArgumentCaptor<Restaurant> captor = ArgumentCaptor.forClass(Restaurant.class);
-		restaurantService.storeInDb("test", 10);
+		Restaurant r = new Restaurant (null, "test", 10);
+		restaurantService.storeInDb(r);
 		verify(restaurantRepository, Mockito.times(1)).save(captor.capture());
 		Restaurant passedToRepository = captor.getValue();
 		assertEquals("test", passedToRepository.getName());
 		assertEquals(10, passedToRepository.getAveragePrice());
 	}
-
 }
