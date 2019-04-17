@@ -11,6 +11,7 @@ public class Restaurant {
 	private int averagePrice;
 	
 	public Restaurant() {
+		
 	}
 	
 	public Restaurant(BigInteger id, String name, int averagePrice) {
