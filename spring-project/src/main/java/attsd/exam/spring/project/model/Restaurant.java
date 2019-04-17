@@ -7,14 +7,10 @@ import org.springframework.data.annotation.Id;
 public class Restaurant {
 	
 	private BigInteger id;
-	
-
 	private String name;
-
 	private int averagePrice;
 	
 	public Restaurant() {
-		
 	}
 	
 	public Restaurant(BigInteger id, String name, int averagePrice) {

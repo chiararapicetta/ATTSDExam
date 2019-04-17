@@ -19,6 +19,7 @@ import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
 
 public class RestaurantRestControllerRestAssuredTest {
+	
 	private RestaurantService restaurantService;
 
 	@Before
