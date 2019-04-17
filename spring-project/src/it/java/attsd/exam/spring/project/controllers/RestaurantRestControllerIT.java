@@ -5,6 +5,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
+
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,7 +22,6 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.apache.log4j.Logger;
-
 
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
@@ -43,15 +44,8 @@ public class RestaurantRestControllerIT {
 	public void setup() {
 		url = "http://localhost:" + port;
 		restaurantRepository.deleteAll();
-		// restaurantRepository.flush();
-		//showCurrentRestaurantsOnTheLog();
 	}
 
-	/*
-	 * private void showCurrentRestaurantsOnTheLog() { LOGGER.info("restaurants: " +
-	 * restaurantRepository.findAll()); }
-	 */
-	
 	@After
 	public void reset() {
 		restaurantRepository.deleteAll();
@@ -61,27 +55,70 @@ public class RestaurantRestControllerIT {
 	public void testAllRestaurantsWithNoRestaurant() throws Exception {
 		given().when().get(url + "/api/restaurants").then().statusCode(200).assertThat().body(is("[]"));
 	}
-	
+
 	@Test
 	public void testAllRestaurants() throws Exception {
-		List<Restaurant> saved = restaurantRepository.saveAll(Arrays.asList(new Restaurant(null, "Il Capriccio", 20), new Restaurant(null, "Seasons", 16)));
-		//restaurantRepository.flush();
-		//showCurrentRestaurantsOnTheLog();
+		List<Restaurant> saved = restaurantRepository
+				.saveAll(Arrays.asList(new Restaurant(null, "Il Capriccio", 20), new Restaurant(null, "Seasons", 16)));
 		given().when().get(url + "/api/restaurants").then().statusCode(200).assertThat().body("name[0]",
-				equalTo("Il Capriccio"), "AveragePrice[0]", equalTo(20), "name[1]", equalTo("Seasons"),
-				"AveragePrice[1]", equalTo(16),
-				// check that the list of integer ids in JSON response
-				// is equal to to the one of saved restaurants
-				"id", equalTo(saved.stream().map(e -> e.getId().abs()).collect(Collectors.toList())));
+				equalTo("Il Capriccio"), "averagePrice[0]", equalTo(20), "name[1]", equalTo("Seasons"),
+				"averagePrice[1]", equalTo(16), "id",
+				equalTo(saved.stream().map(e -> e.getId().abs()).collect(Collectors.toList())));
 	}
 
 	@Test
 	public void testFindByIdWithExistingRestaurant() throws Exception {
 		Restaurant saved = restaurantRepository.save(new Restaurant(null, "Il Capriccio", 20));
-		//restaurantRepository.flush();
-		//showCurrentRestaurantsOnTheLog();
 		given().when().get(url + "/api/restaurants/" + saved.getId()).then().statusCode(200).assertThat().body("id",
-				equalTo(saved.getId().abs()), "name", equalTo("Il Capriccio"), "AveragePrice", equalTo(20));
+				equalTo(saved.getId().abs()), "name", equalTo("Il Capriccio"), "averagePrice", equalTo(20));
 	}
 
+	@Test
+	public void testFindByIdWithNonExistingRestaurant() throws Exception {
+	given().
+	when().
+	get(url + "/api/restaurants/100").
+	then().
+	statusCode(500).
+	contentType("application/json;charset=UTF-8");
+
+	}
+
+	@Test
+	public void testNewRestaurant() throws Exception {
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(new Restaurant(null, "AnticoVinaio", 6)).when()
+				.post(url + "/api/restaurants/new").then().statusCode(200);
+		assertThat(restaurantRepository.findAll().toString())
+				.matches("\\[Restaurant \\[id=([1-9][0-9]*), name=AnticoVinaio, averagePrice=6\\]\\]");
+	}
+
+	@Test
+	public void testUpdateRestaurant() throws Exception {
+		Restaurant saved = restaurantRepository.save(new Restaurant(null, "AntichiSapori", 24));
+		Restaurant updated = new Restaurant(null, "Saporeggiando", 30);
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when()
+				.put(url + "/api/restaurants/update/" + saved.getId()).then().statusCode(200);
+		assertThat(restaurantRepository.findAll().toString())
+				.isEqualTo("[Restaurant [id=" + saved.getId() + ", name=Saporeggiando, averagePrice=30]]");
+
+	}
+
+	@Test
+	public void testUpdateRestaurantWithFakeId() throws Exception {
+		Restaurant saved = restaurantRepository.save(new Restaurant(null, "PaneEVino", 15));
+		Restaurant updated = new Restaurant(BigInteger.valueOf(1), "PizzaEBollicine", 20);
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().
+				put(url + "/api/restaurants/update/" + saved.getId()).then().statusCode(200);
+		assertThat(restaurantRepository.findAll().toString())
+				.isEqualTo("[Restaurant [id=" + saved.getId() + ", name=PizzaEBollicine, averagePrice=20]]");
+
+	}
+
+	@Test
+	public void testDeleteRestaurant() throws Exception {
+		Restaurant saved = restaurantRepository.save(new Restaurant(BigInteger.valueOf(1), "Spera", 15));
+		given().when().delete(url + "/api/restaurants/delete/" + saved.getId()).then().statusCode(200);
+		assertThat(restaurantRepository.findAll()).isEmpty();
+
+	}
 }

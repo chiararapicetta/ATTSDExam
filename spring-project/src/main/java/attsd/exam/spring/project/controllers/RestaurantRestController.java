@@ -39,16 +39,16 @@ public class RestaurantRestController {
 
 	@PostMapping("/restaurants/new")
 	public Restaurant newRestaurant(@RequestBody Restaurant restaurant) {
-		return restaurantService.storeInDb(restaurant.getName(), restaurant.getAveragePrice());
+		return restaurantService.storeInDb(restaurant);
 	}
 
 	@PutMapping("/restaurants/update/{id}")
 	public Restaurant updateRestaurant(@PathVariable BigInteger id, @RequestBody Restaurant restaurant) {
 		restaurant.setId(id);
-		return restaurantService.storeInDb(restaurant.getName(), restaurant.getAveragePrice());
+		return restaurantService.storeInDb(restaurant);
 	}
 
-	@DeleteMapping("/restaurant/delete/{id}")
+	@DeleteMapping("/restaurants/delete/{id}")
 	public void deleteRestaurant(@PathVariable BigInteger id) {
 		restaurantService.delete(id);
 	}

@@ -30,16 +30,14 @@ public class RestaurantService {
 
 	}
 
-	public Restaurant storeInDb(String name, int avgPrice) {
-		Restaurant r = new Restaurant();
-		r.setName(name);
-		r.setAveragePrice(avgPrice);
+	public Restaurant storeInDb(Restaurant r) {
 		restaurantRepository.save(r);
 		return r;
 	}
 	
 	public void delete(BigInteger id) {
-		restaurantRepository.deleteById(id);
+		Restaurant r = restaurantRepository.findById(id).get();
+		restaurantRepository.delete(r);
 	}
 
 }

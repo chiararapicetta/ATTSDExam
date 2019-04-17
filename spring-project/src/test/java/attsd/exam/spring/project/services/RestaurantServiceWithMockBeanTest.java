@@ -101,7 +101,8 @@ public class RestaurantServiceWithMockBeanTest {
 	@Test
 	public void testSave() {
 		ArgumentCaptor<Restaurant> captor = ArgumentCaptor.forClass(Restaurant.class);
-		restaurantService.storeInDb("test", 10);
+		Restaurant r = new Restaurant (null, "test", 10);
+		restaurantService.storeInDb(r);
 		verify(restaurantRepository, Mockito.times(1)).save(captor.capture());
 		Restaurant passedToRepository = captor.getValue();
 		assertEquals("test", passedToRepository.getName());

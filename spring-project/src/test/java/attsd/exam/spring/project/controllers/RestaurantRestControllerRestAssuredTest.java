@@ -59,7 +59,7 @@ public class RestaurantRestControllerRestAssuredTest {
 		Restaurant rest = new Restaurant(null, "Pizzeria", 13);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(rest).when().post("/api/restaurants/new").then()
 				.statusCode(200);
-		verify(restaurantService, times(1)).storeInDb(rest.getName(), rest.getAveragePrice());
+		verify(restaurantService, times(1)).storeInDb(rest);
 
 	}
 
@@ -70,7 +70,7 @@ public class RestaurantRestControllerRestAssuredTest {
 		Restaurant updated = new Restaurant(BigInteger.valueOf(1), "Kyoto", 18);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/restaurants/update/1")
 				.then().statusCode(200);
-		verify(restaurantService, times(1)).storeInDb(updated.getName(), updated.getAveragePrice());
+		verify(restaurantService, times(1)).storeInDb(updated);
 
 	}
 
@@ -80,13 +80,13 @@ public class RestaurantRestControllerRestAssuredTest {
 		Restaurant updated = new Restaurant(BigInteger.valueOf(1), "PesceFresco", 35);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/restaurants/update/1")
 				.then().statusCode(200);
-		verify(restaurantService, times(1)).storeInDb(updated.getName(), updated.getAveragePrice());
+		verify(restaurantService, times(1)).storeInDb(updated);
 
 	}
 
 	@Test
 	public void testDeleteRestaurant() throws Exception {
-		given().when().delete("/api/restaurant/delete/1").then().statusCode(200);
+		given().when().delete("/api/restaurants/delete/1").then().statusCode(200);
 		verify(restaurantService, times(1)).delete(BigInteger.valueOf(1));
 
 	}
