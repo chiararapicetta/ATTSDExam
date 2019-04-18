@@ -65,6 +65,7 @@ public class RestaurantRestControllerIT {
 				"averagePrice[1]", equalTo(16), "id",
 				equalTo(saved.stream().map(e -> e.getId().abs()).collect(Collectors.toList())));
 	}
+	
 
 	@Test
 	public void testFindByIdWithExistingRestaurant() throws Exception {
