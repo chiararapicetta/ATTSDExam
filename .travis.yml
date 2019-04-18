@@ -6,6 +6,7 @@ install:
 
 services:
   - docker
+  - mongodb
 
 addons:
   sonarcloud:
