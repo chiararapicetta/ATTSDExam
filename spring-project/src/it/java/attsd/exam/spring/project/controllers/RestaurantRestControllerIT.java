@@ -75,12 +75,8 @@ public class RestaurantRestControllerIT {
 
 	@Test
 	public void testFindByIdWithNonExistingRestaurant() throws Exception {
-	given().
-	when().
-	get(url + "/api/restaurants/100").
-	then().
-	statusCode(500).
-	contentType("application/json;charset=UTF-8");
+		given().when().get(url + "/api/restaurants/100").then().statusCode(500)
+				.contentType("application/json;charset=UTF-8");
 
 	}
 
@@ -107,8 +103,8 @@ public class RestaurantRestControllerIT {
 	public void testUpdateRestaurantWithFakeId() throws Exception {
 		Restaurant saved = restaurantRepository.save(new Restaurant(null, "PaneEVino", 15));
 		Restaurant updated = new Restaurant(BigInteger.valueOf(1), "PizzaEBollicine", 20);
-		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().
-				put(url + "/api/restaurants/update/" + saved.getId()).then().statusCode(200);
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when()
+				.put(url + "/api/restaurants/update/" + saved.getId()).then().statusCode(200);
 		assertThat(restaurantRepository.findAll().toString())
 				.isEqualTo("[Restaurant [id=" + saved.getId() + ", name=PizzaEBollicine, averagePrice=20]]");
 

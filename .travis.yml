@@ -1,7 +1,7 @@
 language: java
 
 #skip installation step
-install: true
+install:
   - docker pull mongo
 
 services:
@@ -16,6 +16,8 @@ addons:
 script:
   - mvn -f spring-project/pom.xml clean verify -Pjacoco coveralls:report
   - mvn -f spring-project/pom.xml clean verify -Pjacoco sonar:sonar
+  - mvn -f spring-project/pom.xml clean verify -Pfailsafe
 cache:
   directories:
     - '$HOME/.m2'
+    - '$HOME/.sonar/cache'
