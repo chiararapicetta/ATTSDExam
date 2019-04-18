@@ -55,16 +55,16 @@ public class RestaurantRestControllerIT {
 	public void testAllRestaurantsWithNoRestaurant() throws Exception {
 		given().when().get(url + "/api/restaurants").then().statusCode(200).assertThat().body(is("[]"));
 	}
-
+/*
 	@Test
 	public void testAllRestaurants() throws Exception {
-		List<Restaurant> saved = restaurantRepository
-				.saveAll(Arrays.asList(new Restaurant(null, "Il Capriccio", 20), new Restaurant(null, "Seasons", 16)));
+		restaurantRepository.save(new Restaurant(null, "Il Capriccio", 20));
+		restaurantRepository.save(new Restaurant(null, "Seasons", 16));
 		given().when().get(url + "/api/restaurants").then().statusCode(200).assertThat().body("name[0]",
 				equalTo("Il Capriccio"), "averagePrice[0]", equalTo(20), "name[1]", equalTo("Seasons"),
 				"averagePrice[1]", equalTo(16), "id",
 				equalTo(saved.stream().map(e -> e.getId().abs()).collect(Collectors.toList())));
-	}
+	}*/
 
 	@Test
 	public void testFindByIdWithExistingRestaurant() throws Exception {
