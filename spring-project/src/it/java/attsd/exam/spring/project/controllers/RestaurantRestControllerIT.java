@@ -72,13 +72,13 @@ public class RestaurantRestControllerIT {
 		given().when().get(url + "/api/restaurants/" + saved.getId()).then().statusCode(200).assertThat().body("id",
 				equalTo(saved.getId().abs()), "name", equalTo("Il Capriccio"), "averagePrice", equalTo(20));
 	}
-
+/*
 	@Test
 	public void testFindByIdWithNonExistingRestaurant() throws Exception {
 		given().when().get(url + "/api/restaurants/100").then().statusCode(500)
 				.contentType("application/json;charset=UTF-8");
 
-	}
+	}*/
 
 	@Test
 	public void testNewRestaurant() throws Exception {
