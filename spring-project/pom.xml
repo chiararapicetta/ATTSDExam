@@ -171,7 +171,7 @@
 									<name>mongo</name>
 									<run>
 										<ports>
-											<port>27017:27017</port>
+											<port>27000:27017</port>
 										</ports>
 									</run>
 								</image>
@@ -195,6 +195,7 @@
 							</execution>
 						</executions>
 					</plugin>
+						
 				</plugins>
 			</build>
 		</profile>
