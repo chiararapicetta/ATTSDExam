@@ -125,42 +125,13 @@
 							</execution>
 						</executions>
 					</plugin>
-					<!--  
-					<plugin>
-					
-						<groupId>io.fabric8</groupId>
-						<artifactId>docker-maven-plugin</artifactId>
-						<version>0.23.0</version>
-						<configuration>
-							<images>
-								<image>
-									<name>cassandra</name>
-									<run>
-										<ports>
-											<port>9142:9142</port>
-										</ports>
-									</run>
-								</image>
-							</images>
-							<showLogs>true</showLogs>
-						</configuration>
-						<executions>
-							<execution>
-								<id>docker:start</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>docker:stop</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin> -->
+					<!-- <plugin> <groupId>io.fabric8</groupId> <artifactId>docker-maven-plugin</artifactId> 
+						<version>0.23.0</version> <configuration> <images> <image> <name>cassandra</name> 
+						<run> <ports> <port>9142:9142</port> </ports> </run> </image> </images> <showLogs>true</showLogs> 
+						</configuration> <executions> <execution> <id>docker:start</id> <phase>pre-integration-test</phase> 
+						<goals> <goal>start</goal> </goals> </execution> <execution> <id>docker:stop</id> 
+						<phase>post-integration-test</phase> <goals> <goal>stop</goal> </goals> </execution> 
+						</executions> </plugin> -->
 					<plugin>
 						<groupId>io.fabric8</groupId>
 						<artifactId>docker-maven-plugin</artifactId>
@@ -195,7 +166,7 @@
 							</execution>
 						</executions>
 					</plugin>
-						
+
 				</plugins>
 			</build>
 		</profile>
@@ -206,9 +177,18 @@
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -237,6 +217,14 @@
 			<artifactId>spring-mock-mvc</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<version>3.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>log4j</groupId>
