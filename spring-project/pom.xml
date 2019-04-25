@@ -33,162 +33,15 @@
 		<sonar.coverage.exclusions>**/Restaurant.*</sonar.coverage.exclusions>
 	</properties>
 
-	<profiles>
-		<profile>
-			<id>jacoco</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.jacoco</groupId>
-						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.7.7.201606060606</version>
-						<configuration>
-							<excludes>
-								<exclude>**/model/**</exclude>
-								<exclude>**/SpringProjectApplication.*</exclude>
-							</excludes>
-						</configuration>
-						<executions>
-							<execution>
-								<id>pre-unit-test</id>
-								<goals>
-									<goal>prepare-agent</goal>
-								</goals>
-								<configuration>
-									<destFile>${jacoco.data.file}</destFile>
-									<propertyName>surefireArgLine</propertyName>
-								</configuration>
-							</execution>
-							<execution>
-								<id>post-unit-test</id>
-								<phase>test</phase>
-								<goals>
-									<goal>report</goal>
-								</goals>
-								<configuration>
-									<dataFile>${jacoco.data.file}</dataFile>
-									<outputDirectory>${jacoco.report.path}</outputDirectory>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<argLine>${surefireArgLine}</argLine>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.sonarsource.scanner.maven</groupId>
-						<artifactId>sonar-maven-plugin</artifactId>
-						<version>3.4.0.905</version>
-					</plugin>
-				</plugins>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.eluder.coveralls</groupId>
-							<artifactId>coveralls-maven-plugin</artifactId>
-							<configuration>
-								<jacocoReports>
-									<jacocoReport>${jacoco.report.path}/jacoco.xml</jacocoReport>
-								</jacocoReports>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
 
-		<profile>
-			<id>failsafe</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<build>
-				<plugins>
-
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase>integration-test</phase>
-								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<!-- <plugin> <groupId>io.fabric8</groupId> <artifactId>docker-maven-plugin</artifactId> 
-						<version>0.23.0</version> <configuration> <images> <image> <name>cassandra</name> 
-						<run> <ports> <port>9142:9142</port> </ports> </run> </image> </images> <showLogs>true</showLogs> 
-						</configuration> <executions> <execution> <id>docker:start</id> <phase>pre-integration-test</phase> 
-						<goals> <goal>start</goal> </goals> </execution> <execution> <id>docker:stop</id> 
-						<phase>post-integration-test</phase> <goals> <goal>stop</goal> </goals> </execution> 
-						</executions> </plugin> -->
-					<plugin>
-						<groupId>io.fabric8</groupId>
-						<artifactId>docker-maven-plugin</artifactId>
-						<version>0.23.0</version>
-						<configuration>
-							<images>
-								<image>
-									<name>mongo</name>
-									<run>
-										<ports>
-											<port>27017:27017</port>
-										</ports>
-									</run>
-								</image>
-							</images>
-							<showLogs>true</showLogs>
-						</configuration>
-						<executions>
-							<execution>
-								<id>docker:start</id>
-								<phase>pre-integration-test</phase>
-								<goals>
-									<goal>start</goal>
-								</goals>
-							</execution>
-							<execution>
-								<id>docker:stop</id>
-								<phase>post-integration-test</phase>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-
-				</plugins>
-			</build>
-		</profile>
-
-	</profiles>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -214,17 +67,17 @@
 
 		<dependency>
 			<groupId>io.rest-assured</groupId>
-			<artifactId>spring-mock-mvc</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
 			<version>3.0.0</version>
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>spring-mock-mvc</artifactId>
+			<version>3.0.6</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>log4j</groupId>
@@ -294,4 +147,144 @@
 		</plugins>
 	</build>
 
+	<profiles>
+		<profile>
+			<id>jacoco</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+
+						<plugin>
+							<groupId>org.sonarsource.scanner.maven</groupId>
+							<artifactId>sonar-maven-plugin</artifactId>
+							<version>3.4.0.905</version>
+						</plugin>
+
+						<plugin>
+							<groupId>org.eluder.coveralls</groupId>
+							<artifactId>coveralls-maven-plugin</artifactId>
+							<version>4.3.0</version>
+							<configuration>
+								<jacocoReports>
+									<jacocoReport>${jacoco.report.path}/jacoco.xml</jacocoReport>
+								</jacocoReports>
+							</configuration>
+						</plugin>
+
+					</plugins>
+				</pluginManagement>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.7.9</version>
+						<configuration>
+							<excludes>
+								<exclude>**/model/**</exclude>
+								<exclude>**/SpringProjectApplication.*</exclude>
+							</excludes>
+						</configuration>
+						<executions>
+							<execution>
+								<id>pre-unit-test</id>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+								<configuration>
+									<destFile>${jacoco.data.file}</destFile>
+									<propertyName>surefireArgLine</propertyName>
+								</configuration>
+							</execution>
+							<execution>
+								<id>post-unit-test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+								<configuration>
+									<dataFile>${jacoco.data.file}</dataFile>
+									<outputDirectory>${jacoco.report.path}</outputDirectory>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-surefire-plugin</artifactId>
+						<configuration>
+							<argLine>${surefireArgLine}</argLine>
+						</configuration>
+					</plugin>
+
+
+				</plugins>
+
+
+			</build>
+		</profile>
+
+		<profile>
+			<id>failsafe</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.23.0</version>
+						<configuration>
+							<images>
+								<image>
+									<name>mongo</name>
+									<run>
+										<ports>
+											<port>27017:27017</port>
+										</ports>
+									</run>
+								</image>
+							</images>
+							<showLogs>true</showLogs>
+						</configuration>
+						<executions>
+							<execution>
+								<id>docker:start</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>docker:stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+				</plugins>
+			</build>
+		</profile>
+
+	</profiles>
 </project>
