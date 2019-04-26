@@ -206,7 +206,7 @@
 							<excludes>
 								<exclude>**/model/**</exclude>
 								<exclude>**/SpringProjectApplication.*</exclude>
-								<exclude>**/WebSecurityConfig.*,</exclude>
+							
 							</excludes>
 						</configuration>
 						<executions>
