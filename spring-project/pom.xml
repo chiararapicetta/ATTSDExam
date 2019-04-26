@@ -108,7 +108,6 @@
 
 	<build>
 		<plugins>
-
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -132,7 +131,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
 	</build>
 
@@ -151,7 +149,13 @@
 							<artifactId>sonar-maven-plugin</artifactId>
 							<version>3.4.0.905</version>
 						</plugin>
-
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-plugin</artifactId>
+							<configuration>
+								<forkCount>0</forkCount>
+							</configuration>
+						</plugin>
 						<plugin>
 							<groupId>org.eluder.coveralls</groupId>
 							<artifactId>coveralls-maven-plugin</artifactId>
@@ -160,14 +164,6 @@
 								<jacocoReports>
 									<jacocoReport>${jacoco.report.path}/jacoco.xml</jacocoReport>
 								</jacocoReports>
-							</configuration>
-						</plugin>
-
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-surefire-plugin</artifactId>
-							<configuration>
-								<forkCount>0</forkCount>
 							</configuration>
 						</plugin>
 
@@ -213,14 +209,6 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
-							<forkCount>0</forkCount>
-							<includes>
-								<include>**/Test.java</include>
-
-							</includes>
-							<excludes>
-								<exclude>**/*IT.java</exclude>
-							</excludes>
 							<argLine>${surefireArgLine}</argLine>
 						</configuration>
 					</plugin>
