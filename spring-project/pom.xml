@@ -70,17 +70,13 @@
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
-<!--  
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
- -->
+		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-security</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 		</dependency>
-	
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -137,36 +133,6 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<includes>
-						<include>**/*Test.java</include>
-					</includes>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<configuration>
-							<includes>
-								<include>**/*ApplicationTests.java</include>
-								<include>**/*IT.java</include>
-								<include>**/ITProva.java</include>
-							</includes>
-						</configuration>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 	</build>
 
@@ -197,6 +163,14 @@
 							</configuration>
 						</plugin>
 
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-surefire-plugin</artifactId>
+							<configuration>
+								<forkCount>0</forkCount>
+							</configuration>
+						</plugin>
+
 					</plugins>
 				</pluginManagement>
 				<plugins>
@@ -208,7 +182,7 @@
 							<excludes>
 								<exclude>**/model/**</exclude>
 								<exclude>**/SpringProjectApplication.*</exclude>
-							
+
 							</excludes>
 						</configuration>
 						<executions>
@@ -239,14 +213,14 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
-						<forkCount>0</forkCount>
-						<includes>
-						<include>**/Test.java</include>
-						
-						</includes>
-						<excludes>
-						<exclude>**/*IT.java</exclude>
-						</excludes>
+							<forkCount>0</forkCount>
+							<includes>
+								<include>**/Test.java</include>
+
+							</includes>
+							<excludes>
+								<exclude>**/*IT.java</exclude>
+							</excludes>
 							<argLine>${surefireArgLine}</argLine>
 						</configuration>
 					</plugin>
@@ -316,7 +290,7 @@
 
 				</plugins>
 			</build>
-			
+
 		</profile>
 
 	</profiles>
