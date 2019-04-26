@@ -167,9 +167,7 @@
 							</configuration>
 						</plugin>
 
-					</plugins>
-				</pluginManagement>
-				<plugins>
+
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
@@ -213,8 +211,9 @@
 						</configuration>
 					</plugin>
 
+					</plugins>
+				</pluginManagement>
 
-				</plugins>
 
 
 			</build>
