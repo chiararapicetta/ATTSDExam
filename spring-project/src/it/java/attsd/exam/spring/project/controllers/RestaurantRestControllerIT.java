@@ -28,7 +28,7 @@ import attsd.exam.spring.project.repositories.RestaurantRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class RestaurantRestControllerIT {
-	
+
 
 	@LocalServerPort
 	private int port;
@@ -55,6 +55,7 @@ public class RestaurantRestControllerIT {
 		given().when().get(url + "/api/restaurants").then().statusCode(200).assertThat().body(is("[]"));
 	}
 
+
 	@Test
 	public void testAllRestaurants() throws Exception {
 		List<Restaurant> saved = restaurantRepository
@@ -71,13 +72,13 @@ public class RestaurantRestControllerIT {
 		given().when().get(url + "/api/restaurants/" + saved.getId()).then().statusCode(200).assertThat().body("id",
 				equalTo(saved.getId().abs()), "name", equalTo("Il Capriccio"), "averagePrice", equalTo(20));
 	}
-	/*
-	 * @Test public void testFindByIdWithNonExistingRestaurant() throws Exception {
-	 * given().when().get(url + "/api/restaurants/100").then().statusCode(500)
-	 * .contentType("application/json;charset=UTF-8");
-	 * 
-	 * }
-	 */
+/*
+	@Test
+	public void testFindByIdWithNonExistingRestaurant() throws Exception {
+		given().when().get(url + "/api/restaurants/100").then().statusCode(500)
+				.contentType("application/json;charset=UTF-8");
+
+	}*/
 
 	@Test
 	public void testNewRestaurant() throws Exception {
