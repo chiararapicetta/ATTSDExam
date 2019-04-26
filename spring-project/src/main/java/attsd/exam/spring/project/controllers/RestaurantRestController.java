@@ -17,35 +17,38 @@ import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
 
 @RestController
+@RequestMapping("/api")
 public class RestaurantRestController {
 
-	
-	@Autowired
 	private RestaurantService restaurantService;
 
+	@Autowired
+	public RestaurantRestController(RestaurantService restaurantService) {
+		this.restaurantService = restaurantService;
+	}
 
-	@GetMapping("/api")
+	@GetMapping("/restaurants")
 	public List<Restaurant> allRestaurants() {
 		return restaurantService.getAllRestaurants();
 	}
 
-	@GetMapping("api/restaurants/{id}")
+	@GetMapping("/restaurants/{id}")
 	public Restaurant oneRestaurant(@PathVariable BigInteger id) {
 		return restaurantService.getRestaurantById(id);
 	}
 
-	@PostMapping("api/restaurants/new")
+	@PostMapping("/restaurants/new")
 	public Restaurant newRestaurant(@RequestBody Restaurant restaurant) {
 		return restaurantService.storeInDb(restaurant);
 	}
 
-	@PutMapping("api/restaurants/update/{id}")
+	@PutMapping("/restaurants/update/{id}")
 	public Restaurant updateRestaurant(@PathVariable BigInteger id, @RequestBody Restaurant restaurant) {
 		restaurant.setId(id);
 		return restaurantService.storeInDb(restaurant);
 	}
 
-	@DeleteMapping("api/restaurants/delete/{id}")
+	@DeleteMapping("/restaurants/delete/{id}")
 	public void deleteRestaurant(@PathVariable BigInteger id) {
 		restaurantService.delete(id);
 	}
