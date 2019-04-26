@@ -143,31 +143,24 @@
 			<build>
 				<pluginManagement>
 					<plugins>
-
-						<plugin>
-							<groupId>org.sonarsource.scanner.maven</groupId>
-							<artifactId>sonar-maven-plugin</artifactId>
-							<version>3.4.0.905</version>
-						</plugin>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-surefire-plugin</artifactId>
-							<configuration>
-								<forkCount>0</forkCount>
-							</configuration>
-						</plugin>
 						<plugin>
 							<groupId>org.eluder.coveralls</groupId>
 							<artifactId>coveralls-maven-plugin</artifactId>
 							<version>4.3.0</version>
 							<configuration>
 								<jacocoReports>
-									<jacocoReport>${jacoco.report.path}/jacoco.xml</jacocoReport>
+									<jacocoReport>${jacoco.report.path}</jacocoReport>
 								</jacocoReports>
 							</configuration>
 						</plugin>
-
-
+						<plugin>
+							<groupId>org.sonarsource.scanner.maven</groupId>
+							<artifactId>sonar-maven-plugin</artifactId>
+							<version>3.4.0.905</version>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+				<plugins>
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
@@ -203,17 +196,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<configuration>
-							<argLine>${surefireArgLine}</argLine>
-						</configuration>
-					</plugin>
-
-					</plugins>
-				</pluginManagement>
-
+				</plugins>
 
 
 			</build>
@@ -226,7 +209,6 @@
 			</activation>
 			<build>
 				<plugins>
-
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
@@ -274,11 +256,8 @@
 							</execution>
 						</executions>
 					</plugin>
-
 				</plugins>
 			</build>
-
 		</profile>
-
 	</profiles>
 </project>
