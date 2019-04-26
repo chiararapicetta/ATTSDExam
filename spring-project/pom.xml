@@ -306,6 +306,9 @@
 
 				</plugins>
 			</build>
+			<modules>
+				<module>../ATTSDExam</module>
+</modules>
 		</profile>
 
 	</profiles>
