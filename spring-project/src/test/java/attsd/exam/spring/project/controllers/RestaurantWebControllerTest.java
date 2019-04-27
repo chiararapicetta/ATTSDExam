@@ -80,17 +80,17 @@ public class RestaurantWebControllerTest {
 				.andExpect(model().attribute("message", "No restaurant found with id: 1"));
 		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
 	}
-/*
+
 	@Test
 	public void testPostRestaurant() throws Exception {
 		Restaurant restaurant = new Restaurant(BigInteger.valueOf(0), "LaFiaccola", 45);
 		mvc.perform(post("/save")
-				.param("id", restaurant.getId())
+				.param("id", "" + restaurant.getId())
 				.param("name", restaurant.getName())
 				.param("averagePrice","" + restaurant.getAveragePrice()))
 		.andExpect(view().name("redirect:/"));
 		verify(restaurantService).storeInDb(restaurant);
-	}*/
+	}
 
 	@Test
 	public void testNewRestaurant() throws Exception {

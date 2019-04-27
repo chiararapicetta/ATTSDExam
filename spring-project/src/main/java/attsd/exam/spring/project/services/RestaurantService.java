@@ -31,8 +31,7 @@ public class RestaurantService {
 	}
 
 	public Restaurant storeInDb(Restaurant r) {
-		restaurantRepository.save(r);
-		return r;
+		return restaurantRepository.save(r);
 	}
 	
 	public void delete(BigInteger id) {
