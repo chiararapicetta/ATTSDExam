@@ -75,16 +75,16 @@ public class RestaurantWebControllerWebDriverRealServerIT {
 	public void testEditExistentRestaurant() throws Exception {
 		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34));
 		EditPage page = EditPage.to(webDriver, 1L);
-		assertThat(page.getBody()).doesNotContain("No employee found with id: 1");
+		assertThat(page.getBody()).doesNotContain("No restaurant found with id: 1");
 
 		HomePage homePage = page.submitForm(HomePage.class, "Pizzeria", 15);
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Pizzeria 15");
 	}
 	/*
 	 * @Test public void testNewRestaurant() throws Exception { EditPage page =
-	 * EditPage.to(webDriver); // submit the form HomePage homePage =
-	 * page.submitForm(HomePage.class, "Scaraboci", 24); // verify that the modified
-	 * employee is in the table // with automatically assigned id
+	 * EditPage.to(webDriver); 
+	 * page.submitForm(HomePage.class, "Scaraboci", 24); 
+	 * employee is in the table 
 	 * assertThat(homePage.getRestaurantTableAsString()).isEqualTo(
 	 * "ID Name AveragePrice 1 Scaraboci 24" ); }
 	 */
