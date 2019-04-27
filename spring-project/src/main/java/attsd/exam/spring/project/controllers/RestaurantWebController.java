@@ -39,5 +39,17 @@ public class RestaurantWebController {
 		return "edit";
 	}
 
+	@PostMapping("/save")
+	public String saveRestaurant(Restaurant restaurant) {
+		restaurantService.storeInDb(restaurant);
+		return "redirect:/";
+	}
 
+	@GetMapping("/new")
+	public String newRestaurant(Model model) {
+		Restaurant restaurant = new Restaurant();
+		model.addAttribute("restaurant", restaurant);
+		model.addAttribute("message", "");
+		return "edit";
+	}
 }
