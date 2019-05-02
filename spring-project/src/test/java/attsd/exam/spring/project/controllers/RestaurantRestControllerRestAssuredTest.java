@@ -76,7 +76,7 @@ public class RestaurantRestControllerRestAssuredTest {
 
 	@Test
 	public void testUpdateRestaurantWithFakeId() throws Exception {
-		// although we pass an Employee in the body with id 100...
+	
 		Restaurant updated = new Restaurant(BigInteger.valueOf(1), "PesceFresco", 35);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/restaurants/update/1")
 				.then().statusCode(200);
