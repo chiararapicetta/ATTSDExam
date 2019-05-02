@@ -108,4 +108,16 @@ public class RestaurantServiceWithMockBeanTest {
 		assertEquals("test", passedToRepository.getName());
 		assertEquals(10, passedToRepository.getAveragePrice());
 	}
+	
+	@Test
+	public void testDeleteRestaurant() {
+		ArgumentCaptor<Restaurant> captor = ArgumentCaptor.forClass(Restaurant.class);
+		Restaurant r = new Restaurant (BigInteger.valueOf(1), "test", 10);
+		Optional<Restaurant> expected = Optional.of(r);
+		restaurantService.storeInDb(r);
+		when(restaurantRepository.findById(BigInteger.valueOf(1))).thenReturn(expected);
+		restaurantService.delete(r.getId());
+		verify(restaurantRepository, Mockito.times(1)).delete(captor.capture());
+		
+	}
 }
