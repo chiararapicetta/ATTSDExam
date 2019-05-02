@@ -81,11 +81,12 @@ public class RestaurantWebControllerWebDriverRealServerIT {
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Pizzeria 15");
 	}
 
+	/*
 	@Test
 	public void testNewRestaurant() throws Exception {
 		EditPage page = EditPage.to(webDriver);
 		HomePage homePage = page.submitForm(HomePage.class, "Scaraboci", 24);
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Scaraboci 24");
 	}
-
+*/
 }

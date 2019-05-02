@@ -95,7 +95,7 @@ public class RestaurantWebControllerTest {
 	@Test
 	public void testNewRestaurant() throws Exception {
 		mvc.perform(get("/new")).andExpect(view().name("edit"))
-				.andExpect(model().attribute("restaurant", new Restaurant(BigInteger.valueOf(1), "nuovoRistorante", 0)))
+				.andExpect(model().attribute("restaurant", new Restaurant()))
 				.andExpect(model().attribute("message", ""));
 		verifyZeroInteractions(restaurantService);
 	}
