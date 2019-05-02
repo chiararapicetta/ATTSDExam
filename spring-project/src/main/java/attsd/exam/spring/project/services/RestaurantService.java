@@ -3,12 +3,14 @@ package attsd.exam.spring.project.services;
 import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
+
 
 @Service
 public class RestaurantService {
@@ -25,8 +27,8 @@ public class RestaurantService {
 		return restaurantRepository.findAll();
 	}
 
-	public Restaurant getRestaurantById(BigInteger id) {
-		return restaurantRepository.findById(id).get();
+	public Restaurant getRestaurantById(BigInteger id) throws NoSuchElementException {
+			return restaurantRepository.findById(id).get();
 	}
 
 	public Restaurant storeInDb(Restaurant r) {
@@ -34,7 +36,7 @@ public class RestaurantService {
 	}
 
 	
-	public void delete(BigInteger id) {
+	public void delete(BigInteger id) throws NoSuchElementException {
 		Restaurant r = restaurantRepository.findById(id).get();
 		restaurantRepository.delete(r);
 	}
