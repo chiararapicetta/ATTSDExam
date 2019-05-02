@@ -33,11 +33,12 @@ public class RestaurantService {
 		return restaurantRepository.save(r);
 	}
 
+	/*
 	public void delete(BigInteger id) {
 		Restaurant r = restaurantRepository.findById(id).get();
 		restaurantRepository.delete(r);
 	}
-
+*/
 	public void deleteAll() {
 		restaurantRepository.deleteAll();
 	}
