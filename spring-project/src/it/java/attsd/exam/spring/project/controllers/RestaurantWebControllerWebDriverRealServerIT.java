@@ -64,28 +64,28 @@ public class RestaurantWebControllerWebDriverRealServerIT {
 				.isEqualTo("ID Name AveragePrice\n1 CacioePepe 34\n2 Pizzeria 15");
 	}
 	/*
-	  @Test public void testEditNonExistentRestaurant() throws Exception { EditPage
-	  page = EditPage.to(webDriver, 1L);
-	  assertThat(page.getBody()).contains("No restaurant found with id: 1");
-	  
-	  }
+	 * @Test public void testEditNonExistentRestaurant() throws Exception { EditPage
+	 * page = EditPage.to(webDriver, BigInteger.valueOf(1));
+	 * assertThat(page.getBody()).contains("No restaurant found with id: 1");
+	 * 
+	 * }
 	 */
 
 	@Test
 	public void testEditExistentRestaurant() throws Exception {
 		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34));
-		EditPage page = EditPage.to(webDriver, 1L);
+		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
 		assertThat(page.getBody()).doesNotContain("No restaurant found with id: 1");
 
 		HomePage homePage = page.submitForm(HomePage.class, "Pizzeria", 15);
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Pizzeria 15");
 	}
-	/*
-	 * @Test public void testNewRestaurant() throws Exception { EditPage page =
-	 * EditPage.to(webDriver); 
-	 * page.submitForm(HomePage.class, "Scaraboci", 24); 
-	 * employee is in the table 
-	 * assertThat(homePage.getRestaurantTableAsString()).isEqualTo(
-	 * "ID Name AveragePrice 1 Scaraboci 24" ); }
-	 */
+
+	@Test
+	public void testNewRestaurant() throws Exception {
+		EditPage page = EditPage.to(webDriver);
+		HomePage homePage = page.submitForm(HomePage.class, "Scaraboci", 24);
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Scaraboci 24");
+	}
+
 }

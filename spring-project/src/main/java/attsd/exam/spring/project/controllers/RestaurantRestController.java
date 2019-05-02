@@ -52,5 +52,4 @@ public class RestaurantRestController {
 	public void deleteRestaurant(@PathVariable BigInteger id) {
 		restaurantService.delete(id);
 	}
-
 }

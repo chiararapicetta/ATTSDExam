@@ -1,5 +1,7 @@
 package attsd.exam.spring.project.controllers.webdriver.pages;
 
+import java.math.BigInteger;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -21,8 +23,8 @@ public class EditPage extends AbstractPage {
 		return PageFactory.initElements(driver, EditPage.class);
 	}
 
-	public static EditPage to(WebDriver driver, Long employeeId) {
-		get(driver, "edit/" + employeeId);
+	public static EditPage to(WebDriver driver, BigInteger restaurantId) {
+		get(driver, "edit/" + restaurantId);
 		return PageFactory.initElements(driver, EditPage.class);
 	}
 

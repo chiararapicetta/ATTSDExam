@@ -47,7 +47,7 @@ public class RestaurantWebController {
 
 	@GetMapping("/new")
 	public String newRestaurant(Model model) {
-		Restaurant restaurant = new Restaurant();
+		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "nuovoRistorante", 0);
 		model.addAttribute("restaurant", restaurant);
 		model.addAttribute("message", "");
 		return "edit";

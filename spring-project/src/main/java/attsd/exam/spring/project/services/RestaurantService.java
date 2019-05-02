@@ -27,7 +27,6 @@ public class RestaurantService {
 
 	public Restaurant getRestaurantById(BigInteger id) {
 		return restaurantRepository.findById(id).get();
-
 	}
 
 	public Restaurant storeInDb(Restaurant r) {
