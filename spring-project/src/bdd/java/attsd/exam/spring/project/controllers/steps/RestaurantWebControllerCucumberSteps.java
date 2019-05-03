@@ -16,14 +16,11 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.mongodb.MongoClient;
-
 import attsd.exam.spring.project.controllers.webdriver.pages.AbstractPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
-import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;

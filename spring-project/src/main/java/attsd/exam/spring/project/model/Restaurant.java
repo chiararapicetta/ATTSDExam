@@ -2,8 +2,6 @@ package attsd.exam.spring.project.model;
 
 import java.math.BigInteger;
 
-import org.springframework.data.annotation.Id;
-
 public class Restaurant {
 	
 	private BigInteger id;
@@ -61,13 +59,15 @@ public class Restaurant {
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		if (name == null) {
 			if (other.name != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!name.equals(other.name)) {
 			return false;
+		}
 		return true;
 	}
 
