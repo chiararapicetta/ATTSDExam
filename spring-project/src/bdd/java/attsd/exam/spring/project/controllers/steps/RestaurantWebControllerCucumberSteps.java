@@ -50,6 +50,7 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@TestConfiguration
 	static class WebDriverConfiguration {
+		
 		@Bean
 		public WebDriver getWebDriver() {
 			return new HtmlUnitDriver();
