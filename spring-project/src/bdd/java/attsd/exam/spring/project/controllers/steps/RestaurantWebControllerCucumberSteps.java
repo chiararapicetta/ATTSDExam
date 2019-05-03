@@ -48,8 +48,6 @@ public class RestaurantWebControllerCucumberSteps {
 	private EditPage editPage;
 
 	private AbstractPage redirectedPage;
-	
-	private MongoClient mongoClient;
 
 	static final Logger LOGGER = Logger.getLogger(RestaurantWebControllerCucumberSteps.class);
 
@@ -64,15 +62,10 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Before
 	public void setup() {
-		mongoClient = new MongoClient();
 		AbstractPage.port = port;
 		LOGGER.info("Port set: " + port);
 	}
 	
-	@After
-	public void tearDown() {
-		mongoClient.close();
-	}
 	
 	@Given("^The database is empty$")
 	public void the_database_is_empty() throws Throwable {
