@@ -9,3 +9,4 @@ Scenario: List current restaurants
 	Given Some restaurants are in the database
 	When The User is on Home Page
 	Then A table must show the restaurants
+

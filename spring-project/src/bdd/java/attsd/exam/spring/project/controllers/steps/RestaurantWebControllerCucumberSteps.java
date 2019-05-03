@@ -128,6 +128,8 @@ public class RestaurantWebControllerCucumberSteps {
 	@And("^A table must show the modified restaurant \"([^\"]*)\"$")
 	public void aTableMustShowTheModifiedrestaurant(String expectedRepresentation) throws Throwable {
 		assertThat(homePage.getRestaurantTableAsString()).contains(expectedRepresentation);
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
+
 	}
 
 }
