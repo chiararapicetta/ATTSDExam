@@ -259,7 +259,7 @@
 									</includes>
 								</configuration>
 								<goals>
-									<goal>integrationt-test</goal>
+									<goal>integration-test</goal>
 									<goal>verify</goal>
 								</goals>
 							</execution>
