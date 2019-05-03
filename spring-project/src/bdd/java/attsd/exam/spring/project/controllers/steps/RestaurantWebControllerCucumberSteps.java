@@ -17,11 +17,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 
 import attsd.exam.spring.project.controllers.webdriver.pages.AbstractPage;
+import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
-import cucumber.api.PendingException;
 import cucumber.api.java.Before;
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -40,6 +41,10 @@ public class RestaurantWebControllerCucumberSteps {
 	private int port;
 
 	private HomePage homePage;
+
+	private EditPage editPage;
+
+	private AbstractPage redirectedPage;
 
 	static final Logger LOGGER = Logger.getLogger(RestaurantWebControllerCucumberSteps.class);
 
@@ -80,7 +85,29 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Then("^A table must show the restaurants$")
 	public void aTableMustShowTheRestaurants() throws Throwable {
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice 1 restaurant1 10 2 restaurant2 20");
+		assertThat(homePage.getRestaurantTableAsString())
+				.isEqualTo("ID Name AveragePrice\n1 restaurant1 101n2 restaurant2 20");
+	}
+
+	@When("^The User navigates to \"([^\"]*)\" page$")
+	public void theUserNavigatesToPage(String newPage) throws Throwable {
+		editPage = EditPage.to(webDriver);
+	}
+
+	@And("^Enters Restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
+	public void entersRestaurantNameAndPriceAndPressesClick(String name, String averagePrice) throws Throwable {
+		redirectedPage = editPage.submitForm(HomePage.class, name, Integer.parseInt(averagePrice));
+	}
+
+	@Then("^The User is redirected to Home Page$")
+	public void theUserIsRedirectedToHomePage() throws Throwable {
+		assertThat(redirectedPage).isInstanceOf(HomePage.class);
+	}
+
+	@And("^A table must show the added restaurant with name \"([^\"]*)\",average price\"([^\"]*)\" and id is positive$")
+	public void aTableMustShowTheAddedRestaurantWithNamePriceAndIdIsPositive(String name, String averagePrice)
+			throws Throwable {
+		assertThat(homePage.getRestaurantTableAsString()).matches(".*([1-9][0-9]*) " + name + " " + averagePrice);
 	}
 
 }
