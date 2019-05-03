@@ -80,7 +80,7 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Then("^A table must show the restaurants$")
 	public void aTableMustShowTheRestaurants() throws Throwable {
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice 1 restaurant1 10 2 restaurant2 20");
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
 	}
 
 }
