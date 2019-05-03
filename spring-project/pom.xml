@@ -251,6 +251,18 @@
 									<goal>verify</goal>
 								</goals>
 							</execution>
+							<execution>
+								<id>bdd-tests</id>
+								<configuration>
+									<includes>
+										<include>**/*BDD.java</include>
+									</includes>
+								</configuration>
+								<goals>
+									<goal>integrationt-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
 						</executions>
 					</plugin>
 					<plugin>
