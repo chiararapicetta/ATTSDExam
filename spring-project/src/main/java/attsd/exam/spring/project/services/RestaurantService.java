@@ -32,19 +32,12 @@ public class RestaurantService {
 		return restaurantRepository.findById(id).orElse(null);
 	}
 
-	/*
-	 * public Restaurant getRestaurantById(BigInteger id) throws
-	 * NoSuchElementException { if (restaurantRepository.findById(id).isPresent()) {
-	 * return restaurantRepository.findById(id).get(); } else { throw new
-	 * NoSuchElementException("No restaurant found with id " + id); } }
-	 */
-
 	public Restaurant storeInDb(Restaurant r) {
 		return restaurantRepository.save(r);
 	}
 
 	public void delete(BigInteger id) {
-		Restaurant r = restaurantRepository.findById(id).get();
+		Restaurant r = restaurantRepository.findById(id).orElse(null);
 		restaurantRepository.delete(r);
 	}
 
