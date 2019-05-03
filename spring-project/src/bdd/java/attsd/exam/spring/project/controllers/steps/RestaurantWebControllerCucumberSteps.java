@@ -16,11 +16,14 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.mongodb.MongoClient;
+
 import attsd.exam.spring.project.controllers.webdriver.pages.AbstractPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
+import cucumber.api.java.After;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -45,6 +48,8 @@ public class RestaurantWebControllerCucumberSteps {
 	private EditPage editPage;
 
 	private AbstractPage redirectedPage;
+	
+	private MongoClient mongoClient;
 
 	static final Logger LOGGER = Logger.getLogger(RestaurantWebControllerCucumberSteps.class);
 
@@ -59,10 +64,16 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Before
 	public void setup() {
+		mongoClient = new MongoClient();
 		AbstractPage.port = port;
 		LOGGER.info("Port set: " + port);
 	}
-
+	
+	@After
+	public void tearDown() {
+		mongoClient.close();
+	}
+	
 	@Given("^The database is empty$")
 	public void the_database_is_empty() throws Throwable {
 		restaurantService.deleteAll();
