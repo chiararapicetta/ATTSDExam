@@ -94,7 +94,7 @@ public class RestaurantWebControllerCucumberSteps {
 		editPage = EditPage.to(webDriver);
 	}
 
-	@And("^Enters Restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
+	@And("^Enters restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
 	public void entersRestaurantNameAndPriceAndPressesClick(String name, String averagePrice) throws Throwable {
 		redirectedPage = editPage.submitForm(HomePage.class, name, Integer.parseInt(averagePrice));
 	}
@@ -118,6 +118,16 @@ public class RestaurantWebControllerCucumberSteps {
 	@Then("^A message \"([^\"]*)\" \\+ \"([^\"]*)\" must be shown$")
 	public void aMessageMustBeShown(String messagePart, String id) throws Throwable {
 		assertThat(editPage.getBody()).contains(messagePart + id);
+	}
+
+	@And("^The restaurant with id \"([^\"]*)\" exists in the database$")
+	public void theEmployeeWithIdExistsInTheDatabase(String id) throws Throwable {
+		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(Long.parseLong(id)), "restaurant1", 25));
+	}
+
+	@And("^A table must show the modified restaurant \"([^\"]*)\"$")
+	public void aTableMustShowTheModifiedrestaurant(String expectedRepresentation) throws Throwable {
+		assertThat(homePage.getRestaurantTableAsString()).contains(expectedRepresentation);
 	}
 
 }
