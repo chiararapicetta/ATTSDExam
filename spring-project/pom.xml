@@ -32,11 +32,19 @@
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
 		<sonar.coverage.exclusions>**/Restaurant.*</sonar.coverage.exclusions>
 		<cucumber.version>1.2.5</cucumber.version>
+		<skip.integration-tests>false</skip.integration-tests>
 	</properties>
 
 
 
 	<dependencies>
+
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>1.7.2</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -71,8 +79,7 @@
 			<artifactId>rest-assured</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-security</artifactId> 
-			</dependency> -->
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -160,7 +167,7 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>add-test-resources</id>
+						<id>add-test-resource</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>add-test-resource</goal>
@@ -246,6 +253,19 @@
 						<executions>
 							<execution>
 								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>bdd-tests</id>
+								<configuration>
+									<skipTests>${skip.integration-tests}</skipTests>
+									<includes>
+										<include>**/*BDD.java</include>
+									</includes>
+								</configuration>
 								<goals>
 									<goal>integration-test</goal>
 									<goal>verify</goal>

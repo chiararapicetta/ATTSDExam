@@ -49,12 +49,12 @@ public class RestaurantWebControllerWebDriverIT {
 				.isEqualTo("ID Name AveragePrice\n1 CacioePepe 34\n2 Pizzeria 15");
 	}
 	
-	/*  @Test 
+	  @Test 
 	  public void testEditNonExistentRestaurant() throws Exception { EditPage
 	  page = EditPage.to(webDriver, BigInteger.valueOf(1));
 	  assertThat(page.getBody()).contains("No restaurant found with id: 1");
 	  
-	  }*/
+	  }
 	 
 
 	@Test

@@ -92,11 +92,10 @@ public class RestaurantServiceWithMockBeanTest {
 		verify(restaurantRepository, Mockito.times(1)).findById(BigInteger.ONE);
 	}
 
-	@Test(expected = NoSuchElementException.class)
+	@Test
 	public void testGetRestaurantByIdNotFound() {
-		Optional<Restaurant> actual = Optional.of(restaurantService.getRestaurantById(BigInteger.ZERO));
-		assertNotNull(actual);
-		actual.get();
+		Restaurant actual = restaurantService.getRestaurantById(BigInteger.ZERO);
+		assertNull(actual);
 		verify(restaurantRepository, Mockito.times(1)).findById(BigInteger.ZERO);
 	}
 
