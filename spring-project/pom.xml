@@ -40,6 +40,13 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>1.7.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 		</dependency>
@@ -254,7 +261,7 @@
 							<execution>
 								<id>bdd-tests</id>
 								<configuration>
-								<skipTests>${skip.integration-tests}</skipTests>
+									<skipTests>${skip.integration-tests}</skipTests>
 									<includes>
 										<include>**/*BDD.java</include>
 									</includes>
