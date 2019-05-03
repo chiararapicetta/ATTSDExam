@@ -1,5 +1,7 @@
 package attsd.exam.spring.project.controllers.steps;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -54,20 +56,17 @@ public class RestaurantWebControllerCucumberSteps {
 	
 	@Given("^The database is empty$")
 	public void the_database_is_empty() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    restaurantService.deleteAll();
 	}
 
 	@When("^The User is on Home Page$")
 	public void the_User_is_on_Home_Page() throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	    homePage = HomePage.to(webDriver);
 	}
 
 	@Then("^A message \"([^\"]*)\" must be shown$")
-	public void a_message_must_be_shown(String arg1) throws Throwable {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new PendingException();
+	public void a_message_must_be_shown(String expectedMessage) throws Throwable {
+	    assertThat(homePage.getBody()).contains(expectedMessage);
 	}
 
 	
