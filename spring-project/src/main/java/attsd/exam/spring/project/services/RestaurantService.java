@@ -29,7 +29,7 @@ public class RestaurantService {
 
 	public Restaurant getRestaurantById(BigInteger id) {
 
-		return restaurantRepository.findById(id).get();
+		return restaurantRepository.findById(id).orElse(null);
 	}
 
 	/*
