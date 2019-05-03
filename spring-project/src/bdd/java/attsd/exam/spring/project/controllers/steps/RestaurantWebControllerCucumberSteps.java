@@ -3,6 +3,7 @@ package attsd.exam.spring.project.controllers.steps;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.ContextConfiguration;
 
 import cucumber.api.PendingException;
 import cucumber.api.java.en.Given;
