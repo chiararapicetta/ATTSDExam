@@ -106,7 +106,7 @@ public class RestaurantWebControllerCucumberSteps {
 		assertThat(redirectedPage).isInstanceOf(HomePage.class);
 	}
 
-	@And("^A table must show the added restaurant with name \"([^\"]*)\",average price\"([^\"]*)\" and id is positive$")
+	@And("^A table must show the added restaurant with name \"([^\"]*)\", average price\"([^\"]*)\" and id is positive$")
 	public void aTableMustShowTheAddedRestaurantWithNamePriceAndIdIsPositive(String name, String averagePrice)
 			throws Throwable {
 		assertThat(homePage.getRestaurantTableAsString()).matches(".*([1-9][0-9]*) " + name + " " + averagePrice);
