@@ -116,6 +116,7 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Then("^A table must show the added restaurant with name \"([^\"]*)\", average price \"([^\"]*)\"$")
 	public void aTableMustShowTheAddedRestaurantWithNameAndAveragePrice(String name, int averagePrice)
+
 			throws Throwable {
 		assertThat(homePage.getRestaurantTableAsString()).matches("ID Name AveragePrice\n1 "+ name + " " + averagePrice);
 	}
