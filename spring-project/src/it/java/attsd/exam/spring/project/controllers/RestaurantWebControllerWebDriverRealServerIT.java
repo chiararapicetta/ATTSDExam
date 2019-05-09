@@ -23,6 +23,7 @@ import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
+import cucumber.api.java.After;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -48,6 +49,7 @@ public class RestaurantWebControllerWebDriverRealServerIT {
 		AbstractPage.port = port;
 		restaurantService.deleteAll();
 	}
+	
 
 	@Test
 	public void testHomePageWithNoRestaurants() throws Exception {

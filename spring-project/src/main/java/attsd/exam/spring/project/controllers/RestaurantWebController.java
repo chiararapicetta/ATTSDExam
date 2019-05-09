@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +17,7 @@ import attsd.exam.spring.project.services.RestaurantService;
 public class RestaurantWebController {
 
 	private RestaurantService restaurantService;
+	private String redirect = "redirect:/";
 
 	@Autowired
 	public RestaurantWebController(RestaurantService restaurantService) {
@@ -43,7 +43,7 @@ public class RestaurantWebController {
 	@PostMapping("/save")
 	public String saveRestaurant(Restaurant restaurant) {
 		restaurantService.storeInDb(restaurant);
-		return "redirect:/";
+		return redirect;
 	}
 
 	@GetMapping("/new")
@@ -64,13 +64,13 @@ public class RestaurantWebController {
 	@GetMapping("/delete/{id}")
 	public String deleteRestaurant(@PathVariable BigInteger id) {
 		restaurantService.delete(id);
-		return "redirect:/";
+		return redirect;
 	}
 	
 	@GetMapping("/reset")
 	public String resetRestaurants() {
 		restaurantService.deleteAll();
-		return "redirect:/";
+		return redirect;
 	}
 	
 }

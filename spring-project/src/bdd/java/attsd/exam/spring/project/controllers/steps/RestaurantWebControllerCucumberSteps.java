@@ -65,6 +65,10 @@ public class RestaurantWebControllerCucumberSteps {
 		restaurantService.deleteAll();
 	}
 	
+	@After
+	public void finish() {
+		restaurantService.deleteAll();
+	}
 	
 	
 	@Given("^The database is empty$")
