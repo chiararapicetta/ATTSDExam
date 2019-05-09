@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigInteger;
 
 import org.apache.log4j.Logger;
+import org.junit.After;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,9 @@ public class RestaurantWebControllerCucumberSteps {
 	public void setup() {
 		AbstractPage.port = port;
 		LOGGER.info("Port set: " + port);
+		restaurantService.deleteAll();
 	}
+	
 	
 	
 	@Given("^The database is empty$")
@@ -91,12 +94,13 @@ public class RestaurantWebControllerCucumberSteps {
 				.isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
 	}
 
+	
 	@When("^The User navigates to \"([^\"]*)\" page$")
 	public void theUserNavigatesToPage(String newPage) throws Throwable {
 		editPage = EditPage.to(webDriver);
 	}
 
-	@And("^Enters restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
+	@And("^Enters restaurant id \"([^\"]*)\" name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
 	public void entersRestaurantNameAndPriceAndPressesClick(String name, String averagePrice) throws Throwable {
 		redirectedPage = editPage.submitForm(HomePage.class, name, Integer.parseInt(averagePrice));
 	}
@@ -106,10 +110,10 @@ public class RestaurantWebControllerCucumberSteps {
 		assertThat(redirectedPage).isInstanceOf(HomePage.class);
 	}
 
-	@And("^A table must show the added restaurant with name \"([^\"]*)\",average price\"([^\"]*)\" and id is positive$")
-	public void aTableMustShowTheAddedRestaurantWithNamePriceAndIdIsPositive(String name, String averagePrice)
+	@Then("^A table must show the added restaurant with id \"([^\"]*)\", name \"([^\"]*)\", average price \"([^\"]*)\"$")
+	public void aTableMustShowTheAddedRestaurantWithNamePriceAndIdIsPositive(BigInteger id, String name, String averagePrice)
 			throws Throwable {
-		assertThat(homePage.getRestaurantTableAsString()).matches(".*([1-9][0-9]*) " + name + " " + averagePrice);
+		assertThat(homePage.getRestaurantTableAsString()).matches("ID Name AveragePrice\n"+id +" "+ name + " " + averagePrice);
 	}
 
 	@When("^The User navigates to \"([^\"]*)\" page with id \"([^\"]*)\"$")
@@ -134,4 +138,8 @@ public class RestaurantWebControllerCucumberSteps {
 
 	}
 
+	@When("^Enters restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
+	public void enters_restaurant_name_and_average_price_and_presses_click(String name, int averagePrice) throws Throwable {
+		assertThat(homePage.getRestaurantTableAsString()).matches("ID Name AveragePrice\n"+"10" +" "+ name + " " + averagePrice);
+	}
 }

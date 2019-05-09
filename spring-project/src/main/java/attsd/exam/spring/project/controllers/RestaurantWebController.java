@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,6 +51,19 @@ public class RestaurantWebController {
 		Restaurant restaurant = new Restaurant();
 		model.addAttribute("restaurant", restaurant);
 		model.addAttribute("message", "");
+		List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
+		for (int i=1; i<=allRestaurants.size()+1; i++) {
+			if (restaurantService.getRestaurantById(BigInteger.valueOf(i))== null){
+				restaurant.setId(BigInteger.valueOf(i));
+				break;
+			}	
+		}
 		return "edit";
+	}
+
+	@GetMapping("/delete/{id}")
+	public String deleteRestaurant(@PathVariable BigInteger id) {
+		restaurantService.delete(id);
+		return "redirect:/";
 	}
 }

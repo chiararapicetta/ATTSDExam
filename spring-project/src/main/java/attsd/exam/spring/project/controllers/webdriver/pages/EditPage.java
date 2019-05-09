@@ -10,6 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 public class EditPage extends AbstractPage {
 
 	private WebElement name;
+	private WebElement id;
 	private WebElement averagePrice;
 	@FindBy(name = "btn_submit")
 	private WebElement submit;
