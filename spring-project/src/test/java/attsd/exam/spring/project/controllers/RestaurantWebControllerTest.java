@@ -106,4 +106,10 @@ public class RestaurantWebControllerTest {
 		mvc.perform(get("/delete/1")).andExpect(view().name("redirect:/"));
 		verify(restaurantService).delete(BigInteger.valueOf(1));
 	}
+	
+	@Test
+	public void testResetRestaurants() throws Exception {
+		mvc.perform(get("/reset")).andExpect(view().name("redirect:/"));
+		verify(restaurantService).deleteAll();
+	}
 }

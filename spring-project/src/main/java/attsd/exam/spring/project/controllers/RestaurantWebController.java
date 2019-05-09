@@ -66,4 +66,11 @@ public class RestaurantWebController {
 		restaurantService.delete(id);
 		return "redirect:/";
 	}
+	
+	@GetMapping("/reset")
+	public String resetRestaurants() {
+		restaurantService.deleteAll();
+		return "redirect:/";
+	}
+	
 }

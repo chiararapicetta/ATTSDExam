@@ -3,8 +3,8 @@ Feature: Restaurants editing
 Scenario: Add new restaurant
 	Given The User is on Home Page
 	When The User navigates to "save" page
-	And Enters restaurant id "1" name "new restaurant" and average price "10" and presses click
-	Then A table must show the added restaurant with id "1", name "new restaurant", average price "10"
+	And Enters restaurant name "new restaurant" and average price "10" and presses click
+	Then A table must show the added restaurant with name "new restaurant", average price "10"
 
 Scenario: Edit a non existing restaurant
 	Given The User is on Home Page

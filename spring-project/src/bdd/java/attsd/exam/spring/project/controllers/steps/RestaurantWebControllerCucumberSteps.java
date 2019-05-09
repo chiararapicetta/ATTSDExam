@@ -100,7 +100,7 @@ public class RestaurantWebControllerCucumberSteps {
 		editPage = EditPage.to(webDriver);
 	}
 
-	@And("^Enters restaurant id \"([^\"]*)\" name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
+	@And("^Enters restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
 	public void entersRestaurantNameAndPriceAndPressesClick(String name, String averagePrice) throws Throwable {
 		redirectedPage = editPage.submitForm(HomePage.class, name, Integer.parseInt(averagePrice));
 	}
@@ -110,10 +110,10 @@ public class RestaurantWebControllerCucumberSteps {
 		assertThat(redirectedPage).isInstanceOf(HomePage.class);
 	}
 
-	@Then("^A table must show the added restaurant with id \"([^\"]*)\", name \"([^\"]*)\", average price \"([^\"]*)\"$")
-	public void aTableMustShowTheAddedRestaurantWithNamePriceAndIdIsPositive(BigInteger id, String name, String averagePrice)
+	@Then("^A table must show the added restaurant with name \"([^\"]*)\", average price \"([^\"]*)\"$")
+	public void aTableMustShowTheAddedRestaurantWithNameAndAveragePrice(String name, int averagePrice)
 			throws Throwable {
-		assertThat(homePage.getRestaurantTableAsString()).matches("ID Name AveragePrice\n"+id +" "+ name + " " + averagePrice);
+		assertThat(homePage.getRestaurantTableAsString()).matches("ID Name AveragePrice\n1 "+ name + " " + averagePrice);
 	}
 
 	@When("^The User navigates to \"([^\"]*)\" page with id \"([^\"]*)\"$")
@@ -134,12 +134,7 @@ public class RestaurantWebControllerCucumberSteps {
 	@And("^A table must show the modified restaurant \"([^\"]*)\"$")
 	public void aTableMustShowTheModifiedrestaurant(String expectedRepresentation) throws Throwable {
 		assertThat(homePage.getRestaurantTableAsString()).contains(expectedRepresentation);
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n10 modified name 25");
 
-	}
-
-	@When("^Enters restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
-	public void enters_restaurant_name_and_average_price_and_presses_click(String name, int averagePrice) throws Throwable {
-		assertThat(homePage.getRestaurantTableAsString()).matches("ID Name AveragePrice\n"+"10" +" "+ name + " " + averagePrice);
 	}
 }
