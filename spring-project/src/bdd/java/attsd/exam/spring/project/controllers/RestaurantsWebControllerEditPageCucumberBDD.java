@@ -7,6 +7,6 @@ import cucumber.api.junit.Cucumber;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(features = "src/bdd/resources/editing.feature")
-public class RestaurantWebControllerEditPageCucumberBDD {
+public class RestaurantsWebControllerEditPageCucumberBDD {
 
 }

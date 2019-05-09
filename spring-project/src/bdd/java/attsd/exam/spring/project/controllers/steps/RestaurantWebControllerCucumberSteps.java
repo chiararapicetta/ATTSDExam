@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigInteger;
 
 import org.apache.log4j.Logger;
+import org.junit.After;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,12 @@ public class RestaurantWebControllerCucumberSteps {
 	public void setup() {
 		AbstractPage.port = port;
 		LOGGER.info("Port set: " + port);
+		restaurantService.deleteAll();
+	}
+	
+	@After
+	public void finish() {
+		restaurantService.deleteAll();
 	}
 	
 	
@@ -91,6 +98,7 @@ public class RestaurantWebControllerCucumberSteps {
 				.isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
 	}
 
+	
 	@When("^The User navigates to \"([^\"]*)\" page$")
 	public void theUserNavigatesToPage(String newPage) throws Throwable {
 		editPage = EditPage.to(webDriver);
@@ -106,10 +114,11 @@ public class RestaurantWebControllerCucumberSteps {
 		assertThat(redirectedPage).isInstanceOf(HomePage.class);
 	}
 
-	@And("^A table must show the added restaurant with name \"([^\"]*)\", average price\"([^\"]*)\" and id is positive$")
-	public void aTableMustShowTheAddedRestaurantWithNamePriceAndIdIsPositive(String name, String averagePrice)
+	@Then("^A table must show the added restaurant with name \"([^\"]*)\", average price \"([^\"]*)\"$")
+	public void aTableMustShowTheAddedRestaurantWithNameAndAveragePrice(String name, int averagePrice)
+
 			throws Throwable {
-		assertThat(homePage.getRestaurantTableAsString()).matches(".*([1-9][0-9]*) " + name + " " + averagePrice);
+		assertThat(homePage.getRestaurantTableAsString()).matches("ID Name AveragePrice\n1 "+ name + " " + averagePrice);
 	}
 
 	@When("^The User navigates to \"([^\"]*)\" page with id \"([^\"]*)\"$")
@@ -130,8 +139,7 @@ public class RestaurantWebControllerCucumberSteps {
 	@And("^A table must show the modified restaurant \"([^\"]*)\"$")
 	public void aTableMustShowTheModifiedrestaurant(String expectedRepresentation) throws Throwable {
 		assertThat(homePage.getRestaurantTableAsString()).contains(expectedRepresentation);
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n10 modified name 25");
 
 	}
-
 }

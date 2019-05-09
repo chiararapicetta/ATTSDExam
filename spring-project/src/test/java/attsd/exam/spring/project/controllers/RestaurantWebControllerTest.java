@@ -83,7 +83,7 @@ public class RestaurantWebControllerTest {
 
 	@Test
 	public void testPostRestaurant() throws Exception {
-		Restaurant restaurant = new Restaurant(BigInteger.valueOf(0), "LaFiaccola", 45);
+		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "LaFiaccola", 45);
 		mvc.perform(post("/save")
 				.param("id", "" + restaurant.getId())
 				.param("name", restaurant.getName())
@@ -92,12 +92,24 @@ public class RestaurantWebControllerTest {
 		verify(restaurantService).storeInDb(restaurant);
 	}
 
+	
 	@Test
 	public void testNewRestaurant() throws Exception {
 		mvc.perform(get("/new")).andExpect(view().name("edit"))
-				.andExpect(model().attribute("restaurant", new Restaurant()))
+				.andExpect(model().attribute("restaurant", new Restaurant(BigInteger.valueOf(1), null, 0)))
 				.andExpect(model().attribute("message", ""));
-		verifyZeroInteractions(restaurantService);
+		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
 	}
 
+	@Test
+	public void testDeleteRestaurant() throws Exception {
+		mvc.perform(get("/delete/1")).andExpect(view().name("redirect:/"));
+		verify(restaurantService).delete(BigInteger.valueOf(1));
+	}
+	
+	@Test
+	public void testResetRestaurants() throws Exception {
+		mvc.perform(get("/reset")).andExpect(view().name("redirect:/"));
+		verify(restaurantService).deleteAll();
+	}
 }

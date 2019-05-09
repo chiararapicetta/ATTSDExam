@@ -23,6 +23,7 @@ import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
+import cucumber.api.java.After;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -48,6 +49,7 @@ public class RestaurantWebControllerWebDriverRealServerIT {
 		AbstractPage.port = port;
 		restaurantService.deleteAll();
 	}
+	
 
 	@Test
 	public void testHomePageWithNoRestaurants() throws Exception {
@@ -63,17 +65,18 @@ public class RestaurantWebControllerWebDriverRealServerIT {
 		assertThat(homePage.getRestaurantTableAsString())
 				.isEqualTo("ID Name AveragePrice\n1 CacioePepe 34\n2 Pizzeria 15");
 	}
-	/*
-	 * @Test public void testEditNonExistentRestaurant() throws Exception { EditPage
-	 * page = EditPage.to(webDriver, BigInteger.valueOf(1));
-	 * assertThat(page.getBody()).contains("No restaurant found with id: 1");
-	 * 
-	 * }
-	 */
+
+	@Test
+	public void testEditNonExistentRestaurant() throws Exception {
+		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
+		assertThat(page.getBody()).contains("No restaurant found with id: 1");
+
+	}
 
 	@Test
 	public void testEditExistentRestaurant() throws Exception {
-		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34));
+		Restaurant r = new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34);
+		restaurantService.storeInDb(r);
 		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
 		assertThat(page.getBody()).doesNotContain("No restaurant found with id: 1");
 
@@ -81,12 +84,12 @@ public class RestaurantWebControllerWebDriverRealServerIT {
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Pizzeria 15");
 	}
 
-	/*
 	@Test
 	public void testNewRestaurant() throws Exception {
 		EditPage page = EditPage.to(webDriver);
+
 		HomePage homePage = page.submitForm(HomePage.class, "Scaraboci", 24);
+
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Scaraboci 24");
 	}
-*/
 }

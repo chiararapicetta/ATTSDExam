@@ -59,20 +59,21 @@ public class RestaurantWebControllerWebDriverIT {
 
 	@Test
 	public void testEditExistentRestaurant() throws Exception {
-		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34));
+		Restaurant r = new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34);
+		restaurantService.storeInDb(r);
 		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
 		assertThat(page.getBody()).doesNotContain("No restaurant found with id: 1");
 
 		HomePage homePage = page.submitForm(HomePage.class, "Pizzeria", 15);
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Pizzeria 15");
 	}
-/*
+
 	@Test
 	public void testNewRestaurant() throws Exception {
 		EditPage page = EditPage.to(webDriver);
 
 		HomePage homePage = page.submitForm(HomePage.class, "Scaraboci", 24);
 
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice 1 Scaraboci 24");
-	}*/
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Scaraboci 24");
+	}
 }

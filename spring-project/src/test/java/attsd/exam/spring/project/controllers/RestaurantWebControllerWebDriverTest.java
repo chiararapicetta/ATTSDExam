@@ -57,8 +57,11 @@ public class RestaurantWebControllerWebDriverTest {
 	public void testEditExistentRestaurant() throws Exception {
 		when(restaurantService.getRestaurantById(BigInteger.valueOf(1)))
 				.thenReturn(new Restaurant(BigInteger.valueOf(1), "LaCostaDelMancino", 45));
+		
 		Restaurant expectedSave = new Restaurant(BigInteger.valueOf(1), "IlGalloNero", 35);
+		
 		when(restaurantService.getAllRestaurants()).thenReturn(Arrays.asList(expectedSave));
+		
 		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
 		assertThat(page.getBody()).doesNotContain("No restaurant found with id: 1");
 		HomePage homePage = page.submitForm(HomePage.class, "IlGalloNero", 35);
@@ -68,11 +71,11 @@ public class RestaurantWebControllerWebDriverTest {
 
 	@Test
 	public void testNewRestaurant() throws Exception {
-		Restaurant expectedSave = new Restaurant(null, "OsteriaDelNoce", 40);
+		Restaurant expectedSave = new Restaurant(BigInteger.valueOf(1), "OsteriaDelNoce", 40);
 		when(restaurantService.getAllRestaurants()).thenReturn(Arrays.asList(expectedSave));
 		EditPage page = EditPage.to(webDriver);
 		HomePage homePage = page.submitForm(HomePage.class, "OsteriaDelNoce", 40);
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n OsteriaDelNoce 40");
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 OsteriaDelNoce 40");
 		verify(restaurantService).storeInDb(expectedSave);
 	}
 }

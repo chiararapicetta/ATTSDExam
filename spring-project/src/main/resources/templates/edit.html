@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title>Restaurants</title>
 </head>
-<body>
+<body bgcolor="orange">
 	<h1>Edit Restaurant</h1>
 	<div th:unless="${message.empty}">
 		<span th:text="${message}"></span>
@@ -12,9 +12,7 @@
 	<div th:if="${message.empty}">
 		<form name="restaurant_form" action="#" th:action="@{/save}"
 			th:object="${restaurant}" method="post">
-			<p>
-				ID: <input type="text" th:field="*{id}" />ml>
-			</p>
+			<input type="hidden" th:field="*{id}" />
 			<p>
 				Name: <input type="text" th:field="*{name}" />ml>
 			</p>

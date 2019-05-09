@@ -50,23 +50,24 @@ public class RestaurantRestControllerRestAssuredTest {
 
 	@Test
 	public void testFindByIdWithNonExistingRestaurant() throws Exception {
-		given().when().get("/api/restaurants/100").then().statusCode(200).contentType(isEmptyOrNullString());
-		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(100));
+		given().when().get("/api/restaurants/1").then().statusCode(200).contentType(isEmptyOrNullString());
+		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(1));
 	}
 
 	@Test
 	public void testNewRestaurant() throws Exception {
-		Restaurant rest = new Restaurant(null, "Pizzeria", 13);
-		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(rest).when().post("/api/restaurants/new").then()
+		Restaurant r = new Restaurant(null, "Pizzeria", 13);
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(r).when().post("/api/restaurants/new").then()
 				.statusCode(200);
-		verify(restaurantService, times(1)).storeInDb(rest);
+		verify(restaurantService, times(1)).storeInDb(r);
 
 	}
 
 	@Test
-	public void testUpdateRestaurant() throws Exception {
+	public void testUpdateRestaurant() throws Exception {  
 		when(restaurantService.getRestaurantById(BigInteger.valueOf(1)))
 				.thenReturn(new Restaurant(BigInteger.valueOf(1), "Yoko", 13));
+		
 		Restaurant updated = new Restaurant(BigInteger.valueOf(1), "Kyoto", 18);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/restaurants/update/1")
 				.then().statusCode(200);

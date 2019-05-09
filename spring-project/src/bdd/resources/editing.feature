@@ -4,8 +4,7 @@ Scenario: Add new restaurant
 	Given The User is on Home Page
 	When The User navigates to "save" page
 	And Enters restaurant name "new restaurant" and average price "10" and presses click
-	Then The User is redirected to Home Page
-	And A table must show the added restaurant with name "new restaurant", average price "10" and id is positive
+	Then A table must show the added restaurant with name "new restaurant", average price "10"
 
 Scenario: Edit a non existing restaurant
 	Given The User is on Home Page
