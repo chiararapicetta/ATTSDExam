@@ -24,6 +24,7 @@ public class User implements UserDetails{
     private String email;
     private String password;
     private String fullname;
+    private String username;
     private boolean enabled;
    
 
@@ -84,8 +85,11 @@ public class User implements UserDetails{
 
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 
