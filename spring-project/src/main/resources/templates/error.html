@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+    <head>
+        <title>Error</title>
+    </head>
+    
+    <body bgcolor="orange">
+        <div layout:fragment="content">
+            <h1 th:inline="text">ERROR</h1>
+            <h2>Something wrong</h2>
+             <p>Click <a th:href="@{/signup}">here</a> to retry authentication.</p>
+              <p>Click <a th:href="@{/}">here</a> if you already logged.</p>
+        </div>
+    </body>
+</html>

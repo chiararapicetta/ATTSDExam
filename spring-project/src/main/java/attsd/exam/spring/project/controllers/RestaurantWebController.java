@@ -17,7 +17,7 @@ import attsd.exam.spring.project.services.RestaurantService;
 public class RestaurantWebController {
 
 	private RestaurantService restaurantService;
-	private String redirect = "redirect:/";
+	public static final String redirect = "redirect:/";
 
 	@Autowired
 	public RestaurantWebController(RestaurantService restaurantService) {
