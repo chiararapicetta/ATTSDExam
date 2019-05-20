@@ -1,6 +1,8 @@
 package attsd.exam.spring.project.services;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,10 +30,14 @@ public class UserService implements UserDetailsService {
 	}
 
 	public User saveUser(User user) {
-		user.setPassword(encoder.encode(user.getPassword()));
-		user.setEnabled(true);
-		userRepository.save(user);
-		return user;
+		if (!existsUserByUsername(user.getEmail())) {
+			user.setPassword(encoder.encode(user.getPassword()));
+			user.setEnabled(true);
+			userRepository.save(user);
+			return user;
+		}
+		throw new RuntimeException("Username already exists");
+	
 	}
 
 	@Override
@@ -43,4 +49,14 @@ public class UserService implements UserDetailsService {
 			throw new UsernameNotFoundException("user not found");
 		}
 	}
+	
+	public boolean existsUserByUsername(String email) {
+		List<User> list = userRepository.findAll();
+		for (User user : list) {
+			if (user.getUsername().equals(email)) {
+				return true;
+			}
+		}
+		return false;
+}
 }

@@ -48,15 +48,11 @@ public class UserServiceWithMockBeanTest {
 		verify(userRepository, times(1)).save(isA(User.class));
 	}
 
-	@Test
+	@Test(expected = RuntimeException.class)
 	public void testUsernameAlreadyExists() {
-		User user = new User();
-		user.setUsername("user");
 		when(userRepository.findAll()).thenReturn(userList());
-		when(userRepository.save(isA(User.class))).thenReturn(user);
-
 		User user2 = new User();
-		user.setUsername("user");
+		user2.setEmail("email");
 		userService.saveUser(user2);
 		verify(userRepository, times(1)).save(isA(User.class));
 	}
@@ -84,7 +80,10 @@ public class UserServiceWithMockBeanTest {
 
 	public List<User> userList() {
 		List<User> list = new LinkedList<>();
-		list.add(new User());
+		User u = new User();
+		u.setEmail("email");
+		u.setPassword("pass");
+		list.add(u);
 		return list;
 	}
 }
