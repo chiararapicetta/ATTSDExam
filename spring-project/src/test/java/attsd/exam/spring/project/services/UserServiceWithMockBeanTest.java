@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isA;
@@ -71,12 +72,6 @@ public class UserServiceWithMockBeanTest {
 		when(userRepository.save(isA(User.class))).thenReturn(user);
 		when(userService.findUserByEmail("email")).thenReturn(user);
 	}
-
-	/*
-	 * @Test public void testIncorrectPassword() { User user = new User();
-	 * user.setPassword("password"); userService.saveUser(user);
-	 * verify(userRepository, times(0)).save(isA(User.class)); }
-	 */
 
 	public List<User> userList() {
 		List<User> list = new LinkedList<>();
