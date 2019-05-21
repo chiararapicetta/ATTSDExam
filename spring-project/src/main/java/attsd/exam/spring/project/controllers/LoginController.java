@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import attsd.exam.spring.project.model.User;
-
+import attsd.exam.spring.project.repositories.UserRepository;
 import attsd.exam.spring.project.services.UserService;
 
 @Controller

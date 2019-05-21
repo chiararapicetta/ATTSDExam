@@ -2,6 +2,8 @@ package attsd.exam.spring.project.controllers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.http.HttpHeaders;
+import org.springframework.security.test.context.support.WithMockUser;
+
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -12,11 +14,13 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.htmlunit.webdriver.MockMvcHtmlUnitDriverBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
@@ -37,24 +41,27 @@ import attsd.exam.spring.project.services.RestaurantService;
 public class RestaurantWebControllerHtmlUnitTest {
 
 	
-	private MockMvc mvc;
-	//private MultiValueMap<String, String> params;
-	
-	@Autowired
-	private WebApplicationContext context;
-	
 	@Autowired
 	private WebClient webClient;
 
 	@MockBean
 	private RestaurantService restaurantService;
 
+	/*
+//aggiunte
+	private static final String CSRF_TOKEN_COOKIE = "XSRF-TOKEN";
+	WebDriver webDriver;
+	@Autowired
+	WebApplicationContext context;
+	
 	@Before
 	public void setup() {
-		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-		//params = new HttpHeaders();
+		webDriver = MockMvcHtmlUnitDriverBuilder.webAppContextSetup(context, springSecurity()).build();
+		webDriver.manage().deleteAllCookies();
 	}
-
+*/
+	
+	@WithMockUser
 	@Test
 	public void testHomePageWithNoRestaurants() throws Exception {
 		HtmlPage page = this.webClient.getPage("/");

@@ -62,7 +62,7 @@ public class UserServiceWithMockBeanTest {
 	public void testUsernameNotFound() {
 		when(userRepository.findAll()).thenReturn(userList());
 		userService.loadUserByUsername("email");
-		verify(userRepository, times(0)).findByEmail("email");
+		verify(userRepository, times(0)).findByEmail("email2");
 	}
 
 	@Test
