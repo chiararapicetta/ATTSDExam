@@ -1,14 +1,15 @@
 package attsd.exam.spring.project.controllers;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.test.context.support.WithMockUser;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -17,19 +18,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.htmlunit.webdriver.MockMvcHtmlUnitDriverBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
-
-
 
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlButton;
@@ -50,47 +46,27 @@ public class RestaurantWebControllerHtmlUnitTest {
 
 	@MockBean
 	private RestaurantService restaurantService;
-
-	/*
-//aggiunte
-	private static final String CSRF_TOKEN_COOKIE = "XSRF-TOKEN";
-	WebDriver webDriver;
-	@Autowired
-	WebApplicationContext context;
 	
-	@Before
-	public void setup() {
-		webDriver = MockMvcHtmlUnitDriverBuilder.webAppContextSetup(context, springSecurity()).build();
-		webDriver.manage().deleteAllCookies();
-	}
-*/
-/*	
 	private MockMvc mvc;
-	private MultiValueMap<String, String> params;
+	
 	@Autowired
 	private WebApplicationContext context;
 	
 	@Before
 	public void setup() {
 		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-		params = new HttpHeaders();
 	}
 	
 	@After
-	public void clear() {
-		params.clear();
-	}
-	
-	*/
-	@Test
-	public void testHomePageWithNoRestaurants() throws Exception {
-		HtmlPage page = this.webClient.getPage("/");
-		assertThat(page.getTitleText()).isEqualTo("Restaurants");
-		assertThat(page.getBody().getTextContent()).contains("No restaurant");
+	public void clearAll() {
+		restaurantService.deleteAll();
 	}
 
 	@Test
+	@WithMockUser("username")
 	public void testHomePageWithRestaurants() throws Exception {
+		mvc.perform(get("/").sessionAttr("user", "username").with(csrf()))
+		.andExpect(status().isOk());
 		when(restaurantService.getAllRestaurants())
 				.thenReturn(Arrays.asList(new Restaurant(BigInteger.valueOf(1), "SaleGrosso", 35),
 						new Restaurant(BigInteger.valueOf(2), "Scaraboci", 40)));
@@ -100,6 +76,13 @@ public class RestaurantWebControllerHtmlUnitTest {
 		assertThat(page.getBody().getTextContent()).doesNotContain("No restaurant");
 		assertThat(table.asText())
 				.isEqualTo("ID	Name	AveragePrice\n" + "1	SaleGrosso	35\n" + "2	Scaraboci	40");
+	}
+	
+	@Test
+	public void testHomePageWithNoRestaurants() throws Exception {	
+		HtmlPage page = this.webClient.getPage("/");
+		assertThat(page.getTitleText()).isEqualTo("Restaurants");
+		assertThat(page.getBody().getTextContent()).contains("No restaurant");
 	}
 
 	@Test
@@ -148,4 +131,6 @@ public class RestaurantWebControllerHtmlUnitTest {
 
 		assertThat(table.asText()).isEqualTo("ID	Name	AveragePrice\n" + "1	BorgoAlCotone	40");
 	}
+	
+	
 }
