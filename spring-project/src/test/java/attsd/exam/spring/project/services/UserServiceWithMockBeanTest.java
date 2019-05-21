@@ -49,12 +49,17 @@ public class UserServiceWithMockBeanTest {
 		assertEquals("fullname", u.getFullname());
 		verify(userRepository, times(1)).save(isA(User.class));
 	}
-/*
+
 	@Test(expected = RuntimeException.class)
 	public void testUsernameAlreadyExists() { 
-		when(userRepository.findByEmail(anyString()).thenReturn(null));
+		User u = new User();
+		u.setEmail("email");
+		when(userRepository.findByEmail("email")).thenReturn(u);
+		User user2 = new User();
+		user2.setEmail("email");
+		userService.saveUser(user2);
 	}
-	*/
+	
 
 	@Test(expected = UsernameNotFoundException.class)
 	public void testUsernameNotFound() {
