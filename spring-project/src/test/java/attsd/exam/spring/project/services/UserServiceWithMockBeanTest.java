@@ -49,40 +49,29 @@ public class UserServiceWithMockBeanTest {
 		assertEquals("fullname", u.getFullname());
 		verify(userRepository, times(1)).save(isA(User.class));
 	}
-
+/*
 	@Test(expected = RuntimeException.class)
-	public void testUsernameAlreadyExists() {
-		User user = new User();
-		when(userRepository.findByEmail(anyString())).thenReturn(user);
-		User user2 = new User();
-		user2.setEmail("email2");
-		userService.saveUser(user2);
-		verify(userRepository, times(1)).save(isA(User.class));
+	public void testUsernameAlreadyExists() { 
+		when(userRepository.findByEmail(anyString()).thenReturn(null));
 	}
+	*/
 
 	@Test(expected = UsernameNotFoundException.class)
 	public void testUsernameNotFound() {
-		User user = new User();
-		when(userRepository.findByEmail(anyString())).thenReturn(user);
 		User user2 = new User();
 		user2.setEmail("email2");
 		userService.loadUserByUsername(user2.getEmail());
-		verify(userRepository, times(0)).findByEmail(anyString());
 	}
 
 	@Test
 	public void testFindUserByEmail() {
 		User user = new User();
 		user.setEmail("email");
-		when(userRepository.save(isA(User.class))).thenReturn(user);
+		when(userRepository.findByEmail(anyString())).thenReturn(user);
 		when(userService.findUserByEmail("email")).thenReturn(user);
 	}
 
-	/*
-	 * @Test public void testIncorrectPassword() { User user = new User();
-	 * user.setPassword("password"); userService.saveUser(user);
-	 * verify(userRepository, times(0)).save(isA(User.class)); }
-	 */
+
 
 	public List<User> userList() {
 		List<User> list = new LinkedList<>();
