@@ -7,15 +7,19 @@ import org.springframework.security.test.context.support.WithMockUser;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -37,7 +41,7 @@ import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(controllers = RestaurantWebController.class)
+@WebMvcTest(controllers = RestaurantWebController.class, secure = false)
 public class RestaurantWebControllerHtmlUnitTest {
 
 	
@@ -60,8 +64,24 @@ public class RestaurantWebControllerHtmlUnitTest {
 		webDriver.manage().deleteAllCookies();
 	}
 */
+/*	
+	private MockMvc mvc;
+	private MultiValueMap<String, String> params;
+	@Autowired
+	private WebApplicationContext context;
 	
-	@WithMockUser
+	@Before
+	public void setup() {
+		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
+		params = new HttpHeaders();
+	}
+	
+	@After
+	public void clear() {
+		params.clear();
+	}
+	
+	*/
 	@Test
 	public void testHomePageWithNoRestaurants() throws Exception {
 		HtmlPage page = this.webClient.getPage("/");
