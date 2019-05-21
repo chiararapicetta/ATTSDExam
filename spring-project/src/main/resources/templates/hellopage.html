@@ -6,8 +6,9 @@
     <body bgcolor="orange">
     <body>
         <div layout:fragment="content">
-            <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-            <h2>This is your Admin Dashboard</h2>
+            <h1 th:inline="text">Hello!</h1>
+            <h2>Yoy're welcome</h2>
+             <p>Click <a th:href="@{/}">here</a> to see all the restaurants.</p>
         </div>
     </body>
 </html>

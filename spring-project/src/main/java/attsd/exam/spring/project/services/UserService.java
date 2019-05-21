@@ -29,16 +29,14 @@ public class UserService implements UserDetailsService {
 		return userRepository.findByEmail(email);
 	}
 
-	
-	public User saveUser(User user) {
-		if (!existsUserByUsername(user.getEmail())) {
+	public User saveUser(User user){
+		if (userRepository.findByEmail(user.getEmail()) == null){
 			user.setPassword(encoder.encode(user.getPassword()));
 			user.setEnabled(true);
 			userRepository.save(user);
 			return user;
 		}
-		throw new RuntimeException("Username already exists");
-	
+		throw new RuntimeException("user already exists");
 	}
 
 	@Override
@@ -49,15 +47,5 @@ public class UserService implements UserDetailsService {
 		} else {
 			throw new UsernameNotFoundException("user not found");
 		}
-	}
-	
-	public boolean existsUserByUsername(String email) {
-		List<User> list = userRepository.findAll();
-		for (User user : list) {
-			if (user.getUsername().equals(email)) {
-				return true;
-			}
-		}
-		return false;
 	}
 }

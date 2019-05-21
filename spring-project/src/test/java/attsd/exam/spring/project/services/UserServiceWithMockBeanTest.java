@@ -23,6 +23,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class UserServiceWithMockBeanTest {
 
+
 	private UserRepository userRepository;
 	private PasswordEncoder passEncoder;
 	private UserService userService;
@@ -35,7 +36,7 @@ public class UserServiceWithMockBeanTest {
 	}
 
 	@Test
-	public void testValidRegistration() {
+	public void testSaveUser() {
 		User user = new User();
 		user.setPassword("password");
 		user.setEmail("email");
@@ -50,28 +51,32 @@ public class UserServiceWithMockBeanTest {
 	}
 
 	@Test(expected = RuntimeException.class)
-	public void testUsernameAlreadyExists() {
-		when(userRepository.findAll()).thenReturn(userList());
+	public void testUsernameAlreadyExists() { 
+		User u = new User();
+		u.setEmail("email");
+		when(userRepository.findByEmail("email")).thenReturn(u);
 		User user2 = new User();
 		user2.setEmail("email");
 		userService.saveUser(user2);
-		verify(userRepository, times(1)).save(isA(User.class));
 	}
+	
 
 	@Test(expected = UsernameNotFoundException.class)
 	public void testUsernameNotFound() {
-		when(userRepository.findAll()).thenReturn(userList());
-		userService.loadUserByUsername("email");
-		verify(userRepository, times(0)).findByEmail("email2");
+		User user2 = new User();
+		user2.setEmail("email2");
+		userService.loadUserByUsername(user2.getEmail());
 	}
 
 	@Test
 	public void testFindUserByEmail() {
 		User user = new User();
 		user.setEmail("email");
-		when(userRepository.save(isA(User.class))).thenReturn(user);
+		when(userRepository.findByEmail(anyString())).thenReturn(user);
 		when(userService.findUserByEmail("email")).thenReturn(user);
 	}
+
+
 
 	public List<User> userList() {
 		List<User> list = new LinkedList<>();
