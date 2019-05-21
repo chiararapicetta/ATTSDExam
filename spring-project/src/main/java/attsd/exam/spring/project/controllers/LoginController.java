@@ -1,6 +1,7 @@
 package attsd.exam.spring.project.controllers;
 
 
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import attsd.exam.spring.project.model.User;
-import attsd.exam.spring.project.repositories.UserRepository;
+
 import attsd.exam.spring.project.services.UserService;
 
 @Controller
@@ -54,15 +55,12 @@ public class LoginController {
 	 
 	 @GetMapping("/hellopage")
 	 public String helloPage(Model model) {
-		 Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-			User user = userService.findUserByEmail(auth.getName());
-			model.addAttribute("currentUser", user);
-			model.addAttribute("fullName", "Welcome " + user.getFullname());
-			model.addAttribute("adminMessage", "Content Available Only for Users with Admin Role");
 			return "hellopage";
 	 }
 
 	 
+
+
 
 
 }
