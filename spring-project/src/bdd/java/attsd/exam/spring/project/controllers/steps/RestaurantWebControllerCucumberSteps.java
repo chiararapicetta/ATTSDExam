@@ -22,6 +22,7 @@ import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
+import attsd.exam.spring.project.services.UserService;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
@@ -34,6 +35,8 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Autowired
 	private RestaurantService restaurantService;
+	
+	@Autowired UserService userService;
 
 	@Autowired
 	private WebDriver webDriver;
@@ -70,13 +73,18 @@ public class RestaurantWebControllerCucumberSteps {
 		restaurantService.deleteAll();
 	}
 	
+	@Given("^The User is logged with email \"([^\"]*)\"$")
+	public void theUserIsLogged(String email) throws Throwable {
+		assertThat(userService.loadUserByUsername(email)).isEqualTo(userService.findUserByEmail(email));
+	}
+	
 	
 	@Given("^The database is empty$")
 	public void the_database_is_empty() throws Throwable {
 		restaurantService.deleteAll();
 	}
 
-	@When("^The User is on Home Page$")
+	@And("^The User is on Home Page$")
 	public void the_User_is_on_Home_Page() throws Throwable {
 		homePage = HomePage.to(webDriver);
 	}
