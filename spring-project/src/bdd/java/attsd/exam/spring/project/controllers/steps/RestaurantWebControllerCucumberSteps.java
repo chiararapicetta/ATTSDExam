@@ -23,6 +23,7 @@ import org.springframework.test.context.ContextConfiguration;
 import attsd.exam.spring.project.controllers.webdriver.pages.AbstractPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
+import attsd.exam.spring.project.controllers.webdriver.pages.LoginPage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
@@ -55,6 +56,8 @@ public class RestaurantWebControllerCucumberSteps {
 	private EditPage editPage;
 
 	private AbstractPage redirectedPage;
+	
+	private LoginPage loginPage;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -84,15 +87,9 @@ public class RestaurantWebControllerCucumberSteps {
 		restaurantService.deleteAll();
 	}
 	
-	@And("^The User is logged$")
-	public void theUserIsLogged() throws Throwable {	
-		webDriver.get("http://localhost:8080/login");
-		webDriver.findElement(By.id("email")).sendKeys("USEREMAIL");
-		webDriver.findElement(By.id("username")).sendKeys("USERNAME");
-		webDriver.findElement(By.id("password")).sendKeys("USERPASSWORD");
-		webDriver.findElement(By.id("Sign in")).click();
-		assertEquals(1, userRepository.count());
-		//assertThat(userService.loadUserByUsername(email)).isEqualTo(user.getEmail());
+	@And("^The User with email \"([^\"]*)\" and password \"([^\"]*)\" is logged$")
+	public void theUserIsLogged(String email, String password) throws Throwable {	
+		redirectedPage = loginPage.submitForm(HomePage.class, email, password);
 	}
 	
 	@Given("^The user is registered$")
