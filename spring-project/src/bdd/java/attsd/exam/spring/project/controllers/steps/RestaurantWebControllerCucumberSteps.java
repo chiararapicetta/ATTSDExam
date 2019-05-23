@@ -6,6 +6,7 @@ import java.math.BigInteger;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,8 @@ public class RestaurantWebControllerCucumberSteps {
 	private EditPage editPage;
 
 	private AbstractPage redirectedPage;
+	
+	private WebDriver driver;
 
 	static final Logger LOGGER = Logger.getLogger(RestaurantWebControllerCucumberSteps.class);
 
@@ -74,9 +77,15 @@ public class RestaurantWebControllerCucumberSteps {
 		restaurantService.deleteAll();
 	}
 	
-	@Given("^The User \"([^\"]*)\" is logged with email \"([^\"]*)\"$")
-	public void theUserIsLogged(User user, String email) throws Throwable {
-		assertThat(userService.loadUserByUsername(email)).isEqualTo(user.getEmail());
+	@Given("^The User is logged$")
+	public void theUserIsLogged() throws Throwable {
+		driver.get("http://localhost:8080/login");
+		driver.findElement(By.id("email")).sendKeys("USEREMAIL");
+		driver.findElement(By.id("username")).sendKeys("USERNAME");
+		driver.findElement(By.id("password")).sendKeys("USERPASSWORD");
+		driver.findElement(By.id("Sign in")).click();
+		
+		//assertThat(userService.loadUserByUsername(email)).isEqualTo(user.getEmail());
 	}
 	
 	
