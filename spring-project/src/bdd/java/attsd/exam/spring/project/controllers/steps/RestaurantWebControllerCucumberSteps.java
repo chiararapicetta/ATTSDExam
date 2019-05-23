@@ -1,6 +1,7 @@
 package attsd.exam.spring.project.controllers.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
 
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.ContextConfiguration;
 
 import attsd.exam.spring.project.controllers.webdriver.pages.AbstractPage;
@@ -23,6 +25,7 @@ import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.model.User;
+import attsd.exam.spring.project.repositories.UserRepository;
 import attsd.exam.spring.project.services.RestaurantService;
 import attsd.exam.spring.project.services.UserService;
 import cucumber.api.java.Before;
@@ -38,7 +41,8 @@ public class RestaurantWebControllerCucumberSteps {
 	@Autowired
 	private RestaurantService restaurantService;
 	
-	@Autowired UserService userService;
+	@Autowired 
+	private UserService userService;
 
 	@Autowired
 	private WebDriver webDriver;
@@ -51,8 +55,9 @@ public class RestaurantWebControllerCucumberSteps {
 	private EditPage editPage;
 
 	private AbstractPage redirectedPage;
-	
-	private WebDriver driver;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	static final Logger LOGGER = Logger.getLogger(RestaurantWebControllerCucumberSteps.class);
 
@@ -65,11 +70,13 @@ public class RestaurantWebControllerCucumberSteps {
 		}
 	}
 
+
 	@Before
 	public void setup() {
 		AbstractPage.port = port;
 		LOGGER.info("Port set: " + port);
 		restaurantService.deleteAll();
+		userRepository.deleteAll();
 	}
 	
 	@After
@@ -77,17 +84,25 @@ public class RestaurantWebControllerCucumberSteps {
 		restaurantService.deleteAll();
 	}
 	
-	@Given("^The User is logged$")
-	public void theUserIsLogged() throws Throwable {
-		driver.get("http://localhost:8080/login");
-		driver.findElement(By.id("email")).sendKeys("USEREMAIL");
-		driver.findElement(By.id("username")).sendKeys("USERNAME");
-		driver.findElement(By.id("password")).sendKeys("USERPASSWORD");
-		driver.findElement(By.id("Sign in")).click();
-		
+	@And("^The User is logged$")
+	public void theUserIsLogged() throws Throwable {	
+		webDriver.get("http://localhost:8080/login");
+		webDriver.findElement(By.id("email")).sendKeys("USEREMAIL");
+		webDriver.findElement(By.id("username")).sendKeys("USERNAME");
+		webDriver.findElement(By.id("password")).sendKeys("USERPASSWORD");
+		webDriver.findElement(By.id("Sign in")).click();
+		assertEquals(1, userRepository.count());
 		//assertThat(userService.loadUserByUsername(email)).isEqualTo(user.getEmail());
 	}
 	
+	@Given("^The user is registered$")
+	public void theUserIsRegistered() throws Throwable {
+		User user = new User();
+		user.setEmail("email@email");
+		user.setPassword("userpassword");
+		user.setUsername("username");
+		userService.saveUser(user);
+	}
 	
 	@Given("^The database is empty$")
 	public void the_database_is_empty() throws Throwable {
