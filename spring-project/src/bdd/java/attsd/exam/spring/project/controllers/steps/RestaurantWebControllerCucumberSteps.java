@@ -24,6 +24,7 @@ import attsd.exam.spring.project.controllers.webdriver.pages.AbstractPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.controllers.webdriver.pages.LoginPage;
+import attsd.exam.spring.project.controllers.webdriver.pages.SignUpPage;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
@@ -41,8 +42,8 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Autowired
 	private RestaurantService restaurantService;
-	
-	@Autowired 
+
+	@Autowired
 	private UserService userService;
 
 	@Autowired
@@ -53,10 +54,12 @@ public class RestaurantWebControllerCucumberSteps {
 
 	private HomePage homePage;
 
+	private SignUpPage signUpPage;
+
 	private EditPage editPage;
 
 	private AbstractPage redirectedPage;
-	
+
 	private LoginPage loginPage;
 
 	@Autowired
@@ -66,13 +69,12 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@TestConfiguration
 	static class WebDriverConfiguration {
-		
+
 		@Bean
 		public WebDriver getWebDriver() {
 			return new HtmlUnitDriver();
 		}
 	}
-
 
 	@Before
 	public void setup() {
@@ -81,26 +83,17 @@ public class RestaurantWebControllerCucumberSteps {
 		restaurantService.deleteAll();
 		userRepository.deleteAll();
 	}
-	
+
 	@After
 	public void finish() {
 		restaurantService.deleteAll();
 	}
-	
-	@And("^The User with email \"([^\"]*)\" and password \"([^\"]*)\" is logged$")
-	public void theUserIsLogged(String email, String password) throws Throwable {	
-		redirectedPage = loginPage.submitForm(HomePage.class, email, password);
+
+	@When("^Enters email \"([^\"]*)\" , password \"([^\"]*)\" and username \"([^\"]*)\"$")
+	public void theUserIsLogged(String email, String password, String username) throws Throwable {
+		redirectedPage = signUpPage.submitForm(SignUpPage.class, email, password, username);
 	}
-	
-	@Given("^The user is registered$")
-	public void theUserIsRegistered() throws Throwable {
-		User user = new User();
-		user.setEmail("email@email");
-		user.setPassword("userpassword");
-		user.setUsername("username");
-		userService.saveUser(user);
-	}
-	
+
 	@Given("^The database is empty$")
 	public void the_database_is_empty() throws Throwable {
 		restaurantService.deleteAll();
@@ -109,6 +102,16 @@ public class RestaurantWebControllerCucumberSteps {
 	@And("^The User is on Home Page$")
 	public void the_User_is_on_Home_Page() throws Throwable {
 		homePage = HomePage.to(webDriver);
+	}
+
+	@Given("^The User is on SignUp Page$")
+	public void the_User_is_on_SignUp_Page() throws Throwable {
+		signUpPage = SignUpPage.to(webDriver);
+	}
+
+	@Then("^The User is on Login Page$")
+	public void the_User_is_on_Login_Page() throws Throwable {
+		loginPage = LoginPage.to(webDriver);
 	}
 
 	@Then("^A message \"([^\"]*)\" must be shown$")
@@ -128,7 +131,6 @@ public class RestaurantWebControllerCucumberSteps {
 				.isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
 	}
 
-	
 	@When("^The User navigates to \"([^\"]*)\" page$")
 	public void theUserNavigatesToPage(String newPage) throws Throwable {
 		editPage = EditPage.to(webDriver);
@@ -136,7 +138,18 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@And("^Enters restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
 	public void entersRestaurantNameAndPriceAndPressesClick(String name, String averagePrice) throws Throwable {
-		redirectedPage = editPage.submitForm(HomePage.class, name, Integer.parseInt(averagePrice));
+		redirectedPage = editPage.submitForm(EditPage.class, name, Integer.parseInt(averagePrice));
+	}
+	
+	@Then("^The User is redirected to HelloPage$")
+	public void the_User_is_redirected_to_HelloPage() throws Throwable {
+	    
+	}
+
+	
+	@Then("^load his email \"([^\"]*)\" and password \"([^\"]*)\"$")
+	public void load_his_email_and_password(String email, String password) throws Throwable {
+		redirectedPage = loginPage.submitForm(LoginPage.class, email, password);
 	}
 
 	@Then("^The User is redirected to Home Page$")
@@ -146,9 +159,9 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Then("^A table must show the added restaurant with name \"([^\"]*)\", average price \"([^\"]*)\"$")
 	public void aTableMustShowTheAddedRestaurantWithNameAndAveragePrice(String name, int averagePrice)
-
 			throws Throwable {
-		assertThat(homePage.getRestaurantTableAsString()).matches("ID Name AveragePrice\n1 "+ name + " " + averagePrice);
+		assertThat(homePage.getRestaurantTableAsString())
+				.matches("ID Name AveragePrice\n1 " + name + " " + averagePrice);
 	}
 
 	@When("^The User navigates to \"([^\"]*)\" page with id \"([^\"]*)\"$")

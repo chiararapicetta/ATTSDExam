@@ -57,10 +57,4 @@ public class LoginController {
 	 public String helloPage(Model model) {
 			return "hellopage";
 	 }
-
-	 
-
-
-
-
 }

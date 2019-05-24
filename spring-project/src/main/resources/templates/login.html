@@ -18,7 +18,9 @@
 <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email" required="" />
                 <label for="inputPassword" class="sr-only">Password</label>
                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
-                <button class="w3-button w3-white w3-border w3-border-red w3-round-large">Sign in</button>
+                <button type="submit" class="btn btn-primary" id="submit"
+name="submit">Sign
+				in</button>
             </form>
             <form class="form-signin" th:action="@{/signup}" method="get">
                <button>Sign up here</button>

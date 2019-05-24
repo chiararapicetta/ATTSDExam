@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 				Authentication authentication) throws IOException, ServletException {
 			request.getSession().setAttribute("user", authentication.getName());
-			new DefaultRedirectStrategy().sendRedirect(request, response, "/hellopage");
+			new DefaultRedirectStrategy().sendRedirect(request, response, "/");
 		}
 
 	}

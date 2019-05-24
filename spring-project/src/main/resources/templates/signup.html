@@ -20,10 +20,12 @@
                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="" />
                 <label for="inputUsername" class="sr-only">User Name</label>
                 <input type="text" name="username" id="inputEmail" class="form-control" placeholder="Username" required="" />
-                <button class="w3-button w3-white w3-border w3-border-red w3-round-large">Sign up</button>
+               <button type="submit" class="btn btn-primary" id="submit"
+name="submit">Sign up</button>
             </form>
             <form class="form-signin" th:action="@{/login}" method="get">
-                <button class="w3-button w3-white w3-border w3-border-red w3-round-large">Sign in</button>
+                <button type="submit" class="btn btn-primary" id="sub_mit"
+name="submit">Sign in</button>
             </form>
         </div>
     </body>
