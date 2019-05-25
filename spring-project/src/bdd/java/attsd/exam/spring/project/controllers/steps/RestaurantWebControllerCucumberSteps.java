@@ -148,7 +148,7 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@And("^Enters restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
 	public void entersRestaurantNameAndPriceAndPressesClick(String name, String averagePrice) throws Throwable {
-		redirectedPage = editPage.submitForm(EditPage.class, name, Integer.parseInt(averagePrice));
+		redirectedPage = editPage.submitForm(HomePage.class, name, Integer.parseInt(averagePrice));
 	}
 	
 	@Then("^The User is redirected to HelloPage$")
