@@ -23,34 +23,34 @@ public class LoginController {
 	public String login() {
 		return "login";
 	}
-	    
-	 @GetMapping("/signup")
-	 public String signup(Model model) {
-		 User user = new User();
-		 model.addAttribute("user", user);
-		 return "signup";
-	 }
 
-	 @PostMapping("/signup")
-	 public String createNewUser(@Valid User user, BindingResult bindingResult, Model model) {
-		 User userExists = userService.findUserByEmail(user.getEmail());
-		 if (userExists != null) {
-				bindingResult.rejectValue("email", "error.user",
-						"There is already a user registered with the username provided");
-				return "error";
-			}
-			if (bindingResult.hasErrors()) {
-				return "signup";
-			} else {
-				userService.saveUser(user);
-				model.addAttribute("successMessage", "User has been registered successfully");
-				model.addAttribute("user", new User());
-				return "login";
-			}
-	 }
-	 
-	 @GetMapping("/hellopage")
-	 public String helloPage(Model model) {
-			return "hellopage";
-	 }
+	@GetMapping("/signup")
+	public String signup(Model model) {
+		User user = new User();
+		model.addAttribute("user", user);
+		return "signup";
+	}
+
+	@PostMapping("/signup")
+	public String createNewUser(@Valid User user, BindingResult bindingResult, Model model) {
+		User userExists = userService.findUserByEmail(user.getEmail());
+		if (userExists != null) {
+			bindingResult.rejectValue("email", "error.user",
+					"There is already a user registered with the username provided");
+			return "error";
+		}
+		if (bindingResult.hasErrors()) {
+			return "signup";
+		} else {
+			userService.saveUser(user);
+			model.addAttribute("successMessage", "User has been registered successfully");
+			model.addAttribute("user", new User());
+			return "login";
+		}
+	}
+
+	@GetMapping("/hellopage")
+	public String helloPage(Model model) {
+		return "hellopage";
+	}
 }
