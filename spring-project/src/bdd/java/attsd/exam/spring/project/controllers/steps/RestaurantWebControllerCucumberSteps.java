@@ -2,6 +2,8 @@ package attsd.exam.spring.project.controllers.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
 
@@ -109,10 +111,11 @@ public class RestaurantWebControllerCucumberSteps {
 		signUpPage = SignUpPage.to(webDriver);
 	}
 
-	@Then("^The User is on Login Page$")
+	@Given("^The User is on Login Page$")
 	public void the_User_is_on_Login_Page() throws Throwable {
 		loginPage = LoginPage.to(webDriver);
 	}
+
 
 	@Then("^A message \"([^\"]*)\" must be shown$")
 	public void a_message_must_be_shown(String expectedMessage) throws Throwable {
@@ -131,8 +134,15 @@ public class RestaurantWebControllerCucumberSteps {
 				.isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
 	}
 
-	@When("^The User navigates to \"([^\"]*)\" page$")
+	/*@When("^The User navigates to \"([^\"]*)\" page$")
 	public void theUserNavigatesToPage(String newPage) throws Throwable {
+		editPage = EditPage.to(webDriver);
+	}*/
+	
+
+	
+	@When("^The User navigates to \"([^\"]*)\" page$")
+	public void the_User_navigates_to_page(String arg1) throws Throwable {
 		editPage = EditPage.to(webDriver);
 	}
 
@@ -146,8 +156,23 @@ public class RestaurantWebControllerCucumberSteps {
 	    
 	}
 
+
+	@Then("^the user with email \"([^\"]*)\" is logged$")
+	public void the_user_with_email_is_logged(String email) throws Throwable {
+		assertThat(userService.loadUserByUsername(email).isEnabled()).isTrue();
+	}
 	
-	@Then("^load his email \"([^\"]*)\" and password \"([^\"]*)\"$")
+	
+	
+	@Then("^the user with email \"([^\"]*)\" is registered$")
+	public void the_user_is_registered(String email) throws Throwable {
+		assertThat(userService.loadUserByUsername(email).isEnabled()).isTrue();
+	}
+
+	
+	
+	
+	@And("^load his email \"([^\"]*)\" and password \"([^\"]*)\"$")
 	public void load_his_email_and_password(String email, String password) throws Throwable {
 		redirectedPage = loginPage.submitForm(LoginPage.class, email, password);
 	}
@@ -164,6 +189,8 @@ public class RestaurantWebControllerCucumberSteps {
 				.matches("ID Name AveragePrice\n1 " + name + " " + averagePrice);
 	}
 
+
+	
 	@When("^The User navigates to \"([^\"]*)\" page with id \"([^\"]*)\"$")
 	public void theUserNavigatesToPageWithId(String arg, String id) throws Throwable {
 		editPage = EditPage.to(webDriver, BigInteger.valueOf(Long.parseLong(id)));
