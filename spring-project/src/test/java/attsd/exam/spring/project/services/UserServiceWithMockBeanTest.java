@@ -36,7 +36,7 @@ public class UserServiceWithMockBeanTest {
 	}
 
 	@Test
-	public void testSaveUser() {
+	public void testSaveUserWhenUserNotExists() {
 		User user = new User();
 		user.setPassword("password");
 		user.setEmail("email");
@@ -51,7 +51,7 @@ public class UserServiceWithMockBeanTest {
 	}
 
 	@Test(expected = RuntimeException.class)
-	public void testUsernameAlreadyExists() { 
+	public void testSaveUserWhenUserAlreadyExists() { 
 		User u = new User();
 		u.setEmail("email");
 		when(userRepository.findByEmail("email")).thenReturn(u);
@@ -62,10 +62,17 @@ public class UserServiceWithMockBeanTest {
 	
 
 	@Test(expected = UsernameNotFoundException.class)
-	public void testUsernameNotFound() {
+	public void testLoadUserByUsernameNotFound() {
 		User user2 = new User();
 		user2.setEmail("email2");
 		userService.loadUserByUsername(user2.getEmail());
+	}
+	
+	@Test
+	public void testLoadUserByUsernameFound() {
+		User user = new User();
+		user.setEmail("email");
+		when(userRepository.findByEmail("email")).thenReturn(user);
 	}
 
 	@Test
@@ -75,8 +82,6 @@ public class UserServiceWithMockBeanTest {
 		when(userRepository.findByEmail(anyString())).thenReturn(user);
 		when(userService.findUserByEmail("email")).thenReturn(user);
 	}
-
-
 
 	public List<User> userList() {
 		List<User> list = new LinkedList<>();
