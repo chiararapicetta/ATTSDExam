@@ -72,7 +72,8 @@ public class UserServiceWithMockBeanTest {
 	public void testLoadUserByUsernameFound() {
 		User user = new User();
 		user.setEmail("email");
-		when(userRepository.findByEmail("email")).thenReturn(user);
+		when(userRepository.findByEmail(anyString())).thenReturn(user);
+		when(userService.loadUserByUsername(user.getEmail())).thenReturn(user);
 	}
 
 	@Test
