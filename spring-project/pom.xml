@@ -218,6 +218,8 @@
 							<excludes>
 								<exclude>**/model/**</exclude>
 								<exclude>**/SpringProjectApplication.*</exclude>
+								<exclude>**/config/**</exclude>
+								<exclude>**/pages/**</exclude>
 							</excludes>
 						</configuration>
 						<executions>
