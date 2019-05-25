@@ -1,6 +1,8 @@
 package attsd.exam.spring.project.model;
 
 import java.util.Collection;
+import java.util.Collections;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -66,7 +68,7 @@ public class User implements UserDetails{
         this.enabled = enabled;
     }
     public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	public boolean isAccountNonExpired() {
