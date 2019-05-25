@@ -40,7 +40,7 @@ import attsd.exam.spring.project.services.RestaurantService;
 public class RestaurantWebControllerTest {
 
 	private MockMvc mvc;
-	private MultiValueMap<String, String> params;
+	//private MultiValueMap<String, String> params;
 	
 	@Autowired
 	private WebApplicationContext context;
@@ -51,12 +51,12 @@ public class RestaurantWebControllerTest {
 	@Before
 	public void setup() {
 		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-		params = new HttpHeaders();
+		//params = new HttpHeaders();
 	}
 	
 	@After
 	public void clearAll() {
-		params.clear();
+		//params.clear();
 }
 	
 	@Test
