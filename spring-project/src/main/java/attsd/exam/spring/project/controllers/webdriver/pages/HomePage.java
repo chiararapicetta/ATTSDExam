@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 public class HomePage extends AbstractPage {
 
 	@FindBy(id = "restaurant_table")
-
 	private WebElement restaurantTable;
 
 	public HomePage(WebDriver driver) {

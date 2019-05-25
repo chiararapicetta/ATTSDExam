@@ -133,13 +133,6 @@ public class RestaurantWebControllerCucumberSteps {
 		assertThat(homePage.getRestaurantTableAsString())
 				.isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
 	}
-
-	/*@When("^The User navigates to \"([^\"]*)\" page$")
-	public void theUserNavigatesToPage(String newPage) throws Throwable {
-		editPage = EditPage.to(webDriver);
-	}*/
-	
-
 	
 	@When("^The User navigates to \"([^\"]*)\" page$")
 	public void the_User_navigates_to_page(String arg1) throws Throwable {
