@@ -17,7 +17,7 @@ import attsd.exam.spring.project.services.RestaurantService;
 public class RestaurantWebController {
 
 	private RestaurantService restaurantService;
-	private String redirect = "redirect:/";
+	public static final String REDIRECT = "redirect:/";
 
 	@Autowired
 	public RestaurantWebController(RestaurantService restaurantService) {
@@ -43,7 +43,7 @@ public class RestaurantWebController {
 	@PostMapping("/save")
 	public String saveRestaurant(Restaurant restaurant) {
 		restaurantService.storeInDb(restaurant);
-		return redirect;
+		return REDIRECT;
 	}
 
 	@GetMapping("/new")
@@ -64,13 +64,13 @@ public class RestaurantWebController {
 	@GetMapping("/delete/{id}")
 	public String deleteRestaurant(@PathVariable BigInteger id) {
 		restaurantService.delete(id);
-		return redirect;
+		return REDIRECT;
 	}
 	
 	@GetMapping("/reset")
 	public String resetRestaurants() {
 		restaurantService.deleteAll();
-		return redirect;
+		return REDIRECT;
 	}
 	
 }

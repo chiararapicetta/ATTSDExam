@@ -28,6 +28,7 @@ public class EditPage extends AbstractPage {
 		return PageFactory.initElements(driver, EditPage.class);
 	}
 
+
 	public <T> T submitForm(Class<T> resultPage, String name, int averagePrice) {
 		this.name.clear();
 		this.name.sendKeys(name);
