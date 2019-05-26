@@ -18,6 +18,7 @@ public class RestaurantWebController {
 
 	private RestaurantService restaurantService;
 	public static final String REDIRECT = "redirect:/";
+	public static final String MESSAGE = "message";
 
 	@Autowired
 	public RestaurantWebController(RestaurantService restaurantService) {
@@ -28,7 +29,7 @@ public class RestaurantWebController {
 	public String index(Model model) {
 		List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
 		model.addAttribute("restaurants", allRestaurants);
-		model.addAttribute("message", allRestaurants.isEmpty() ? "No restaurant" : "");
+		model.addAttribute(MESSAGE, allRestaurants.isEmpty() ? "No restaurant" : "");
 		return "index";
 	}
 
@@ -36,7 +37,7 @@ public class RestaurantWebController {
 	public String editRestaurant(@PathVariable BigInteger id, Model model) {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		model.addAttribute("restaurant", restaurantById);
-		model.addAttribute("message", restaurantById == null ? "No restaurant found with id: " + id : "");
+		model.addAttribute(MESSAGE, restaurantById == null ? "No restaurant found with id: " + id : "");
 		return "edit";
 	}
 
@@ -50,7 +51,7 @@ public class RestaurantWebController {
 	public String newRestaurant(Model model) {
 		Restaurant restaurant = new Restaurant();
 		model.addAttribute("restaurant", restaurant);
-		model.addAttribute("message", "");
+		model.addAttribute(MESSAGE, "");
 		List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
 		for (int i=1; i<=allRestaurants.size()+1; i++) {
 			if (restaurantService.getRestaurantById(BigInteger.valueOf(i))== null){
