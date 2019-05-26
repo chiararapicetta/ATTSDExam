@@ -14,10 +14,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Document(collection = "user")
 public class User implements UserDetails{
 
-    public User() {
-		super();
-	}
-
 	@Id
     private String id;
     @Indexed(unique = true, direction = IndexDirection.DESCENDING)
@@ -26,6 +22,10 @@ public class User implements UserDetails{
     private String fullname;
     private String username;
     private boolean enabled;
+    
+    public User() {
+		super();
+	}
    
 
     public String getId() {

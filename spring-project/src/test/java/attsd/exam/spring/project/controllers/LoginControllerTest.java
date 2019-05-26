@@ -1,8 +1,11 @@
 package attsd.exam.spring.project.controllers;
 
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -63,18 +66,19 @@ public class LoginControllerTest {
 		.andExpect(view().name("login"));
 	}
 	
-/*	@Test
+	@Test
 	public void testNewUserWhenUserExists() throws Exception {
 		User user = new User();
+		user.setEmail("email");
 		userService.saveUser(user);
-
+		when(userService.findUserByEmail("email")).thenReturn(user);
+		User user2 = new User();
+		user2.setEmail("email");
 		mvc.perform(post("/signup")
-				.param("email", user.getEmail()).param("username", user.getUsername()).param("password", user.getPassword()))
-		.andExpect(status().is4xxClientError())
-		.andExpect(model().attribute("error.user", "There is already a user registered with the username provided"));
-
+				.param("email", user2.getEmail()).param("username", user2.getUsername()).param("password", user2.getPassword()))
+		.andExpect(view().name("error"));
 	}
-*/
+
 		
 	
 	
