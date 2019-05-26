@@ -32,16 +32,12 @@ public class LoginController {
 	}
 
 	@PostMapping("/signup")
-	public String createNewUser(@Valid User user, BindingResult bindingResult, Model model) {
+	public String createNewUser(@Valid User user,Model model) {
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
-			bindingResult.rejectValue("email", "error.user",
-					"There is already a user registered with the username provided");
 			return "error";
 		}
-		if (bindingResult.hasErrors()) {
-			return "signup";
-		} else {
+		else {
 			userService.saveUser(user);
 			model.addAttribute("successMessage", "User has been registered successfully");
 			model.addAttribute("user", new User());
