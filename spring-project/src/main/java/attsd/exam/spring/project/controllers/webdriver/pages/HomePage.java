@@ -21,14 +21,19 @@ public class HomePage extends AbstractPage {
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 
-	public static EditPage toDelete(WebDriver driver, BigInteger restaurantId) {
+	public static HomePage toDelete(WebDriver driver, BigInteger restaurantId) {
 		get(driver, "delete/" + restaurantId);
-		return PageFactory.initElements(driver, EditPage.class);
+		return PageFactory.initElements(driver, HomePage.class);
 	}
 
-	public static EditPage toReset(WebDriver driver) {
+	public static HomePage toLogout(WebDriver driver) {
+		get(driver, "logout");
+		return PageFactory.initElements(driver, HomePage.class);
+	}
+	
+	public static HomePage toReset(WebDriver driver) {
 		get(driver, "reset");
-		return PageFactory.initElements(driver, EditPage.class);
+		return PageFactory.initElements(driver, HomePage.class);
 	}
 
 	public String getRestaurantTableAsString() {

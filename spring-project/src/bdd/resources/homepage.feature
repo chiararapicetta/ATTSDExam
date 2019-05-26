@@ -8,6 +8,8 @@ Scenario: List no restaurants
 	When The User is on Home Page
 	Given The database is empty
 	Then A message "No restaurant" must be shown
+	When The user logout
+	Then he is redirect to LoginPage
 	
 Scenario: List current restaurants
 	Given The User is on SignUp Page
@@ -17,3 +19,7 @@ Scenario: List current restaurants
 	Given Some restaurants are in the database
 	When The User is on Home Page
 	Then A table must show the restaurants
+	When The user logout
+	Then he is redirect to LoginPage
+
+	

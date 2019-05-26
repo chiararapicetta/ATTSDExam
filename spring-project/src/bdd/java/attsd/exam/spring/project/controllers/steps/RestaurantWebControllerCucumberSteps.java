@@ -1,15 +1,11 @@
 package attsd.exam.spring.project.controllers.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import java.math.BigInteger;
 
 import org.apache.log4j.Logger;
 import org.junit.After;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,11 +139,6 @@ public class RestaurantWebControllerCucumberSteps {
 	public void entersRestaurantNameAndPriceAndPressesClick(String name, String averagePrice) throws Throwable {
 		redirectedPage = editPage.submitForm(HomePage.class, name, Integer.parseInt(averagePrice));
 	}
-	
-	@Then("^The User is redirected to HelloPage$")
-	public void the_User_is_redirected_to_HelloPage() throws Throwable {
-	    
-	}
 
 
 	@Then("^the user with email \"([^\"]*)\" is logged$")
@@ -155,16 +146,20 @@ public class RestaurantWebControllerCucumberSteps {
 		assertThat(userService.loadUserByUsername(email).isEnabled()).isTrue();
 	}
 	
-	
+	@When("^The user logout$")
+	public void the_User_make_logout() throws Throwable {
+		homePage = HomePage.toLogout(webDriver);
+	}
+	@Then("^he is redirect to LoginPage$")
+	public void he_is_redirect_to_LoginPage() throws Throwable {
+		assertThat(redirectedPage).isInstanceOf(LoginPage.class);
+	}	
 	
 	@Then("^the user with email \"([^\"]*)\" is registered$")
 	public void the_user_is_registered(String email) throws Throwable {
 		assertThat(userService.loadUserByUsername(email).isEnabled()).isTrue();
 	}
 
-	
-	
-	
 	@And("^load his email \"([^\"]*)\" and password \"([^\"]*)\"$")
 	public void load_his_email_and_password(String email, String password) throws Throwable {
 		redirectedPage = loginPage.submitForm(LoginPage.class, email, password);
@@ -182,8 +177,6 @@ public class RestaurantWebControllerCucumberSteps {
 				.matches("ID Name AveragePrice\n1 " + name + " " + averagePrice);
 	}
 
-
-	
 	@When("^The User navigates to \"([^\"]*)\" page with id \"([^\"]*)\"$")
 	public void theUserNavigatesToPageWithId(String arg, String id) throws Throwable {
 		editPage = EditPage.to(webDriver, BigInteger.valueOf(Long.parseLong(id)));
