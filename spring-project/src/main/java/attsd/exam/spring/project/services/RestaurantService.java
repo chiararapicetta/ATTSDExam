@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
 
-@javax.annotation.ParametersAreNonnullByDefault
 @Service
 public class RestaurantService {
 
@@ -35,7 +34,6 @@ public class RestaurantService {
 		return restaurantRepository.save(r);
 	}
 
-	@javax.annotation.CheckForNull
 	public void delete(BigInteger id) {
 		Restaurant r = restaurantRepository.findById(id).orElse(null);
 		restaurantRepository.delete(r);
