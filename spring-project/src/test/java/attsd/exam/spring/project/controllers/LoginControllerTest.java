@@ -1,11 +1,9 @@
 package attsd.exam.spring.project.controllers;
 
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
@@ -51,12 +49,6 @@ public class LoginControllerTest {
 		mvc.perform(get("/signup"))
 				.andExpect(view().name("signup")).andExpect(status().isOk());
 	}
-	
-	@Test
-	public void testGetHelloPage() throws Exception {
-		mvc.perform(get("/hellopage"))
-				.andExpect(view().name("hellopage")).andExpect(status().isOk());
-	}
 
 	@Test
 	public void testNewUserWhenUserNotExists() throws Exception {
@@ -70,7 +62,6 @@ public class LoginControllerTest {
 	public void testNewUserWhenUserExists() throws Exception {
 		User user = new User();
 		user.setEmail("email");
-		userService.saveUser(user);
 		when(userService.findUserByEmail("email")).thenReturn(user);
 		User user2 = new User();
 		user2.setEmail("email");
@@ -79,23 +70,6 @@ public class LoginControllerTest {
 		.andExpect(view().name("error"));
 	}
 
-		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

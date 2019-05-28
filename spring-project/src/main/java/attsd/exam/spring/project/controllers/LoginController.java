@@ -3,7 +3,6 @@ package attsd.exam.spring.project.controllers;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,28 +23,20 @@ public class LoginController {
 	}
 
 	@GetMapping("/signup")
-	public String signup(Model model) {
-		User user = new User();
-		model.addAttribute("user", user);
+	public String signup() {
 		return "signup";
 	}
 
 	@PostMapping("/signup")
-	public String createNewUser(@Valid User user,Model model) {
+	public String createNewUser(@Valid User user) {
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
 			return "error";
 		}
 		else {
 			userService.saveUser(user);
-			model.addAttribute("successMessage", "User has been registered successfully");
-			model.addAttribute("user", new User());
 			return "login";
 		}
 	}
 
-	@GetMapping("/hellopage")
-	public String helloPage(Model model) {
-		return "hellopage";
-	}
 }
