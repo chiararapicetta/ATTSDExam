@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.services.UserService;
 
@@ -52,18 +55,13 @@ public class LoginControllerTest {
 				.andExpect(view().name("signup")).andExpect(status().isOk());
 	}
 	
-	@Test
-	public void testGetHelloPage() throws Exception {
-		mvc.perform(get("/hellopage"))
-				.andExpect(view().name("hellopage")).andExpect(status().isOk());
-	}
 
 	@Test
 	public void testNewUserWhenUserNotExists() throws Exception {
 		User user = new User();
 		mvc.perform(post("/signup")
 				.param("email", user.getEmail()).param("username", user.getUsername()).param("password", user.getPassword()))
-		.andExpect(view().name("login"));
+		.andExpect(model().attribute("successMessage", "User has been registered successfully"));
 	}
 	
 	@Test
