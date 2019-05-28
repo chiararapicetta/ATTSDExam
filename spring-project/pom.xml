@@ -30,7 +30,7 @@
 		<jacoco.report.path>${project.reporting.outputDirectory}/jacoco.xml</jacoco.report.path>
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
-		<sonar.coverage.exclusions>**/Restaurant.*</sonar.coverage.exclusions>
+		<sonar.coverage.exclusions>**/Restaurant.*, **/test/**, **/it/**, **/bdd/**</sonar.coverage.exclusions>
 		<cucumber.version>1.2.5</cucumber.version>
 		<skip.integration-tests>false</skip.integration-tests>
 	</properties>
