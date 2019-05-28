@@ -60,8 +60,8 @@ public class LoginControllerTest {
 	public void testNewUserWhenUserNotExists() throws Exception {
 		User user = new User();
 		mvc.perform(post("/signup")
-				.param("email", user.getEmail()).param("username", user.getUsername()).param("password", user.getPassword()))
-		.andExpect(model().attribute("successMessage", "User has been registered successfully"));
+				.param("email", user.getEmail()).param("username", user.getUsername()).param("password", user.getPassword())).andExpect(status().isOk());
+;
 	}
 	
 	@Test
