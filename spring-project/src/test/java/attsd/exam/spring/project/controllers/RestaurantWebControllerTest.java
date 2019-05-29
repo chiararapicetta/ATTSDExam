@@ -1,8 +1,9 @@
 package attsd.exam.spring.project.controllers;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,7 +22,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -29,7 +29,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import attsd.exam.spring.project.model.Restaurant;
@@ -150,5 +149,12 @@ public class RestaurantWebControllerTest {
 	public void testResetRestaurants() throws Exception {
 		mvc.perform(get("/reset")).andExpect(view().name("redirect:/"));
 		verify(restaurantService).deleteAll();
+	}
+	
+	@Test
+	@WithMockUser
+	public void testSetIndexForNewRestaurant() throws Exception {
+		assertThat(restaurantService.getAllRestaurants().isEmpty());
+		assertNull(restaurantService.getRestaurantById(BigInteger.valueOf(1)));
 	}
 }
