@@ -1,6 +1,7 @@
 package attsd.exam.spring.project.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
 
@@ -27,8 +28,23 @@ public class RestaurantServiceIT {
 
 	@Test
 	public void testServiceCanInsertIntoRepository() {
-		Restaurant r = service.storeInDb(new Restaurant(BigInteger.valueOf(1), "PizzeriaSpera", 10));
-		assertThat(repository.findById(r.getId())).isPresent();
+		Restaurant restaurant = service.storeInDb(new Restaurant(BigInteger.valueOf(1), "PizzeriaSpera", 10));
+		assertThat(repository.findById(restaurant.getId())).isPresent();
+	}
+	
+	@Test
+	public void testServiceCanUpdateIntoRepository() {
+		Restaurant restaurant = repository.save(new Restaurant(BigInteger.valueOf(1), "PizzeriaSpera", 10));
+		Restaurant modifiedRestaurant = service.storeInDb(new Restaurant(restaurant.getId(), "RistoranteSpera", 15));
+		assertThat(repository.findById(restaurant.getId()).get()).isEqualTo(modifiedRestaurant);
+	}
+	
+	@Test
+	public void deleteRestaurant() {
+		Restaurant restaurant = service.storeInDb(new Restaurant(BigInteger.valueOf(1), "PizzeriaSpera", 10));
+		assertEquals(1, repository.count());
+		service.delete(restaurant.getId());
+		assertEquals(0, repository.count());
 	}
 
 }
