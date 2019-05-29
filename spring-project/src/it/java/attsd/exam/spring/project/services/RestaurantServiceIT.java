@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
+import cucumber.api.java.After;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -25,6 +27,16 @@ public class RestaurantServiceIT {
 
 	@Autowired
 	private RestaurantRepository repository;
+	
+	@Before
+	public void setup() {
+		repository.deleteAll();
+	}
+	
+	@After
+	public void clean() {
+		repository.deleteAll();
+	}
 
 	@Test
 	public void testServiceCanInsertIntoRepository() {
@@ -46,5 +58,14 @@ public class RestaurantServiceIT {
 		service.delete(restaurant.getId());
 		assertEquals(0, repository.count());
 	}
+	
+	@Test
+	public void testMaxAveragePrice() {
+		Restaurant restaurant1 = service.storeInDb(new Restaurant(BigInteger.valueOf(1), "PizzeriaSpera", 15));
+		service.storeInDb(new Restaurant(BigInteger.valueOf(2), "VinoERavioli", 10));
+		assertEquals(2, repository.count());
+		assertEquals(restaurant1, service.getMaxAveragePriceRestaurant());
+	}
+	
 
 }
