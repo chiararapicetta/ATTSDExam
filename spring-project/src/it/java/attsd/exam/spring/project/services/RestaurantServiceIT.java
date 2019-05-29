@@ -2,6 +2,8 @@ package attsd.exam.spring.project.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.math.BigInteger;
 
@@ -66,6 +68,7 @@ public class RestaurantServiceIT {
 		assertEquals(2, repository.count());
 		assertEquals(restaurant1, service.getMaxAveragePriceRestaurant());
 	}
+	
 	
 
 }
