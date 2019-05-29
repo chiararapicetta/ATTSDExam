@@ -22,13 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpHeaders;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 import attsd.exam.spring.project.config.WebSecurityConfig;
@@ -52,19 +50,19 @@ public class RestaurantWebControllerIT {
 
 	private MockMvc mvc;
 	
-	private MultiValueMap<String, String> params = new HttpHeaders();
+	//private MultiValueMap<String, String> params = new HttpHeaders();
 	
 	@Before
 	public void setup() {
 		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
 		repository.deleteAll();
-		params = new HttpHeaders();
+		//params = new HttpHeaders();
 	}
 	
 	@After
 	public void clearAll() {
 		repository.deleteAll();
-		params.clear();
+		//params.clear();
 	}
 	
 	@Test

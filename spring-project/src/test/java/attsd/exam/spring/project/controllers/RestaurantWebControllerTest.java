@@ -151,10 +151,5 @@ public class RestaurantWebControllerTest {
 		verify(restaurantService).deleteAll();
 	}
 	
-	@Test
-	@WithMockUser
-	public void testSetIndexForNewRestaurant() throws Exception {
-		assertThat(restaurantService.getAllRestaurants().isEmpty());
-		assertNull(restaurantService.getRestaurantById(BigInteger.valueOf(1)));
-	}
+
 }
