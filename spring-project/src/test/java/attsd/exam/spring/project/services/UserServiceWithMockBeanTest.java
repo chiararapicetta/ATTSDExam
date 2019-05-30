@@ -40,13 +40,13 @@ public class UserServiceWithMockBeanTest {
 		User user = new User();
 		user.setPassword("password");
 		user.setEmail("email");
-		user.setFullname("fullname");
+		user.setUsername("fullname");
 		when(userRepository.save(isA(User.class))).thenReturn(user);
 		when(passEncoder.encode(anyString())).thenReturn("password");
 		User u = userService.saveUser(user);
 		assertEquals("email", u.getEmail());
 		assertEquals("password", u.getPassword());
-		assertEquals("fullname", u.getFullname());
+		assertEquals("fullname", u.getUsername());
 		verify(userRepository, times(1)).save(isA(User.class));
 	}
 
@@ -73,7 +73,7 @@ public class UserServiceWithMockBeanTest {
 		User user = new User();
 		user.setEmail("email");
 		when(userRepository.findByEmail(anyString())).thenReturn(user);
-		when(userService.loadUserByUsername(user.getEmail())).thenReturn(user);
+		assertEquals(user, userService.loadUserByUsername(user.getEmail()));
 	}
 
 	@Test
@@ -81,7 +81,7 @@ public class UserServiceWithMockBeanTest {
 		User user = new User();
 		user.setEmail("email");
 		when(userRepository.findByEmail(anyString())).thenReturn(user);
-		when(userService.findUserByEmail("email")).thenReturn(user);
+		assertEquals(user, userService.findUserByEmail(user.getEmail()));
 	}
 
 	public List<User> userList() {

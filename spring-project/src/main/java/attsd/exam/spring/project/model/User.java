@@ -19,7 +19,6 @@ public class User implements UserDetails{
     @Indexed(unique = true, direction = IndexDirection.DESCENDING)
     private String email;
     private String password;
-    private String fullname;
     private String username;
     private boolean enabled;
     
@@ -52,13 +51,6 @@ public class User implements UserDetails{
         this.password = password;
     }
 
-    public String getFullname() {
-        return fullname;
-    }
-
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
-    }
 
     public boolean isEnabled() {
         return enabled;
