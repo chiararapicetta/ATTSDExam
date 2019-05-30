@@ -126,6 +126,16 @@ public class LoginControllerWebDriverIT {
 		assertThat(page.getBody()).contains("No restaurant");
 	}
 	
+	@Test
+	public void testDeleteRestaurant() throws Exception {
+		saveNewUser("francesco@gmail", "password", "Francesco");
+		login("francesco@gmail", "password");
+		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34));
+		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(2), "Pizzeria", 15));
+		HomePage page = HomePage.toDelete(webDriver, BigInteger.valueOf(1));
+		assertThat(page.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n2 Pizzeria 15");
+	}
+	
 	public void saveNewUser(String email, String password, String username) {
 		SignUpPage page = SignUpPage.to(webDriver);
 		page.submitForm(SignUpPage.class, email, password, username);
