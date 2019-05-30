@@ -1,6 +1,11 @@
 package attsd.exam.spring.project.services;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -32,6 +38,11 @@ public class UserServiceIT {
 	public void setup() {
 		repository.deleteAll();
 		service = new UserService(repository, encoder);
+	}
+	
+	@After
+	public void clear() {
+		repository.deleteAll();
 	}
 	
 	@Test
@@ -65,13 +76,31 @@ public class UserServiceIT {
 		user2.setEmail("email2");
 		service.loadUserByUsername(user2.getEmail());
 	}
-	/*
+	
 	@Test
-	public void testFindUserByEmail() {
+	public void testLoadUserByUsernameFound() {
+		User user1 = new User();
+		user1.setUsername("user1");
+		user1.setEmail("email1");
+		repository.save(user1);
+		assertThat(service.loadUserByUsername("email1"), instanceOf(User.class));
+	}
+	
+	@Test
+	public void testFindUserByEmailFound() {
 		User user2 = new User();
 		user2.setEmail("email2");
 		user2.setPassword("pass");
 		service.saveUser(user2);
-		assertEquals(user2, service.loadUserByUsername(user2.getEmail()));
-	}*/
+		assertEquals(1, repository.count());
+		User user = repository.findAll().get(0);
+		assertEquals(user2.getUsername(), user.getUsername());
+		assertEquals(user2.getPassword(), user.getPassword());
+	
+	}
+	
+	@Test
+	public void testFindUserByEmailNotFound() {
+		assertNull(repository.findByEmail("email"));
+	}
 }
