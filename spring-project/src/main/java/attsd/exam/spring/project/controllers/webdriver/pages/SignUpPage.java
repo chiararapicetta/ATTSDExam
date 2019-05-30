@@ -13,6 +13,8 @@ public class SignUpPage extends AbstractPage{
 	@FindBy(id = "submit")
 	private WebElement submit;
 	
+
+	
 	
 	public SignUpPage(WebDriver driver) {
 		super(driver);
