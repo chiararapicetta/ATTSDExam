@@ -53,6 +53,9 @@ public class LoginControllerTest {
 	@Test
 	public void testNewUserWhenUserNotExists() throws Exception {
 		User user = new User();
+		user.setEmail("email");
+		user.setPassword("pass");
+		user.setUsername("user");
 		mvc.perform(post("/signup")
 				.param("email", user.getEmail()).param("username", user.getUsername()).param("password", user.getPassword())).andExpect(status().isOk());
 ;
@@ -61,10 +64,14 @@ public class LoginControllerTest {
 	@Test
 	public void testNewUserWhenUserExists() throws Exception {
 		User user = new User();
-		user.setEmail("email");
-		when(userService.findUserByEmail("email")).thenReturn(user);
+		user.setEmail("sara@gmail");
+		user.setPassword("pass");
+		user.setUsername("Sara");
+		when(userService.findUserByEmail("sara@gmail")).thenReturn(user);
 		User user2 = new User();
-		user2.setEmail("email");
+		user2.setEmail("sara@gmail");
+		user.setPassword("password");
+		user.setUsername("Sara10");
 		mvc.perform(post("/signup")
 				.param("email", user2.getEmail()).param("username", user2.getUsername()).param("password", user2.getPassword()))
 		.andExpect(view().name("error"));

@@ -38,9 +38,6 @@ import attsd.exam.spring.project.repositories.RestaurantRepository;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class RestaurantWebControllerIT {
 
-
-	//@MockBean
-	//private RestaurantService restaurantService;
 	
 	@Autowired
 	private WebApplicationContext context;
@@ -50,19 +47,16 @@ public class RestaurantWebControllerIT {
 
 	private MockMvc mvc;
 	
-	//private MultiValueMap<String, String> params = new HttpHeaders();
 	
 	@Before
 	public void setup() {
 		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
 		repository.deleteAll();
-		//params = new HttpHeaders();
 	}
 	
 	@After
 	public void clearAll() {
 		repository.deleteAll();
-		//params.clear();
 	}
 	
 	@Test

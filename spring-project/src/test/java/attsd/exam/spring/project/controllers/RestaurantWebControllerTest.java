@@ -1,8 +1,6 @@
 package attsd.exam.spring.project.controllers;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.nullValue;
-import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -39,8 +37,7 @@ import attsd.exam.spring.project.services.RestaurantService;
 public class RestaurantWebControllerTest {
 
 	private MockMvc mvc;
-	//private MultiValueMap<String, String> params;
-	
+
 	@Autowired
 	private WebApplicationContext context;
 
@@ -50,19 +47,16 @@ public class RestaurantWebControllerTest {
 	@Before
 	public void setup() {
 		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-		//params = new HttpHeaders();
 	}
-	
+
 	@After
 	public void clearAll() {
-		//params.clear();
-}
-	
+	}
+
 	@Test
 	@WithMockUser
 	public void testGetIndex() throws Exception {
-		mvc.perform(get("/"))
-				.andExpect(view().name("index")).andExpect(status().isOk());
+		mvc.perform(get("/")).andExpect(view().name("index")).andExpect(status().isOk());
 	}
 
 	@Test
@@ -119,15 +113,11 @@ public class RestaurantWebControllerTest {
 	@WithMockUser
 	public void testPostRestaurant() throws Exception {
 		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "LaFiaccola", 45);
-		mvc.perform(post("/save")
-				.param("id", "" + restaurant.getId())
-				.param("name", restaurant.getName())
-				.param("averagePrice","" + restaurant.getAveragePrice()))
-		.andExpect(view().name("redirect:/"));
+		mvc.perform(post("/save").param("id", "" + restaurant.getId()).param("name", restaurant.getName())
+				.param("averagePrice", "" + restaurant.getAveragePrice())).andExpect(view().name("redirect:/"));
 		verify(restaurantService).storeInDb(restaurant);
 	}
 
-	
 	@Test
 	@WithMockUser
 	public void testNewRestaurant() throws Exception {
@@ -143,13 +133,12 @@ public class RestaurantWebControllerTest {
 		mvc.perform(get("/delete/1")).andExpect(view().name("redirect:/"));
 		verify(restaurantService).delete(BigInteger.valueOf(1));
 	}
-	
+
 	@Test
 	@WithMockUser
 	public void testResetRestaurants() throws Exception {
 		mvc.perform(get("/reset")).andExpect(view().name("redirect:/"));
 		verify(restaurantService).deleteAll();
 	}
-	
 
 }

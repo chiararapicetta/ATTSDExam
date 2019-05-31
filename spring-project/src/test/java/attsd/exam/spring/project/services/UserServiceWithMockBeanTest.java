@@ -1,5 +1,8 @@
 package attsd.exam.spring.project.services;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -8,24 +11,25 @@ import static org.mockito.Mockito.when;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isA;
-
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
 public class UserServiceWithMockBeanTest {
 
-
+    @MockBean
 	private UserRepository userRepository;
+    
+    @Autowired
 	private PasswordEncoder passEncoder;
+	
+	@Autowired
 	private UserService userService;
 
 	@Before
