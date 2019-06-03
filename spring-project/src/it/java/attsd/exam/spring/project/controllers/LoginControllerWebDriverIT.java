@@ -47,7 +47,6 @@ public class LoginControllerWebDriverIT {
 		saveNewUser("francesco@gmail", "password", "Francesco");
 		LoginPage page = LoginPage.to(webDriver);
 		page.submitForm(LoginPage.class, "francesco@gmail", "passSbagliata");
-		System.out.println(page.getBody());
 		assertThat(page.getBody()).contains("Invalid email and password");
 	}
 
