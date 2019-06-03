@@ -1,6 +1,8 @@
 package attsd.exam.spring.project.controllers.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigInteger;
 
@@ -15,7 +17,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.ContextConfiguration;
 
 import attsd.exam.spring.project.controllers.webdriver.pages.AbstractPage;
@@ -24,7 +25,6 @@ import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.controllers.webdriver.pages.LoginPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.SignUpPage;
 import attsd.exam.spring.project.model.Restaurant;
-import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
 import attsd.exam.spring.project.services.RestaurantService;
 import attsd.exam.spring.project.services.UserService;
@@ -87,24 +87,14 @@ public class RestaurantWebControllerCucumberSteps {
 		restaurantService.deleteAll();
 	}
 
-	@When("^Enters email \"([^\"]*)\" , password \"([^\"]*)\" and username \"([^\"]*)\"$")
-	public void theUserIsLogged(String email, String password, String username) throws Throwable {
-		redirectedPage = signUpPage.submitForm(SignUpPage.class, email, password, username);
-	}
-
-	@Given("^The database is empty$")
-	public void the_database_is_empty() throws Throwable {
-		restaurantService.deleteAll();
-	}
-
-	@And("^The User is on Home Page$")
-	public void the_User_is_on_Home_Page() throws Throwable {
-		homePage = HomePage.to(webDriver);
-	}
-
 	@Given("^The User is on SignUp Page$")
 	public void the_User_is_on_SignUp_Page() throws Throwable {
 		signUpPage = SignUpPage.to(webDriver);
+	}
+
+	@When("^Enters email \"([^\"]*)\" , password \"([^\"]*)\" and username \"([^\"]*)\"$")
+	public void theUserIsLogged(String email, String password, String username) throws Throwable {
+		redirectedPage = signUpPage.submitForm(SignUpPage.class, email, password, username);
 	}
 
 	@Given("^The User is on Login Page$")
@@ -112,6 +102,35 @@ public class RestaurantWebControllerCucumberSteps {
 		loginPage = LoginPage.to(webDriver);
 	}
 
+	@And("^load his email \"([^\"]*)\" and password \"([^\"]*)\"$")
+	public void load_his_email_and_password(String email, String password) throws Throwable {
+		redirectedPage = loginPage.submitForm(LoginPage.class, email, password);
+	}
+
+	@Then("^the user with email \"([^\"]*)\" is logged$")
+	public void the_user_with_email_is_logged(String email) throws Throwable {
+		assertThat(userService.loadUserByUsername(email).isEnabled()).isTrue();
+	}
+
+	@When("^The user logout$")
+	public void the_User_make_logout() throws Throwable {
+		homePage = HomePage.toLogout(webDriver);
+	}
+
+	@Then("^he is redirect to LoginPage$")
+	public void he_is_redirect_to_LoginPage() throws Throwable {
+		assertThat(redirectedPage).isInstanceOf(LoginPage.class);
+	}
+
+	@When("^The User is on Home Page$")
+	public void the_User_is_on_Home_Page() throws Throwable {
+		homePage = HomePage.to(webDriver);
+	}
+
+	@Given("^The database is empty$")
+	public void the_database_is_empty() throws Throwable {
+		restaurantService.deleteAll();
+	}
 
 	@Then("^A message \"([^\"]*)\" must be shown$")
 	public void a_message_must_be_shown(String expectedMessage) throws Throwable {
@@ -129,45 +148,15 @@ public class RestaurantWebControllerCucumberSteps {
 		assertThat(homePage.getRestaurantTableAsString())
 				.isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
 	}
-	
-	@When("^The User navigates to \"([^\"]*)\" page$")
-	public void the_User_navigates_to_page(String arg1) throws Throwable {
+
+	@When("^The User navigates to new page$")
+	public void theUserNavigatesToNewPage() throws Throwable {
 		editPage = EditPage.to(webDriver);
 	}
 
 	@And("^Enters restaurant name \"([^\"]*)\" and average price \"([^\"]*)\" and presses click$")
 	public void entersRestaurantNameAndPriceAndPressesClick(String name, String averagePrice) throws Throwable {
 		redirectedPage = editPage.submitForm(HomePage.class, name, Integer.parseInt(averagePrice));
-	}
-
-
-	@Then("^the user with email \"([^\"]*)\" is logged$")
-	public void the_user_with_email_is_logged(String email) throws Throwable {
-		assertThat(userService.loadUserByUsername(email).isEnabled()).isTrue();
-	}
-	
-	@When("^The user logout$")
-	public void the_User_make_logout() throws Throwable {
-		homePage = HomePage.toLogout(webDriver);
-	}
-	@Then("^he is redirect to LoginPage$")
-	public void he_is_redirect_to_LoginPage() throws Throwable {
-		assertThat(redirectedPage).isInstanceOf(LoginPage.class);
-	}	
-	
-	@Then("^the user with email \"([^\"]*)\" is registered$")
-	public void the_user_is_registered(String email) throws Throwable {
-		assertThat(userService.loadUserByUsername(email).isEnabled()).isTrue();
-	}
-
-	@And("^load his email \"([^\"]*)\" and password \"([^\"]*)\"$")
-	public void load_his_email_and_password(String email, String password) throws Throwable {
-		redirectedPage = loginPage.submitForm(LoginPage.class, email, password);
-	}
-
-	@Then("^The User is redirected to Home Page$")
-	public void theUserIsRedirectedToHomePage() throws Throwable {
-		assertThat(redirectedPage).isInstanceOf(HomePage.class);
 	}
 
 	@Then("^A table must show the added restaurant with name \"([^\"]*)\", average price \"([^\"]*)\"$")
@@ -177,25 +166,57 @@ public class RestaurantWebControllerCucumberSteps {
 				.matches("ID Name AveragePrice\n1 " + name + " " + averagePrice);
 	}
 
-	@When("^The User navigates to \"([^\"]*)\" page with id \"([^\"]*)\"$")
-	public void theUserNavigatesToPageWithId(String arg, String id) throws Throwable {
-		editPage = EditPage.to(webDriver, BigInteger.valueOf(Long.parseLong(id)));
+	@When("^The User navigates to edit page with id \"([^\"]*)\"$")
+	public void theUserNavigatesToEditPageWithId(String id) throws Throwable {
+			editPage = EditPage.to(webDriver, BigInteger.valueOf(Long.parseLong(id)));
+	}
+	
+	@When("^The User navigates to delete page with id \"([^\"]*)\"$")
+	public void theUserNavigatesToDeletePageWithId(String id) throws Throwable {
+			homePage = HomePage.toDelete(webDriver, BigInteger.valueOf(Long.parseLong(id)));
 	}
 
 	@Then("^A message \"([^\"]*)\" \\+ \"([^\"]*)\" must be shown$")
 	public void aMessageMustBeShown(String messagePart, String id) throws Throwable {
+		System.out.println(editPage.getBody());
 		assertThat(editPage.getBody()).contains(messagePart + id);
 	}
 
 	@And("^The restaurant with id \"([^\"]*)\" exists in the database$")
-	public void theEmployeeWithIdExistsInTheDatabase(String id) throws Throwable {
+	public void theRestaurantWithIdExistsInTheDatabase(String id) throws Throwable {
 		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(Long.parseLong(id)), "restaurant1", 25));
+		assertNotNull(restaurantService.getRestaurantById(BigInteger.valueOf(Long.parseLong(id))));
+	}
+
+	@Then("^The User is redirected to Home Page$")
+	public void theUserIsRedirectedToHomePage() throws Throwable {
+		assertThat(redirectedPage).isInstanceOf(HomePage.class);
 	}
 
 	@And("^A table must show the modified restaurant \"([^\"]*)\"$")
 	public void aTableMustShowTheModifiedrestaurant(String expectedRepresentation) throws Throwable {
 		assertThat(homePage.getRestaurantTableAsString()).contains(expectedRepresentation);
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n10 modified name 25");
-
 	}
+
+	@Then("^The restaurant with id \"([^\"]*)\" doesn't exists in the database$")
+	public void theRestaurantWithIdDoesntExistsInTheDatabase(String id) throws Throwable {
+		assertNull(restaurantService.getRestaurantById(BigInteger.valueOf(Long.parseLong(id))));
+	}
+	
+	@When("^The User navigates to reset page$")
+	public void theUserNavigatesToResetPage() throws Throwable {
+		homePage = HomePage.toReset(webDriver);
+	}
+
+	@Then("^The message \"([^\"]*)\" must be shown$")
+	public void theMessageMustBeShown(String message) throws Throwable {
+		assertThat(loginPage.getBody()).contains(message);
+	}
+
+	@Then("^The error message \"([^\"]*)\" must be shown$")
+	public void theErrorMessageMustBeShown(String message) throws Throwable {
+		assertThat(signUpPage.getBody()).contains(message);
+	}
+
 }
