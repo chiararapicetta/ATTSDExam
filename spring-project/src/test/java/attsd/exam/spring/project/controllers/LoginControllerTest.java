@@ -44,6 +44,7 @@ public class LoginControllerTest {
 				.andExpect(view().name("login")).andExpect(status().isOk());
 	}
 	
+	
 	@Test
 	public void testGetSignupPage() throws Exception {
 		mvc.perform(get("/signup"))

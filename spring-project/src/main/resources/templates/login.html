@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <title>Login</title>
-    </head>
+<head>
+<title>Login</title>
+</head>
 
-    <body class="text-center" bgcolor="orange">
-        <div>
-            <form th:action="@{/login}" method="post">
-                <h1>Please sign in</h1>
+<body class="text-center" bgcolor="orange">
+	<div>
+		<form th:action="@{/login}" method="post">
+			<h1>Please sign in</h1>
+			<div th:if="${param.error}">Invalid email and password.</div>
 			<p>
-				Email: <input type="email" name="email" id="inputEmail" placeholder="Email" />
+				Email: <input type="email" name="email" id="inputEmail"
+					placeholder="Email" />
 			</p>
 			<p>
-				Password: <input type="password" name="password" id="inputPassword"  placeholder="Password" />
+				Password: <input type="password" name="password" id="inputPassword"
+					placeholder="Password" />
 			</p>
-                <button type="submit" class="btn btn-primary" id="submit" name="submit">Sign
-				in</button>
-            </form><br><br>
-            <form th:action="@{/signup}" method="get">
-               <button>Sign up here</button>
-            </form>
-        </div>
-    </body>
+			<button type="submit" class="btn btn-primary" id="submit"
+				name="submit">Sign in</button>
+		</form>
+		<br>
+		<br>
+		<form th:action="@{/signup}" method="get">
+			<button>Sign up here</button>
+		</form>
+	</div>
+</body>
 </html>

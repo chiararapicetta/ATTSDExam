@@ -27,7 +27,6 @@ import attsd.exam.spring.project.services.RestaurantService;
 @AutoConfigureMockMvc
 public class LoginControllerWebDriverIT {
 
-
 	@Autowired
 	private RestaurantService restaurantService;
 
@@ -44,11 +43,20 @@ public class LoginControllerWebDriverIT {
 	}
 
 	@Test
+	public void loginWithParamError() throws Exception {
+		saveNewUser("francesco@gmail", "password", "Francesco");
+		LoginPage page = LoginPage.to(webDriver);
+		page.submitForm(LoginPage.class, "francesco@gmail", "passSbagliata");
+		System.out.println(page.getBody());
+		assertThat(page.getBody()).contains("Invalid email and password");
+	}
+
+	@Test
 	public void testSignUp() throws Exception {
 		saveNewUser("francesco@gmail", "password", "Francesco");
 		assertEquals(1, urepository.count());
 	}
-	
+
 	@Test
 	public void testLogout() throws Exception {
 		saveNewUser("francesco@gmail", "password", "Francesco");
@@ -56,7 +64,6 @@ public class LoginControllerWebDriverIT {
 		HomePage page = HomePage.toLogout(webDriver);
 		assertThat(page.getBody()).contains("Please sign in");
 	}
-	
 
 	@Test
 	public void testSaveUserAlreadyExists() throws Exception {
@@ -94,7 +101,7 @@ public class LoginControllerWebDriverIT {
 		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
 		assertThat(page.getBody()).contains("No restaurant found with id: 1");
 	}
-	
+
 	@Test
 	public void testEditExistentRestaurant() throws Exception {
 		saveNewUser("francesco@gmail", "password", "Francesco");
@@ -115,7 +122,7 @@ public class LoginControllerWebDriverIT {
 		HomePage homePage = page.submitForm(HomePage.class, "Scaraboci", 24);
 		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Scaraboci 24");
 	}
-	
+
 	@Test
 	public void testDeleteAllRestaurants() throws Exception {
 		saveNewUser("francesco@gmail", "password", "Francesco");
@@ -125,7 +132,7 @@ public class LoginControllerWebDriverIT {
 		HomePage page = HomePage.toReset(webDriver);
 		assertThat(page.getBody()).contains("No restaurant");
 	}
-	
+
 	@Test
 	public void testDeleteRestaurant() throws Exception {
 		saveNewUser("francesco@gmail", "password", "Francesco");
@@ -135,7 +142,7 @@ public class LoginControllerWebDriverIT {
 		HomePage page = HomePage.toDelete(webDriver, BigInteger.valueOf(1));
 		assertThat(page.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n2 Pizzeria 15");
 	}
-	
+
 	public void saveNewUser(String email, String password, String username) {
 		SignUpPage page = SignUpPage.to(webDriver);
 		page.submitForm(SignUpPage.class, email, password, username);
