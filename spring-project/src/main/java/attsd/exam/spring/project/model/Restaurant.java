@@ -1,9 +1,13 @@
 package attsd.exam.spring.project.model;
 
+
 import java.math.BigInteger;
+
+import org.springframework.data.annotation.Id;
 
 public class Restaurant {
 	
+	@Id
 	private BigInteger id;
 	private String name;
 	private int averagePrice;
@@ -19,7 +23,7 @@ public class Restaurant {
 	}
 
 	public BigInteger getId() {
-		return id;
+			return id;
 	}
 
 	public String getName() {
