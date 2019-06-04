@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Document(collection = "user")
-public class User implements UserDetails{
+public class User implements UserDetails {
 
 	@Id
     private String id;
