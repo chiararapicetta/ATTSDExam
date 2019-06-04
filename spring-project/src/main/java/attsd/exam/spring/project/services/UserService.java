@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import attsd.exam.spring.project.exceptions.UserAlreadyExistsException;
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
 
@@ -33,7 +35,7 @@ public class UserService implements UserDetailsService {
 			userRepository.save(user);
 			return user;
 		}
-		throw new RuntimeException("user already exists");
+		throw new UserAlreadyExistsException("user already exists");
 	}
 
 	@Override

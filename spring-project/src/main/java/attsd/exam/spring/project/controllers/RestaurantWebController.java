@@ -52,13 +52,13 @@ public class RestaurantWebController {
 		Restaurant restaurant = new Restaurant();
 		model.addAttribute("restaurant", restaurant);
 		model.addAttribute(MESSAGE, "");
-		List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
-		for (int i=1; i<=allRestaurants.size()+1; i++) {
+		//List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
+		/*for (int i=1; i<=allRestaurants.size()+1; i++) {
 			if (restaurantService.getRestaurantById(BigInteger.valueOf(i))== null){
 				restaurant.setId(BigInteger.valueOf(i));
 				break;
 			}	
-		}
+		}*/
 		return "edit";
 	}
 
