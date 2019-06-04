@@ -4,12 +4,10 @@ package attsd.exam.spring.project.model;
 import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.IndexDirection;
-import org.springframework.data.mongodb.core.index.Indexed;
-
 
 public class Restaurant {
 	
+	@Id
 	private BigInteger id;
 	private String name;
 	private int averagePrice;
