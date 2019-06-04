@@ -109,25 +109,29 @@ public class User implements UserDetails {
 		if (email == null) {
 			if (other.email != null)
 				return false;
-		} else if (!email.equals(other.email))
+		} else if (!email.equals(other.email)) {
 			return false;
+		}
 		if (enabled != other.enabled)
 			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!id.equals(other.id)) {
 			return false;
+		}
 		if (password == null) {
 			if (other.password != null)
 				return false;
-		} else if (!password.equals(other.password))
+		} else if (!password.equals(other.password)) {
 			return false;
+		}			
 		if (username == null) {
 			if (other.username != null)
 				return false;
-		} else if (!username.equals(other.username))
+		} else if (!username.equals(other.username)) {
 			return false;
+		}
 		return true;
 	}
 
