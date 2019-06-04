@@ -30,7 +30,13 @@
 		<jacoco.report.path>${project.reporting.outputDirectory}/jacoco.xml</jacoco.report.path>
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
-		<sonar.coverage.exclusions>**/model/**, **/pages/**, **/SpringProjectApplication.java, **/config/**, **/exceptions/**</sonar.coverage.exclusions>
+		<sonar.coverage.exclusions>
+			**/model/**,
+			**/pages/**,
+			**/SpringProjectApplication.java,
+			**/config/**,
+			**/exceptions/**
+		</sonar.coverage.exclusions>
 		<cucumber.version>1.2.5</cucumber.version>
 		<skip.integration-tests>false</skip.integration-tests>
 	</properties>
@@ -221,6 +227,7 @@
 								<exclude>**/SpringProjectApplication.*</exclude>
 								<exclude>**/config/**</exclude>
 								<exclude>**/pages/**</exclude>
+								<exclude>**/exceptions/**</exclude>
 							</excludes>
 						</configuration>
 						<executions>
