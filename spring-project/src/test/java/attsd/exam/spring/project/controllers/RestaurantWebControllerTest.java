@@ -1,6 +1,7 @@
 package attsd.exam.spring.project.controllers;
 
 import static org.hamcrest.CoreMatchers.nullValue;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
@@ -130,8 +131,18 @@ public class RestaurantWebControllerTest {
 
 	@Test
 	@WithMockUser
-	public void testDeleteRestaurant() throws Exception {
+	public void testDeleteRestaurantNotExists() throws Exception {
+		mvc.perform(get("/delete/1")).andExpect(view().name("error"));
+		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
+	}
+	
+	@Test
+	@WithMockUser
+	public void testDeleteRestaurantExists() throws Exception {
+		Restaurant r = new Restaurant(BigInteger.valueOf(1), "CacioEPepe", 30);
+		when(restaurantService.getRestaurantById(BigInteger.valueOf(1))).thenReturn(r);
 		mvc.perform(get("/delete/1")).andExpect(view().name("redirect:/"));
+		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
 		verify(restaurantService).delete(BigInteger.valueOf(1));
 	}
 

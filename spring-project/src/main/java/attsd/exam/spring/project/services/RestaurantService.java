@@ -36,7 +36,6 @@ public class RestaurantService {
 
 	public void delete(BigInteger id) {
 		Restaurant r = restaurantRepository.findById(id).orElse(null);
-		if (r != null)
 			restaurantRepository.delete(r);
 	}
 

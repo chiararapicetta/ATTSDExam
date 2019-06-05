@@ -20,7 +20,6 @@ public class RestaurantWebController {
 	public static final String REDIRECT = "redirect:/";
 	public static final String MESSAGE = "message";
 
-	
 	@Autowired
 	public RestaurantWebController(RestaurantService restaurantService) {
 		this.restaurantService = restaurantService;
@@ -47,6 +46,7 @@ public class RestaurantWebController {
 		restaurantService.storeInDb(restaurant);
 		return REDIRECT;
 	}
+
 	@GetMapping("/new")
 	public String newRestaurant(Model model) {
 		Restaurant restaurant = new Restaurant();
@@ -57,15 +57,18 @@ public class RestaurantWebController {
 
 	@GetMapping("/delete/{id}")
 	public String deleteRestaurant(@PathVariable BigInteger id) {
-		restaurantService.delete(id);
-		return REDIRECT;
+		Restaurant restaurantById = restaurantService.getRestaurantById(id);
+		if (restaurantById != null) {
+			restaurantService.delete(id);
+			return REDIRECT;
+		} else
+			return "error";
 	}
-	
+
 	@GetMapping("/reset")
 	public String resetRestaurants() {
 		restaurantService.deleteAll();
 		return REDIRECT;
 	}
-	
-	
+
 }
