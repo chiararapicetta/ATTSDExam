@@ -59,10 +59,11 @@ public class RestaurantWebController {
 	public String deleteRestaurant(@PathVariable BigInteger id) {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		if (restaurantById != null) {
-			restaurantService.delete(id);
+			restaurantService.delete(restaurantById);
 			return REDIRECT;
-		} else
+		} else {
 			return "error";
+		}
 	}
 
 	@GetMapping("/reset")

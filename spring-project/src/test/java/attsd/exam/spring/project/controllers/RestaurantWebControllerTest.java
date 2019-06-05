@@ -138,12 +138,12 @@ public class RestaurantWebControllerTest {
 	
 	@Test
 	@WithMockUser
-	public void testDeleteRestaurantExists() throws Exception {
+	public void testDeleteRestaurant() throws Exception {
 		Restaurant r = new Restaurant(BigInteger.valueOf(1), "CacioEPepe", 30);
 		when(restaurantService.getRestaurantById(BigInteger.valueOf(1))).thenReturn(r);
 		mvc.perform(get("/delete/1")).andExpect(view().name("redirect:/"));
 		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
-		verify(restaurantService).delete(BigInteger.valueOf(1));
+		verify(restaurantService).delete(r);
 	}
 
 	@Test

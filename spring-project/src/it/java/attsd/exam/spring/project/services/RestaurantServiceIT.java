@@ -57,7 +57,7 @@ public class RestaurantServiceIT {
 	public void deleteRestaurant() {
 		Restaurant restaurant = service.storeInDb(new Restaurant(BigInteger.valueOf(1), "PizzeriaSpera", 10));
 		assertEquals(1, repository.count());
-		service.delete(restaurant.getId());
+		service.delete(restaurant);
 		assertEquals(0, repository.count());
 	}
 	

@@ -36,8 +36,6 @@ public class LoginControllerWebDriverIT {
 	
 	@Autowired
 	private RestaurantRepository restaurantRepository;
-	
-	
 
 	@Autowired
 	private WebDriver webDriver;

@@ -87,9 +87,19 @@ public class RestaurantRestControllerRestAssuredTest {
 
 	@Test
 	public void testDeleteRestaurant() throws Exception {
+		Restaurant r = new Restaurant(BigInteger.valueOf(1), "VinoERavioli", 15);
+		when(restaurantService.getRestaurantById(BigInteger.valueOf(1)))
+		.thenReturn(r);
 		given().when().delete("/api/restaurants/delete/1").then().statusCode(200);
-		verify(restaurantService, times(1)).delete(BigInteger.valueOf(1));
+		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(1));
+		verify(restaurantService, times(1)).delete(r);
 
+	}
+	
+	@Test
+	public void testDeleteRestaurantNotExists() throws Exception {
+		given().when().delete("/api/restaurants/delete/1").then().statusCode(200);
+		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(1));
 	}
 
 }

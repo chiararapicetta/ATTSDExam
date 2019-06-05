@@ -116,7 +116,7 @@ public class RestaurantServiceWithMockBeanTest {
 		Optional<Restaurant> expected = Optional.of(r);
 		when(restaurantRepository.findById(BigInteger.valueOf(1))).thenReturn(expected);
 		assertNotNull(restaurantRepository.findById(BigInteger.valueOf(1)));
-		restaurantService.delete(r.getId());
+		restaurantService.delete(r);
 		verify(restaurantRepository, Mockito.times(1)).delete(captor.capture());
 
 	}
