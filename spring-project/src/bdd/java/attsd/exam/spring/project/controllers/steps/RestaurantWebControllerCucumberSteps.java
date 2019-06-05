@@ -25,6 +25,7 @@ import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.controllers.webdriver.pages.LoginPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.SignUpPage;
 import attsd.exam.spring.project.model.Restaurant;
+import attsd.exam.spring.project.repositories.RestaurantRepository;
 import attsd.exam.spring.project.repositories.UserRepository;
 import attsd.exam.spring.project.services.RestaurantService;
 import attsd.exam.spring.project.services.UserService;
@@ -46,6 +47,9 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Autowired
 	private WebDriver webDriver;
+	
+	@Autowired
+	private RestaurantRepository restaurantRepository;
 
 	@LocalServerPort
 	private int port;
@@ -162,8 +166,9 @@ public class RestaurantWebControllerCucumberSteps {
 	@Then("^A table must show the added restaurant with name \"([^\"]*)\", average price \"([^\"]*)\"$")
 	public void aTableMustShowTheAddedRestaurantWithNameAndAveragePrice(String name, int averagePrice)
 			throws Throwable {
+		BigInteger id = restaurantRepository.findByName(name).getId();
 		assertThat(homePage.getRestaurantTableAsString())
-				.matches("ID Name AveragePrice\n1 " + name + " " + averagePrice);
+				.matches("ID Name AveragePrice\n"+id + " " + name + " " + averagePrice);
 	}
 
 	@When("^The User navigates to edit page with id \"([^\"]*)\"$")

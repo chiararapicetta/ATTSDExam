@@ -2,6 +2,7 @@ package attsd.exam.spring.project.controllers;
 
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -122,9 +123,9 @@ public class RestaurantWebControllerTest {
 	@WithMockUser
 	public void testNewRestaurant() throws Exception {
 		mvc.perform(get("/new")).andExpect(view().name("edit"))
-				.andExpect(model().attribute("restaurant", new Restaurant(BigInteger.valueOf(1), null, 0)))
+				.andExpect(model().attribute("restaurant", new Restaurant(null, null, 0)))
 				.andExpect(model().attribute("message", ""));
-		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
+		verifyZeroInteractions(restaurantService);
 	}
 
 	@Test

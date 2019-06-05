@@ -19,6 +19,7 @@ import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.controllers.webdriver.pages.LoginPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.SignUpPage;
 import attsd.exam.spring.project.model.Restaurant;
+import attsd.exam.spring.project.repositories.RestaurantRepository;
 import attsd.exam.spring.project.repositories.UserRepository;
 import attsd.exam.spring.project.services.RestaurantService;
 
@@ -32,6 +33,11 @@ public class LoginControllerWebDriverIT {
 
 	@Autowired
 	private UserRepository urepository;
+	
+	@Autowired
+	private RestaurantRepository restaurantRepository;
+	
+	
 
 	@Autowired
 	private WebDriver webDriver;
@@ -118,8 +124,9 @@ public class LoginControllerWebDriverIT {
 		saveNewUser("francesco@gmail", "password", "Francesco");
 		login("francesco@gmail", "password");
 		EditPage page = EditPage.to(webDriver);
-		HomePage homePage = page.submitForm(HomePage.class, "Scaraboci", 24);
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Scaraboci 24");
+		page.submitForm(HomePage.class, "Scaraboci", 24);
+		assertThat(restaurantRepository.findByName("Scaraboci").getAveragePrice()).isEqualTo(24);
+		//assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Scaraboci 24");
 	}
 
 	@Test
