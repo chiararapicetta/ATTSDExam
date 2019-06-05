@@ -33,6 +33,7 @@ public class LoginController {
 		if (userExists != null) {
 			return "error";
 		}
+		
 		else {
 			User realUser = new User();
 			realUser.setEmail(user.getEmail());
