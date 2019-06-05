@@ -51,5 +51,5 @@ public class RestaurantRestController {
 	@DeleteMapping("/restaurants/delete/{id}")
 	public void deleteRestaurant(@PathVariable BigInteger id) {
 		restaurantService.delete(id);
-	}
+}
 }

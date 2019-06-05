@@ -133,7 +133,7 @@ public class RestaurantWebControllerIT {
 	@WithMockUser
 	public void testNewRestaurant() throws Exception {
 		mvc.perform(get("/new")).andExpect(view().name("edit"))
-				.andExpect(model().attribute("restaurant", new Restaurant(BigInteger.valueOf(1), null, 0)))
+				.andExpect(model().attribute("restaurant", new Restaurant(null, null, 0)))
 				.andExpect(model().attribute("message", ""));
 	}
 
@@ -153,8 +153,9 @@ public class RestaurantWebControllerIT {
 	public void testResetRestaurants() throws Exception {
 		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "LaFiaccola", 45);
 		repository.save(restaurant);
-		Restaurant r = new Restaurant(BigInteger.valueOf(2), "CacioEPepe", 28);
-		repository.save(r);
+		Restaurant restaurant2 = new Restaurant(BigInteger.valueOf(2), "CacioEPepe", 28);
+		repository.save(restaurant2);
+		assertEquals(2, repository.count());
 		mvc.perform(get("/reset")).andExpect(view().name("redirect:/"));
 		assertEquals(0, repository.count());
 	}

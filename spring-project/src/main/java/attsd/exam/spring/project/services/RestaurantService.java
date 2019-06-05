@@ -10,12 +10,13 @@ import org.springframework.stereotype.Service;
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
 
+
 @Service
 public class RestaurantService {
 
 	@Autowired
 	private RestaurantRepository restaurantRepository;
-
+	
 	public Restaurant getMaxAveragePriceRestaurant() {
 		List<Restaurant> restaurants = restaurantRepository.findAll();
 		return restaurants.stream().max(Comparator.comparing(Restaurant::getAveragePrice)).orElse(null);
@@ -29,8 +30,7 @@ public class RestaurantService {
 		return restaurantRepository.findById(id).orElse(null);
 	}
 
-	public Restaurant storeInDb(Restaurant r) {
-		
+	public Restaurant storeInDb(Restaurant r) {	
 		return restaurantRepository.save(r);
 	}
 
