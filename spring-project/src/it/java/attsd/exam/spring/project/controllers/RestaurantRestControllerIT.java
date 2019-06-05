@@ -4,6 +4,8 @@ import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -113,8 +115,10 @@ public class RestaurantRestControllerIT {
 	@Test
 	public void testDeleteRestaurant() throws Exception {
 		Restaurant saved = restaurantRepository.save(new Restaurant(BigInteger.valueOf(1), "Spera", 15));
+		Restaurant newsaved = restaurantRepository.save(new Restaurant(BigInteger.valueOf(2), "SperaDue", 15));
 		given().when().delete(url + "/api/restaurants/delete/" + saved.getId()).then().statusCode(200);
-		assertThat(restaurantRepository.findAll()).isEmpty();
-
+		assertFalse(restaurantRepository.findById(BigInteger.valueOf(1)).isPresent());
+		assertThat(restaurantRepository.findAll().toString())
+		.isEqualTo("[Restaurant [id=" + newsaved.getId() + ", name="+ newsaved.getName()+ ", averagePrice="+ newsaved.getAveragePrice()+"]]");
 	}
 }

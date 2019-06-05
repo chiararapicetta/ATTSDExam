@@ -98,8 +98,10 @@ public class RestaurantRestControllerRestAssuredTest {
 	
 	@Test
 	public void testDeleteRestaurantNotExists() throws Exception {
+		Restaurant r = new Restaurant();
 		given().when().delete("/api/restaurants/delete/1").then().statusCode(200);
 		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(1));
+		verify(restaurantService, times(0)).delete(r);
 	}
 
 }

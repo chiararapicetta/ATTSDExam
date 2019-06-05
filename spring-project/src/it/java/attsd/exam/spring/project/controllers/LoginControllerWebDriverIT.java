@@ -122,9 +122,8 @@ public class LoginControllerWebDriverIT {
 		saveNewUser("francesco@gmail", "password", "Francesco");
 		login("francesco@gmail", "password");
 		EditPage page = EditPage.to(webDriver);
-		page.submitForm(HomePage.class, "Scaraboci", 24);
-		assertThat(restaurantRepository.findByName("Scaraboci").getAveragePrice()).isEqualTo(24);
-		//assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Scaraboci 24");
+		HomePage homepage = page.submitForm(HomePage.class, "Scaraboci", 24);
+		assertThat(homepage.getRestaurantTableAsString()).contains("Scaraboci 24");
 	}
 
 	@Test

@@ -166,9 +166,7 @@ public class RestaurantWebControllerCucumberSteps {
 	@Then("^A table must show the added restaurant with name \"([^\"]*)\", average price \"([^\"]*)\"$")
 	public void aTableMustShowTheAddedRestaurantWithNameAndAveragePrice(String name, int averagePrice)
 			throws Throwable {
-		BigInteger id = restaurantRepository.findByName(name).getId();
-		assertThat(homePage.getRestaurantTableAsString())
-				.matches("ID Name AveragePrice\n"+id + " " + name + " " + averagePrice);
+		assertThat(homePage.getRestaurantTableAsString()).contains( name + " " + averagePrice);
 	}
 
 	@When("^The User navigates to edit page with id \"([^\"]*)\"$")
@@ -183,7 +181,6 @@ public class RestaurantWebControllerCucumberSteps {
 
 	@Then("^A message \"([^\"]*)\" \\+ \"([^\"]*)\" must be shown$")
 	public void aMessageMustBeShown(String messagePart, String id) throws Throwable {
-		System.out.println(editPage.getBody());
 		assertThat(editPage.getBody()).contains(messagePart + id);
 	}
 
