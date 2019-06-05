@@ -2,6 +2,7 @@ package attsd.exam.spring.project.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -114,6 +115,7 @@ public class RestaurantServiceWithMockBeanTest {
 		Restaurant r = new Restaurant(BigInteger.valueOf(1), "test", 10);
 		Optional<Restaurant> expected = Optional.of(r);
 		when(restaurantRepository.findById(BigInteger.valueOf(1))).thenReturn(expected);
+		assertNotNull(restaurantRepository.findById(BigInteger.valueOf(1)));
 		restaurantService.delete(r.getId());
 		verify(restaurantRepository, Mockito.times(1)).delete(captor.capture());
 
