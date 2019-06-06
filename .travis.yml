@@ -18,9 +18,8 @@ addons:
 
 
 script:
-  - mvn -f spring-project/pom.xml clean verify -Pjacoco coveralls:report
-  - mvn -f spring-project/pom.xml clean verify -Pjacoco sonar:sonar
-  - mvn -f spring-project/pom.xml clean verify -Pfailsafe
+  - mvn -f spring-project/pom.xml clean verify -Pjacoco sonar:sonar coveralls:report
+  - mvn -f spring-project/pom.xml verify -Pfailsafe
 cache:
   directories:
     - '$HOME/.m2'
