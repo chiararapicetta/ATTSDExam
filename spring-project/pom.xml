@@ -30,7 +30,7 @@
 		<jacoco.report.path>${project.reporting.outputDirectory}/jacoco.xml</jacoco.report.path>
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
-		
+
 		<!-- Added this line for sonar coverage even in IT -->
 		<sonar.junit.reportPaths>${project.build.directory}/surefire-reports,${project.build.directory}/failsafe-reports</sonar.junit.reportPaths>
 
@@ -41,6 +41,13 @@
 			**/config/**,
 			**/exceptions/**
 		</sonar.coverage.exclusions>
+
+		<sonar.sources>
+			pom.xml,
+			${project.build.sourceDirectory},
+			${basedir}/src/main/resources
+		</sonar.sources>
+
 		<cucumber.version>1.2.5</cucumber.version>
 		<skip.integration-tests>false</skip.integration-tests>
 	</properties>
@@ -139,19 +146,19 @@
 			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 
 	</dependencies>
 
 	<build>
 		<plugins>
-		
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -190,7 +197,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 
@@ -245,7 +252,7 @@
 							</execution>
 						</executions>
 					</plugin>
-					
+
 				</plugins>
 			</build>
 		</profile>
