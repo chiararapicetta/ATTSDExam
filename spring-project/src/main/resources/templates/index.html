@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title>Restaurants</title>
 </head>
-<body bgcolor="red">
+
 <body>
 	<h1>Restaurants</h1>
 	<div th:if="${restaurants.empty}">
@@ -14,14 +14,14 @@
 		<table id="restaurant_table">
 			<thead>
 				<tr>
-				<th><font face = Arial>ID</font></th>
-					<th><font face = Arial>Name</font></th>
-					<th><font face = Arial>AveragePrice</font></th>
+					<th>ID</th>
+					<th>Name</th>
+					<th>AveragePrice</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="restaurant : ${restaurants}">
-				<td th:text="${restaurant.id}"></td>
+					<td th:text="${restaurant.id}"></td>
 					<td th:text="${restaurant.name}"></td>
 					<td th:text="${restaurant.averagePrice}"></td>
 				</tr>
@@ -29,7 +29,9 @@
 		</table>
 	</div>
 	<div>
-		 <p>Click <a th:href="@{/new}">here</a> to add a new restaurant</p>
+		<p>
+			Click <a th:href="@{/new}">here</a> to add a new restaurant
+		</p>
 	</div>
 </body>
 </html>
