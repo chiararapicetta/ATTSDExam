@@ -30,6 +30,10 @@
 		<jacoco.report.path>${project.reporting.outputDirectory}/jacoco.xml</jacoco.report.path>
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
+		
+		<!-- Added this line for sonar coverage even in IT -->
+		<sonar.junit.reportPaths>${project.build.directory}/surefire-reports,${project.build.directory}/failsafe-reports</sonar.junit.reportPaths>
+
 		<sonar.coverage.exclusions>
 			**/model/**,
 			**/pages/**,
