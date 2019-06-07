@@ -6,7 +6,7 @@ import static org.junit.Assert.assertNull;
 
 import java.math.BigInteger;
 
-import org.apache.log4j.Logger;
+
 import org.junit.After;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -25,7 +25,6 @@ import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.controllers.webdriver.pages.LoginPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.SignUpPage;
 import attsd.exam.spring.project.model.Restaurant;
-import attsd.exam.spring.project.repositories.RestaurantRepository;
 import attsd.exam.spring.project.repositories.UserRepository;
 import attsd.exam.spring.project.services.RestaurantService;
 import attsd.exam.spring.project.services.UserService;
@@ -47,9 +46,6 @@ public class RestaurantWebControllerSteps {
 
 	@Autowired
 	private WebDriver webDriver;
-	
-	@Autowired
-	private RestaurantRepository restaurantRepository;
 
 	@LocalServerPort
 	private int port;
@@ -67,8 +63,6 @@ public class RestaurantWebControllerSteps {
 	@Autowired
 	private UserRepository userRepository;
 
-	static final Logger LOGGER = Logger.getLogger(RestaurantWebControllerSteps.class);
-
 	@TestConfiguration
 	static class WebDriverConfiguration {
 
@@ -81,7 +75,6 @@ public class RestaurantWebControllerSteps {
 	@Before
 	public void setup() {
 		AbstractPage.port = port;
-		LOGGER.info("Port set: " + port);
 		restaurantService.deleteAll();
 		userRepository.deleteAll();
 	}

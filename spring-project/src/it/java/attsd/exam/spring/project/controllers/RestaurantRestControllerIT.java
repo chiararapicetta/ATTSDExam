@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -22,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.apache.log4j.Logger;
 
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
@@ -38,8 +36,6 @@ public class RestaurantRestControllerIT {
 	@Autowired
 	private RestaurantRepository restaurantRepository;
 	private String url;
-
-	static final Logger LOGGER = Logger.getLogger(RestaurantRestControllerIT.class);
 
 	@Before
 	public void setup() {
