@@ -41,19 +41,18 @@ public class RestaurantServiceWithMockBeanTest {
 
 	@Test
 	public void testGetMaxAveragePriceRestaurantwithOneRestaurant() {
-		Restaurant r;
+		Restaurant r= new Restaurant(BigInteger.valueOf(1), "test", 20);
 		when(restaurantRepository.findAll())
-				.thenReturn(Arrays.asList(r = new Restaurant(BigInteger.valueOf(1), "test", 20)));
+				.thenReturn(Arrays.asList(r));
 		assertEquals(r, restaurantService.getMaxAveragePriceRestaurant());
 		verify(restaurantRepository, Mockito.times(1)).findAll();
 	}
 
 	@Test
 	public void testGetMaxAveragePriceRestaurant() {
-		Restaurant r;
+		Restaurant r = new Restaurant(BigInteger.valueOf(2), "test", 30);
 		when(restaurantRepository.findAll())
-				.thenReturn(Arrays.asList(new Restaurant(BigInteger.valueOf(1), "test1", 20),
-						r = new Restaurant(BigInteger.valueOf(2), "test", 30)));
+				.thenReturn(Arrays.asList(new Restaurant(BigInteger.valueOf(1), "test1", 20),r));
 		assertEquals(r, restaurantService.getMaxAveragePriceRestaurant());
 		verify(restaurantRepository, Mockito.times(1)).findAll();
 	}
@@ -66,10 +65,10 @@ public class RestaurantServiceWithMockBeanTest {
 
 	@Test
 	public void testGetAllRestaurantswithOneRestaurants() {
-		Restaurant restaurant1;
+		Restaurant r= new Restaurant(BigInteger.valueOf(1), "first", 10);
 		when(restaurantRepository.findAll())
-				.thenReturn(Arrays.asList(restaurant1 = new Restaurant(BigInteger.valueOf(1), "first", 10)));
-		assertThat(restaurantService.getAllRestaurants()).containsExactly(restaurant1);
+				.thenReturn(Arrays.asList(r));
+		assertThat(restaurantService.getAllRestaurants()).containsExactly(r);
 		verify(restaurantRepository, Mockito.times(1)).findAll();
 	}
 
@@ -93,32 +92,28 @@ public class RestaurantServiceWithMockBeanTest {
 
 	@Test
 	public void testGetRestaurantByIdNotFound() {
-		Restaurant actual = restaurantService.getRestaurantById(BigInteger.ZERO);
+		Restaurant actual = restaurantService.getRestaurantById(BigInteger.ONE);
 		assertNull(actual);
-		verify(restaurantRepository, Mockito.times(1)).findById(BigInteger.ZERO);
+		verify(restaurantRepository, Mockito.times(1)).findById(BigInteger.ONE);
 	}
 
 	@Test
 	public void testSave() {
 		ArgumentCaptor<Restaurant> captor = ArgumentCaptor.forClass(Restaurant.class);
-		Restaurant r = new Restaurant(null, "test", 10);
+		Restaurant r = new Restaurant(BigInteger.ONE, "Pizzeria", 10);
 		restaurantService.storeInDb(r);
 		verify(restaurantRepository, Mockito.times(1)).save(captor.capture());
 		Restaurant passedToRepository = captor.getValue();
-		assertEquals("test", passedToRepository.getName());
+		assertEquals(BigInteger.ONE, passedToRepository.getId());
+		assertEquals("Pizzeria", passedToRepository.getName());
 		assertEquals(10, passedToRepository.getAveragePrice());
 	}
 
 	@Test
 	public void testDeleteRestaurant() {
-		ArgumentCaptor<Restaurant> captor = ArgumentCaptor.forClass(Restaurant.class);
-		Restaurant r = new Restaurant(BigInteger.valueOf(1), "test", 10);
-		Optional<Restaurant> expected = Optional.of(r);
-		when(restaurantRepository.findById(BigInteger.valueOf(1))).thenReturn(expected);
-		assertNotNull(restaurantRepository.findById(BigInteger.valueOf(1)));
+		Restaurant r = new Restaurant(BigInteger.ONE, "Pizzeria", 10);
 		restaurantService.delete(r);
-		verify(restaurantRepository, Mockito.times(1)).delete(captor.capture());
-
+		verify(restaurantRepository, Mockito.times(1)).delete(r);
 	}
 
 	@Test
@@ -126,5 +121,4 @@ public class RestaurantServiceWithMockBeanTest {
 		restaurantService.deleteAll();
 		verify(restaurantRepository, Mockito.times(1)).deleteAll();
 	}
-
 }
