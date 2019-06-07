@@ -60,24 +60,20 @@ public class RestaurantRestControllerRestAssuredTest {
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(r).when().post("/api/restaurants/new").then()
 				.statusCode(200);
 		verify(restaurantService, times(1)).storeInDb(r);
-
 	}
 
 	@Test
 	public void testUpdateRestaurant() throws Exception {  
 		when(restaurantService.getRestaurantById(BigInteger.valueOf(1)))
 				.thenReturn(new Restaurant(BigInteger.valueOf(1), "Yoko", 13));
-		
 		Restaurant updated = new Restaurant(BigInteger.valueOf(1), "Kyoto", 18);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/restaurants/update/1")
 				.then().statusCode(200);
 		verify(restaurantService, times(1)).storeInDb(updated);
-
 	}
 
 	@Test
 	public void testUpdateRestaurantWithFakeId() throws Exception {
-	
 		Restaurant updated = new Restaurant(BigInteger.valueOf(1), "PesceFresco", 35);
 		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(updated).when().put("/api/restaurants/update/1")
 				.then().statusCode(200);

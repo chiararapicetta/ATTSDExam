@@ -5,7 +5,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -17,8 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,8 +25,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
@@ -38,22 +33,11 @@ import attsd.exam.spring.project.services.RestaurantService;
 @WebMvcTest(controllers = RestaurantWebController.class)
 public class RestaurantWebControllerTest {
 
-	private MockMvc mvc;
-
 	@Autowired
-	private WebApplicationContext context;
+	private MockMvc mvc;
 
 	@MockBean
 	private RestaurantService restaurantService;
-
-	@Before
-	public void setup() {
-		mvc = MockMvcBuilders.webAppContextSetup(context).apply(springSecurity()).build();
-	}
-
-	@After
-	public void clearAll() {
-	}
 
 	@Test
 	@WithMockUser
@@ -114,8 +98,8 @@ public class RestaurantWebControllerTest {
 	@Test
 	@WithMockUser
 	public void testPostRestaurant() throws Exception {
-		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "LaFiaccola", 45);
-		mvc.perform(post("/save").param("id", "" + restaurant.getId()).param("name", restaurant.getName())
+		Restaurant restaurant = new Restaurant(null, "LaFiaccola", 45);
+		mvc.perform(post("/save").param("name", restaurant.getName())
 				.param("averagePrice", "" + restaurant.getAveragePrice())).andExpect(view().name("redirect:/"));
 		verify(restaurantService).storeInDb(restaurant);
 	}
