@@ -19,7 +19,6 @@ import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
 import attsd.exam.spring.project.controllers.webdriver.pages.LoginPage;
 import attsd.exam.spring.project.controllers.webdriver.pages.SignUpPage;
 import attsd.exam.spring.project.model.Restaurant;
-import attsd.exam.spring.project.repositories.RestaurantRepository;
 import attsd.exam.spring.project.repositories.UserRepository;
 import attsd.exam.spring.project.services.RestaurantService;
 
@@ -33,9 +32,7 @@ public class LoginControllerWebDriverE2ETest {
 
 	@Autowired
 	private UserRepository urepository;
-	
-	@Autowired
-	private RestaurantRepository restaurantRepository;
+
 
 	@Autowired
 	private WebDriver webDriver;
