@@ -12,6 +12,7 @@
 	<div th:if="${message.empty}">
 		<form name="restaurant_form" action="#" th:action="@{/save}"
 			th:object="${restaurant}" method="post">
+			<input type="hidden" th:field="*{id}" />
 			<p>
 				Name: <input type="text" th:field="*{name}" />
 			</p>
