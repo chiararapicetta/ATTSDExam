@@ -11,7 +11,7 @@ HELP.md
 .settings
 .springBeans
 .sts4-cache
-.attach
+.attach_pid*
 
 ### IntelliJ IDEA ###
 .idea
@@ -32,3 +32,4 @@ HELP.md
 /.attach_pid5921
 /.attach_pid6058
 /.attach_pid6205
+
