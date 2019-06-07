@@ -185,7 +185,7 @@
 						<configuration>
 							<sources>
 								<source>src/it/java</source>
-								<source>src/bdd/java</source>
+								<source>src/e2e/java</source>
 							</sources>
 						</configuration>
 					</execution>
@@ -198,7 +198,7 @@
 						<configuration>
 							<resources>
 								<resource>
-									<directory>src/bdd/resources</directory>
+									<directory>src/e2e/resources</directory>
 								</resource>
 							</resources>
 						</configuration>
@@ -286,12 +286,66 @@
 									<goal>verify</goal>
 								</goals>
 							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>io.fabric8</groupId>
+						<artifactId>docker-maven-plugin</artifactId>
+						<version>0.23.0</version>
+						<configuration>
+							<images>
+								<image>
+									<name>mongo</name>
+									<run>
+										<ports>
+											<port>27017:27017</port>
+										</ports>
+									</run>
+								</image>
+							</images>
+							<showLogs>true</showLogs>
+						</configuration>
+						<executions>
 							<execution>
-								<id>bdd-tests</id>
+								<id>docker:start</id>
+								<phase>pre-integration-test</phase>
+								<goals>
+									<goal>start</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>docker:stop</id>
+								<phase>post-integration-test</phase>
+								<goals>
+									<goal>stop</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<id>e2e</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+				<skip.unit-tests>true</skip.unit-tests>
+				<skip.integration-tests>true</skip.integration-tests>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>e2e-tests</id>
 								<configuration>
-									<skipTests>${skip.integration-tests}</skipTests>
 									<includes>
-										<include>**/*BDD.java</include>
+										<include>**/*E2ETest.java</include>
 									</includes>
 								</configuration>
 								<goals>
@@ -338,5 +392,6 @@
 				</plugins>
 			</build>
 		</profile>
+
 	</profiles>
 </project>

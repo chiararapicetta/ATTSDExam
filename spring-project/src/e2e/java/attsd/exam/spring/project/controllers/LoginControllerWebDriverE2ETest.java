@@ -26,7 +26,7 @@ import attsd.exam.spring.project.services.RestaurantService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class LoginControllerWebDriverIT {
+public class LoginControllerWebDriverE2ETest {
 
 	@Autowired
 	private RestaurantService restaurantService;

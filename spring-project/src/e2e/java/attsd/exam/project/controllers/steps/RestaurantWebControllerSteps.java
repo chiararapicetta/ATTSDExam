@@ -1,4 +1,4 @@
-package attsd.exam.spring.project.controllers.steps;
+package attsd.exam.project.controllers.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -37,7 +37,7 @@ import cucumber.api.java.en.When;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, properties = "spring.main.allow-bean-definition-overriding=true")
 @ContextConfiguration(loader = SpringBootContextLoader.class)
-public class RestaurantWebControllerCucumberSteps {
+public class RestaurantWebControllerSteps {
 
 	@Autowired
 	private RestaurantService restaurantService;
@@ -67,7 +67,7 @@ public class RestaurantWebControllerCucumberSteps {
 	@Autowired
 	private UserRepository userRepository;
 
-	static final Logger LOGGER = Logger.getLogger(RestaurantWebControllerCucumberSteps.class);
+	static final Logger LOGGER = Logger.getLogger(RestaurantWebControllerSteps.class);
 
 	@TestConfiguration
 	static class WebDriverConfiguration {
