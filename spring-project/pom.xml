@@ -31,8 +31,6 @@
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
 
-		<!-- Added this line for sonar coverage even in IT -->
-		<sonar.junit.reportPaths>${project.build.directory}/target/surefire-reports, ${project.build.directory}/target/failsafe-reports</sonar.junit.reportPaths>
 
 		<sonar.coverage.exclusions>
 			**/model/**,
@@ -49,7 +47,8 @@
 		</sonar.sources>
 
 		<sonar.issue.ignore.multicriteria>e11, e12</sonar.issue.ignore.multicriteria>
-		<!-- Disable rule for "Add at least one assertion for the contextLoads test case" -->
+		<!-- Disable rule for "Add at least one assertion for the contextLoads 
+			test case" -->
 		<sonar.issue.ignore.multicriteria.e11.ruleKey>squid:S2699</sonar.issue.ignore.multicriteria.e11.ruleKey>
 		<sonar.issue.ignore.multicriteria.e11.resourceKey>**/SpringProjectApplicationTests.java</sonar.issue.ignore.multicriteria.e11.resourceKey>
 		<!-- Disable rule for if cases in methods equals -->
@@ -129,7 +128,7 @@
 			<artifactId>htmlunit-driver</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-support</artifactId>
@@ -276,6 +275,9 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
+						<configuration>
+							<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+						</configuration>
 						<executions>
 							<execution>
 								<phase>integration-test</phase>
