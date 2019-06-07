@@ -20,6 +20,7 @@ addons:
 script:
   - mvn -f spring-project/pom.xml clean verify -Pjacoco sonar:sonar coveralls:report
   - mvn -f spring-project/pom.xml verify -Pfailsafe
+  - mvn -f spring-project/pom.xml verify -Pe2e
 cache:
   directories:
     - '$HOME/.m2'
