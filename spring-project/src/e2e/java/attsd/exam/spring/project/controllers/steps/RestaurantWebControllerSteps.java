@@ -1,4 +1,4 @@
-package attsd.exam.project.controllers.steps;
+package attsd.exam.spring.project.controllers.steps;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
