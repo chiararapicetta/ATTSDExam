@@ -9,3 +9,7 @@ Build status with Travis: [![Build Status](https://travis-ci.org/chiararapicetta
 Coverage status with Coveralls: [![Coverage Status](https://coveralls.io/repos/github/chiararapicetta/ATTSDExam/badge.svg?branch=master)](https://coveralls.io/github/chiararapicetta/ATTSDExam?branch=master)
 
 Code quality with Sonarcloud: 
+
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=com.lapots.breed.judge:judge-rule-engine&metric=alert_status)](https://sonarcloud.io/dashboard?id=attsd.exam.project%3Aspring-project)
+
+
