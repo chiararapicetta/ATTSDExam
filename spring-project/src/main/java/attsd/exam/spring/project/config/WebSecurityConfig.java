@@ -22,9 +22,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	private static final String[] PRIVATE = { "/", "/edit/**", "/new", "/delete/**", "/reset", "/save" };
-	private static final String[] PUBLIC = { "/login", "/signup" };
 	private static final String HOMEPAGE = "/";
+	private static final String LOGIN = "/login";
+	private static final String[] PRIVATE = { HOMEPAGE, "/edit/**", "/new", "/delete/**", "/reset", "/save" };
+	private static final String[] PUBLIC = { LOGIN, "/signup" };
+
+	
 
 
 	@Bean
@@ -35,9 +38,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers(PUBLIC).permitAll().antMatchers(PRIVATE).authenticated().and().csrf()
-				.disable().formLogin().successHandler(new RestaurantAuthenticationSuccessHandler()).loginPage("/login")
+				.disable().formLogin().successHandler(new RestaurantAuthenticationSuccessHandler()).loginPage(LOGIN)
 				.failureUrl("/login?error=true").usernameParameter("email").passwordParameter("password").and().logout()
-				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login").and()
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl(LOGIN).and()
 				.exceptionHandling();
 	}
 

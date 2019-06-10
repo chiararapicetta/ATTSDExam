@@ -4,9 +4,7 @@ package attsd.exam.spring.project.model;
 import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "restaurant")
 public class Restaurant {
 	
 	@Id
