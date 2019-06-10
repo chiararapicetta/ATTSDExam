@@ -8,8 +8,6 @@ import attsd.exam.spring.project.model.Restaurant;
 
 public interface RestaurantRepository extends MongoRepository<Restaurant, BigInteger> {
 
-	Restaurant findByName(String string);
-
 	
 }
 

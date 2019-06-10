@@ -4,7 +4,9 @@ package attsd.exam.spring.project.model;
 import java.math.BigInteger;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "restaurant")
 public class Restaurant {
 	
 	@Id
@@ -75,8 +77,8 @@ public class Restaurant {
 		return true;
 	}
 
-	public void setName(String name2) {
-		this.name = name2;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public void setAveragePrice(int avgPrice) {

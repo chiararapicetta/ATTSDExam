@@ -19,6 +19,10 @@ public class RestaurantWebController {
 	private RestaurantService restaurantService;
 	public static final String REDIRECT = "redirect:/";
 	public static final String MESSAGE = "message";
+	public static final String HOMEPAGE = "index";
+	public static final String UPDATE = "edit";
+	public static final String ERROR = "error";
+	
 
 	@Autowired
 	public RestaurantWebController(RestaurantService restaurantService) {
@@ -30,7 +34,7 @@ public class RestaurantWebController {
 		List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
 		model.addAttribute("restaurants", allRestaurants);
 		model.addAttribute(MESSAGE, allRestaurants.isEmpty() ? "No restaurant" : "");
-		return "index";
+		return HOMEPAGE;
 	}
 
 	@GetMapping("/edit/{id}")
@@ -38,7 +42,7 @@ public class RestaurantWebController {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		model.addAttribute("restaurant", restaurantById);
 		model.addAttribute(MESSAGE, restaurantById == null ? "No restaurant found with id: " + id : "");
-		return "edit";
+		return UPDATE;
 	}
 
 	@PostMapping("/save")
@@ -52,7 +56,7 @@ public class RestaurantWebController {
 		Restaurant restaurant = new Restaurant();
 		model.addAttribute("restaurant", restaurant);
 		model.addAttribute(MESSAGE, "");
-		return "edit";
+		return UPDATE;
 	}
 
 	@GetMapping("/delete/{id}")
@@ -62,7 +66,7 @@ public class RestaurantWebController {
 			restaurantService.delete(restaurantById);
 			return REDIRECT;
 		} else {
-			return "error";
+			return ERROR;
 		}
 	}
 
