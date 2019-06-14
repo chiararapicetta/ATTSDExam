@@ -14,10 +14,10 @@
 			th:object="${restaurant}" method="post">
 			<input type="hidden" th:field="*{id}" />
 			<p>
-				Name: <input type="text" th:field="*{name}" />
+				Name: <input name="name" type="text" />
 			</p>
 			<p>
-				AveragePrice: <input type="text" th:field="*{averagePrice}" />
+				AveragePrice: <input  name="averagePrice" type="text"  />
 			</p>
 			<button type="submit" name="btn_submit">Save</button>
 		</form>
