@@ -43,6 +43,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl(LOGIN).and()
 				.exceptionHandling();
 	}
+	
+	
+	
+	
 
 	private class RestaurantAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 

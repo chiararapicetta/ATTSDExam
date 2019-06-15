@@ -41,7 +41,7 @@ public class RestaurantWebController {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		model.addAttribute("restaurant", restaurantById);
 		if (restaurantById != null) {
-			model.addAttribute(MESSAGE, "");
+			model.addAttribute(MESSAGE, "Edit restaurant");
 			return EDIT;
 		} else {
 			return ERROR;

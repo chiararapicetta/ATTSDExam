@@ -6,11 +6,12 @@
 <link rel="stylesheet" href="index.css" TYPE="text/css" media="screen">
 </head>
 <body>
-	<h1>Edit Restaurant</h1>
 	<div th:unless="${message.empty}">
-		<span th:text="${message}"></span>
+		<p th:text="${message}"></p>
 	</div>
 	<div th:if="${message.empty}">
+	<p> Insert the new restaurant </p>
+	</div>
 		<form name="restaurant_form" action="#" th:action="@{/save}"
 			th:object="${restaurant}" method="post">
 			<input type="hidden" th:field="*{id}" />
@@ -22,6 +23,5 @@
 			</p>
 			<button type="submit" name="btn_submit">Save</button>
 		</form>
-	</div>
 </body>
 </html>
