@@ -14,17 +14,16 @@
 		<table id="restaurant_table">
 			<thead>
 				<tr>
-					<th>ID</th>
 					<th>Name</th>
 					<th>AveragePrice</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="restaurant : ${restaurants}">
-					<td th:text="${restaurant.id}"></td>
 					<td th:text="${restaurant.name}"></td>
 					<td th:text="${restaurant.averagePrice}"></td>
-					<td ><a th:href="@{/edit/(${restaurant.id})}">Edit</a></td>
+					<td><a th:href="@{/edit(id=${restaurant.id})}">Edit</a></td>
+					<td><a th:href="@{/delete(id=${restaurant.id})}">Delete</a></td>
 				</tr>
 			</tbody>
 		</table>
@@ -34,8 +33,13 @@
 			Click <a th:href="@{/new}">here</a> to add a new restaurant
 		</p>
 		<p>
-		Click <a th:href="@{/logout}">here</a> to logout
+			Click <a th:href="@{/logout}">here</a> to logout
 		</p>
+		<div th:unless="${restaurants.empty}">
+				<div>
+					Click <a th:href="@{/reset}">here</a> to delete all the restaurants
+				</div>
+		</div>
 	</div>
 </body>
 </html>

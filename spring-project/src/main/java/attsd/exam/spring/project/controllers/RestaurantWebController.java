@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
 import attsd.exam.spring.project.model.Restaurant;
@@ -37,8 +38,8 @@ public class RestaurantWebController {
 		return HOMEPAGE;
 	}
 
-	@GetMapping("/edit/{id}")
-	public String editRestaurant(@PathVariable BigInteger id, Model model) {
+	@GetMapping(value = "/edit")
+	public String editRestaurant(@RequestParam(name="id")BigInteger id, Model model) {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		model.addAttribute("restaurant", restaurantById);
 		model.addAttribute(MESSAGE, restaurantById == null ? "No restaurant found with id: " + id : "");
@@ -59,8 +60,8 @@ public class RestaurantWebController {
 		return UPDATE;
 	}
 
-	@GetMapping("/delete/{id}")
-	public String deleteRestaurant(@PathVariable BigInteger id) {
+	@GetMapping("/delete")
+	public String deleteRestaurant(@RequestParam(name="id")BigInteger id) {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		if (restaurantById != null) {
 			restaurantService.delete(restaurantById);
