@@ -83,8 +83,7 @@ public class LoginControllerWebDriverE2ETest {
 			saveNewUser("francesco1@gmail", "password", "Francesco");
 			driver.get(baseUrl+ "/signup");
 			saveNewUser("francesco1@gmail", "password", "Francesco");
-			assertThat(driver.getPageSource()).contains("ERROR");
-					
+			assertEquals(driver.getTitle(), "Error");
 		}
 		
 		@Test
