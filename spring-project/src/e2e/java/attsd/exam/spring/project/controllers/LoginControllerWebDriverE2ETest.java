@@ -71,7 +71,7 @@ public class LoginControllerWebDriverE2ETest {
 		SignUpPage page = SignUpPage.to(webDriver);
 		page.submitForm(SignUpPage.class, "alice@gmail", "passAlice", "Alice");
 		assertThat(page.getBody()).contains(
-				"ERROR\nSomething wrong\nClick here to retry authentication.\nClick here if you already logged.");
+				"ERROR\nSomething wrong!\nClick here to retry authentication.");
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class LoginControllerWebDriverE2ETest {
 		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(2), "Pizzeria", 15));
 		HomePage homePage = HomePage.to(webDriver);
 		assertThat(homePage.getRestaurantTableAsString())
-				.isEqualTo("ID Name AveragePrice\n1 CacioePepe 34\n2 Pizzeria 15");
+				.isEqualTo("Name AveragePrice\nCacioePepe 34\nPizzeria 15");
 
 	}
 
@@ -111,7 +111,7 @@ public class LoginControllerWebDriverE2ETest {
 		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
 		assertThat(page.getBody()).doesNotContain("No restaurant found with id: 1");
 		HomePage homePage = page.submitForm(HomePage.class, "Pizzeria", 15);
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Pizzeria 15");
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("Name AveragePrice\nPizzeria 15");
 	}
 
 	@Test
@@ -140,7 +140,7 @@ public class LoginControllerWebDriverE2ETest {
 		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34));
 		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(2), "Pizzeria", 15));
 		HomePage page = HomePage.toDelete(webDriver, BigInteger.valueOf(1));
-		assertThat(page.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n2 Pizzeria 15");
+		assertThat(page.getRestaurantTableAsString()).isEqualTo("Name AveragePrice\nPizzeria 15");
 	}
 
 	public void saveNewUser(String email, String password, String username) {
