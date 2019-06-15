@@ -28,3 +28,24 @@ a:link {
 a:visited {
   color: red;
 }
+table {
+	width: 40%;
+}
+tr:nth-child(even) {
+	height: 50px;
+	background-color: #f2f2f2;
+}
+button {
+  background-color: #e7e7e7; 
+  border: none;
+  color: black;
+  padding: 9px 13px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+button:hover {
+  background-color: #008CBA; 
+  color: blue;
+}
