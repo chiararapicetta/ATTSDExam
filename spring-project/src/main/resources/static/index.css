@@ -1,0 +1,30 @@
+@charset "UTF-8";
+
+body {
+	background-image : url(https://st4.depositphotos.com/9012638/19893/i/1600/depositphotos_198934058-stock-photo-healthy-food-background-trendy-alkaline.jpg);
+	background-size: 1920px 1080px;
+}
+h1 {
+	color : navy;
+	font-family : fantasy;
+	font-style: oblique;
+	font-size: 300%;
+}
+
+div {
+	color : navy;
+	font-family : fantasy;
+	font-size: 150%;
+}
+p {
+	color : red;
+	font-family: verdana;
+}
+
+a:link {
+  color: blue;
+}
+
+a:visited {
+  color: red;
+}
