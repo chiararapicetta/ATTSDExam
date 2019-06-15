@@ -21,7 +21,7 @@ Scenario: User Signup with email already in use
 	When Enters email "email@gmail" , password "password" and username "user" 
 	Given The User is on SignUp Page
 	When Enters email "email@gmail" , password "anotherpassword" and username "anotheruser" 
-	Then The error message "Something wrong" must be shown
+	Then The error message "This email is already registered!" must be shown
 
 Scenario: List no restaurants
 	Given The User is on SignUp Page

@@ -5,10 +5,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.services.RestaurantService;
@@ -20,9 +20,8 @@ public class RestaurantWebController {
 	public static final String REDIRECT = "redirect:/";
 	public static final String MESSAGE = "message";
 	public static final String HOMEPAGE = "index";
-	public static final String UPDATE = "edit";
+	public static final String EDIT = "edit";
 	public static final String ERROR = "error";
-	
 
 	@Autowired
 	public RestaurantWebController(RestaurantService restaurantService) {
@@ -33,16 +32,20 @@ public class RestaurantWebController {
 	public String index(Model model) {
 		List<Restaurant> allRestaurants = restaurantService.getAllRestaurants();
 		model.addAttribute("restaurants", allRestaurants);
-		model.addAttribute(MESSAGE, allRestaurants.isEmpty() ? "No restaurant" : "");
+		model.addAttribute(MESSAGE, allRestaurants.isEmpty() ? "No restaurants" : "");
 		return HOMEPAGE;
 	}
 
-	@GetMapping("/edit/{id}")
-	public String editRestaurant(@PathVariable BigInteger id, Model model) {
+	@GetMapping(value = "/edit")
+	public String editRestaurant(@RequestParam(name = "id") BigInteger id, Model model) {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		model.addAttribute("restaurant", restaurantById);
-		model.addAttribute(MESSAGE, restaurantById == null ? "No restaurant found with id: " + id : "");
-		return UPDATE;
+		if (restaurantById != null) {
+			model.addAttribute(MESSAGE, "");
+			return EDIT;
+		} else {
+			return ERROR;
+		}
 	}
 
 	@PostMapping("/save")
@@ -56,11 +59,11 @@ public class RestaurantWebController {
 		Restaurant restaurant = new Restaurant();
 		model.addAttribute("restaurant", restaurant);
 		model.addAttribute(MESSAGE, "");
-		return UPDATE;
+		return EDIT;
 	}
 
-	@GetMapping("/delete/{id}")
-	public String deleteRestaurant(@PathVariable BigInteger id) {
+	@GetMapping(value = "/delete")
+	public String deleteRestaurant(@RequestParam(name = "id") BigInteger id) {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		if (restaurantById != null) {
 			restaurantService.delete(restaurantById);

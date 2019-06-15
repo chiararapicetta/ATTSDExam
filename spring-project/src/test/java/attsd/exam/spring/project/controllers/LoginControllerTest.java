@@ -66,7 +66,7 @@ public class LoginControllerTest {
 		user.setUsername("Sara10");
 		mvc.perform(post("/signup")
 				.param("email", user2.getEmail()).param("username", user2.getUsername()).param("password", user2.getPassword()))
-		.andExpect(view().name("error"))
+		.andExpect(view().name("loginError"))
 		.andExpect(status().isOk());
 	}
 	

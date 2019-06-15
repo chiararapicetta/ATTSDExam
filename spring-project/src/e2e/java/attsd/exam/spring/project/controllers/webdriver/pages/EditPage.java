@@ -25,7 +25,7 @@ public class EditPage extends AbstractPage {
 	}
 
 	public static EditPage to(WebDriver driver, BigInteger restaurantId) {
-		get(driver, "edit/" + restaurantId);
+		get(driver, "edit?id=" + restaurantId);
 		return PageFactory.initElements(driver, EditPage.class);
 	}
 

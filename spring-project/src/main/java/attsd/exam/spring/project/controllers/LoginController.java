@@ -31,7 +31,7 @@ public class LoginController {
 	public String createNewUser(@Valid UserDTO user) {
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
-			return "error";
+			return "loginError";
 		}
 		
 		else {

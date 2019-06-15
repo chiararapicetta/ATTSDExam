@@ -22,7 +22,7 @@ public class HomePage extends AbstractPage {
 	}
 
 	public static HomePage toDelete(WebDriver driver, BigInteger restaurantId) {
-		get(driver, "delete/" + restaurantId);
+		get(driver, "delete?id=" + restaurantId);
 		return PageFactory.initElements(driver, HomePage.class);
 	}
 

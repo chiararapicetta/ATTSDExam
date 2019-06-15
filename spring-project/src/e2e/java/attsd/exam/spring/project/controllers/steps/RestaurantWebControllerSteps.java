@@ -143,7 +143,7 @@ public class RestaurantWebControllerSteps {
 	@Then("^A table must show the restaurants$")
 	public void aTableMustShowTheRestaurants() throws Throwable {
 		assertThat(homePage.getRestaurantTableAsString())
-				.isEqualTo("ID Name AveragePrice\n1 restaurant1 10\n2 restaurant2 20");
+				.isEqualTo("Name AveragePrice\nrestaurant1 10 Edit Delete\nrestaurant2 20 Edit Delete");
 	}
 
 	@When("^The User navigates to new page$")
@@ -173,8 +173,8 @@ public class RestaurantWebControllerSteps {
 	}
 
 	@Then("^A message \"([^\"]*)\" \\+ \"([^\"]*)\" must be shown$")
-	public void aMessageMustBeShown(String messagePart, String id) throws Throwable {
-		assertThat(editPage.getBody()).contains(messagePart + id);
+	public void aMessageMustBeShown(String messagePart) throws Throwable {
+		assertThat(editPage.getBody()).contains(messagePart);
 	}
 
 	@And("^The restaurant with id \"([^\"]*)\" exists in the database$")
@@ -190,8 +190,7 @@ public class RestaurantWebControllerSteps {
 
 	@And("^A table must show the modified restaurant \"([^\"]*)\"$")
 	public void aTableMustShowTheModifiedrestaurant(String expectedRepresentation) throws Throwable {
-		assertThat(homePage.getRestaurantTableAsString()).contains(expectedRepresentation);
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n10 modified name 25");
+		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("Name AveragePrice\n"+expectedRepresentation+" Edit Delete");
 	}
 
 	@Then("^The restaurant with id \"([^\"]*)\" doesn't exists in the database$")

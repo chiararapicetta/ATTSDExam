@@ -299,72 +299,46 @@
 			<build>
 				<plugins>
 					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<configuration>
-							<excludes>
-								<exclude>src/e2e/java</exclude>
-							</excludes>
-						</configuration>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>build-helper-maven-plugin</artifactId>
 						<executions>
 							<execution>
-								<phase>integration-test</phase>
+								<id>reserve-tomcat-port</id>
 								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
+									<goal>reserve-network-port</goal>
 								</goals>
+								<phase>process-resources</phase>
+								<configuration>
+									<portNames>
+										<portName>tomcat.http.port</portName>
+									</portNames>
+								</configuration>
 							</execution>
 						</executions>
 					</plugin>
 					<plugin>
-						<groupId>io.fabric8</groupId>
-						<artifactId>docker-maven-plugin</artifactId>
-						<version>0.23.0</version>
-						<configuration>
-							<images>
-								<image>
-									<name>mongo</name>
-									<run>
-										<ports>
-											<port>27017:27017</port>
-										</ports>
-									</run>
-								</image>
-							</images>
-							<showLogs>true</showLogs>
-						</configuration>
+						<groupId>org.springframework.boot</groupId>
+						<artifactId>spring-boot-maven-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>docker:start</id>
-								<phase>pre-integration-test</phase>
+								<id>pre-integration-test</id>
 								<goals>
 									<goal>start</goal>
 								</goals>
+								<configuration>
+									<arguments>
+										<argument>--server.port=${tomcat.http.port}</argument>
+									</arguments>
+								</configuration>
 							</execution>
 							<execution>
-								<id>docker:stop</id>
-								<phase>post-integration-test</phase>
+								<id>post-integration-test</id>
 								<goals>
 									<goal>stop</goal>
 								</goals>
 							</execution>
 						</executions>
 					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>e2e</id>
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>
-			<properties>
-				<skip.unit-tests>true</skip.unit-tests>
-				<skip.integration-tests>true</skip.integration-tests>
-			</properties>
-			<build>
-				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
@@ -382,6 +356,11 @@
 								</goals>
 							</execution>
 						</executions>
+						<configuration>
+							<systemPropertyVariables>
+								<server.port>${tomcat.http.port}</server.port>
+							</systemPropertyVariables>
+						</configuration>
 					</plugin>
 					<plugin>
 						<groupId>io.fabric8</groupId>

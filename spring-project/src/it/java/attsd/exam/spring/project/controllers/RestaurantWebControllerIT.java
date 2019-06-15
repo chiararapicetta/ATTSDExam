@@ -82,7 +82,7 @@ public class RestaurantWebControllerIT {
 	public void testEmptyRestaurantList() throws Exception {
 		mvc.perform(get("/")).andExpect(view().name("index"))
 				.andExpect(model().attribute("restaurants", new ArrayList<Restaurant>()))
-				.andExpect(model().attribute("message", "No restaurant"));
+				.andExpect(model().attribute("message", "No restaurants"));
 		assertEquals(0, repository.count());
 	}
 
@@ -102,7 +102,8 @@ public class RestaurantWebControllerIT {
 	public void testSingleRestaurant() throws Exception {
 		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "Zorba", 23);
 		repository.save(restaurant);
-		mvc.perform(get("/edit/1")).andExpect(view().name("edit"))
+		String id ="1";
+		mvc.perform(get("/edit?id="+id)).andExpect(view().name("edit"))
 				.andExpect(model().attribute("restaurant", restaurant)).andExpect(model().attribute("message", ""));
 		assertEquals(1, repository.count());
 	}
@@ -110,9 +111,9 @@ public class RestaurantWebControllerIT {
 	@Test
 	@WithMockUser
 	public void testSingleRestaurantNotFound() throws Exception {
-		mvc.perform(get("/edit/1")).andExpect(view().name("edit"))
-				.andExpect(model().attribute("restaurant", nullValue()))
-				.andExpect(model().attribute("message", "No restaurant found with id: 1"));
+		String id = "1";
+		mvc.perform(get("/edit?id="+id)).andExpect(view().name("error"))
+				.andExpect(model().attribute("restaurant", nullValue()));
 		assertEquals(0, repository.count());
 	}
 
@@ -144,7 +145,8 @@ public class RestaurantWebControllerIT {
 		repository.save(restaurant);
 		Restaurant r = new Restaurant(BigInteger.valueOf(2), "CacioEPepe", 28);
 		repository.save(r);
-		mvc.perform(get("/delete/1")).andExpect(view().name("redirect:/"));
+		String id = "1";
+		mvc.perform(get("/delete?id="+id)).andExpect(view().name("redirect:/"));
 		assertEquals(1, repository.count());
 	}
 	

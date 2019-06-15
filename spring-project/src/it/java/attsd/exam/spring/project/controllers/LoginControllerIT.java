@@ -87,7 +87,7 @@ public class LoginControllerIT {
 		repository.save(user);
 		assertEquals(1, repository.count());
 		mvc.perform(post("/signup").param("email", "email1").param("username", "usern").param("password", "pass")
-				.with(csrf())).andExpect(status().is2xxSuccessful()).andExpect(view().name("error"));
+				.with(csrf())).andExpect(status().is2xxSuccessful()).andExpect(view().name("loginError"));
 		assertEquals(1, repository.count());
 
 	}
