@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -70,7 +72,6 @@ public class LoginControllerWebDriverE2ETest {
 
 		@Test
 		public void testSignUp() {
-			driver.get(baseUrl+ "/signup");
 			saveNewUser("giulia1@gmail", "pass", "giulia");
 			assertThat(driver.getTitle()).contains("Login");
 			assertEquals(1, urepository.count());
@@ -79,7 +80,6 @@ public class LoginControllerWebDriverE2ETest {
 		
 		@Test
 		public void loginWithParamError() throws Exception {
-			driver.get(baseUrl+ "/signup");
 			saveNewUser("francesco1@gmail", "password", "Francesco");
 			driver.get(baseUrl+ "/signup");
 			saveNewUser("francesco1@gmail", "password", "Francesco");
@@ -88,7 +88,6 @@ public class LoginControllerWebDriverE2ETest {
 		
 		@Test
 		public void testLoginWithNoRestaurant() throws Exception {
-			driver.get(baseUrl+ "/signup");
 			saveNewUser("francesco@gmail", "password", "Francesco");
 			login("francesco@gmail", "password");
 			assertThat(driver.getPageSource()).contains("No restaurant");
@@ -96,7 +95,6 @@ public class LoginControllerWebDriverE2ETest {
 		
 		@Test
 		public void testLogout() throws Exception {
-			driver.get(baseUrl+ "/signup");
 			saveNewUser("francesco1@gmail", "password", "Francesco");
 			login("francesco1@gmail", "password");
 			driver.findElement
@@ -106,25 +104,63 @@ public class LoginControllerWebDriverE2ETest {
 		
 		@Test
 		public void testHomePageWithRestaurants() throws Exception {
-			driver.get(baseUrl+ "/signup");
 			saveNewUser("giada@gmail", "password", "Giada");
 			login("giada@gmail", "password");
 			driver.findElement(By.cssSelector("a[href*='/new")).click();
-			driver.findElement(By.name("name")).sendKeys("Cacio e Pepe");
-			driver.findElement(By.name("averagePrice")).sendKeys("20");
-			driver.findElement(By.name("btn_submit")).click();
+			addOrEditRestaurant("Cacio e Pepe", "30"); 
 			assertThat(driver.findElement(By.id("restaurant_table")).getText()).
-			contains("Cacio e Pepe", "20");
+			contains("Cacio e Pepe", "30");
 		}
 		
+		@Test
+		public void testEditExistingRestaurant() throws Exception {
+			saveNewUser("francesco@gmail", "password", "Francesco");
+			login("francesco@gmail", "password");
+			driver.findElement(By.cssSelector("a[href*='/new")).click();
+			addOrEditRestaurant("Borgo al cotone", "40"); 
+			driver.findElement(By.id("edit")).click();
+			addOrEditRestaurant("Borgo al cotone", "35"); 
+			assertThat(driver.findElement(By.id("restaurant_table")).getText()).
+			contains("Borgo al cotone", "35");
+		}
+
+		
+		@Test
+		public void testDeleteAllRestaurants() throws Exception {
+			saveNewUser("francesco@gmail", "password", "Francesco");
+			login("francesco@gmail", "password");
+			driver.findElement(By.cssSelector("a[href*='/new")).click();
+			addOrEditRestaurant("Borgo al cotone", "40"); 
+			driver.findElement(By.cssSelector("a[href*='/new")).click();
+			addOrEditRestaurant("Scaraboci", "50"); 
+			driver.findElement(By.cssSelector("a[href*='/reset")).click();
+			assertThat(driver.getPageSource()).contains("No restaurant");
+		}
+		
+
+		@Test
+		public void testDeleteOneRestaurant() throws Exception {
+			saveNewUser("francesco@gmail", "password", "Francesco");
+			login("francesco@gmail", "password");
+			driver.findElement(By.cssSelector("a[href*='/new")).click();
+			addOrEditRestaurant("Borgo al cotone", "40"); 
+			driver.findElement(By.id("delete")).click();
+			assertThat(driver.getPageSource()).contains("No restaurant");
+		}
+
+		public void addOrEditRestaurant(String name, String averagePrice) {
+			driver.findElement(By.name("name")).sendKeys(name);
+			driver.findElement(By.name("averagePrice")).sendKeys(averagePrice);
+			driver.findElement(By.name("btn_submit")).click();
+		}
 		public void login(String email, String password) {
 			driver.findElement(By.name("email")).sendKeys(email);
 			driver.findElement(By.name("password")).sendKeys(password);
 			driver.findElement(By.name("submit")).click();
 		}
 		
-		
 		public void saveNewUser(String email, String password, String username) {
+			driver.get(baseUrl+ "/signup");
 			driver.findElement(By.name("email")).sendKeys(email);
 			driver.findElement(By.name("password")).sendKeys(password);
 			driver.findElement(By.name("username")).sendKeys(username);
@@ -132,46 +168,5 @@ public class LoginControllerWebDriverE2ETest {
 
 		}
 }
-/*
 
-	@Test
-	public void testEditNonExistentRestaurant() throws Exception {
-		saveNewUser("francesco@gmail", "password", "Francesco");
-		login("francesco@gmail", "password");
-		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
-		assertThat(page.getBody()).contains("No restaurant found with id: 1");
-	}
-
-	@Test
-	public void testEditExistentRestaurant() throws Exception {
-		saveNewUser("francesco@gmail", "password", "Francesco");
-		login("francesco@gmail", "password");
-		Restaurant r = new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34);
-		restaurantService.storeInDb(r);
-		EditPage page = EditPage.to(webDriver, BigInteger.valueOf(1));
-		assertThat(page.getBody()).doesNotContain("No restaurant found with id: 1");
-		HomePage homePage = page.submitForm(HomePage.class, "Pizzeria", 15);
-		assertThat(homePage.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n1 Pizzeria 15");
-	}
-
-
-	@Test
-	public void testDeleteAllRestaurants() throws Exception {
-		saveNewUser("francesco@gmail", "password", "Francesco");
-		login("francesco@gmail", "password");
-		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34));
-		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(2), "Pizzeria", 15));
-		HomePage page = HomePage.toReset(webDriver);
-		assertThat(page.getBody()).contains("No restaurant");
-	}
-
-	@Test
-	public void testDeleteRestaurant() throws Exception {
-		saveNewUser("francesco@gmail", "password", "Francesco");
-		login("francesco@gmail", "password");
-		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(1), "CacioePepe", 34));
-		restaurantService.storeInDb(new Restaurant(BigInteger.valueOf(2), "Pizzeria", 15));
-		HomePage page = HomePage.toDelete(webDriver, BigInteger.valueOf(1));
-		assertThat(page.getRestaurantTableAsString()).isEqualTo("ID Name AveragePrice\n2 Pizzeria 15");
-*/
 

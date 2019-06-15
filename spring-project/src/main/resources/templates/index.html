@@ -22,9 +22,10 @@
 				<tr th:each="restaurant : ${restaurants}">
 					<td th:text="${restaurant.name}"></td>
 					<td th:text="${restaurant.averagePrice}"></td>
-					<td><a th:href="@{/edit(id=${restaurant.id})}">Edit</a></td>
-					<td><a th:href="@{/delete(id=${restaurant.id})}">Delete</a></td>
+					<td><a id = "edit" th:href='@{/edit(id=${restaurant.id})}'><button>Edit</button></a></td>
+					<td><a id = "delete" th:href='@{/delete(id=${restaurant.id})}'><button>Delete</button></a></td>
 				</tr>
+				
 			</tbody>
 		</table>
 	</div>
