@@ -81,7 +81,8 @@ public class RestaurantWebControllerTest {
 	public void testSingleRestaurant() throws Exception {
 		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "Zorba", 23);
 		when(restaurantService.getRestaurantById(BigInteger.valueOf(1))).thenReturn(restaurant);
-		mvc.perform(get("/edit/1")).andExpect(view().name("edit"))
+		String id = "1";
+		mvc.perform(get("/edit?id="+ id)).andExpect(view().name("edit"))
 				.andExpect(model().attribute("restaurant", restaurant)).andExpect(model().attribute("message", ""));
 		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
 	}
@@ -89,7 +90,8 @@ public class RestaurantWebControllerTest {
 	@Test
 	@WithMockUser
 	public void testSingleRestaurantNotFound() throws Exception {
-		mvc.perform(get("/edit/1")).andExpect(view().name("edit"))
+		String id = "1";
+		mvc.perform(get("/edit?id=" + id)).andExpect(view().name("edit"))
 				.andExpect(model().attribute("restaurant", nullValue()))
 				.andExpect(model().attribute("message", "No restaurant found with id: 1"));
 		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
@@ -117,7 +119,9 @@ public class RestaurantWebControllerTest {
 	@WithMockUser
 	public void testDeleteRestaurantNotExists() throws Exception {
 		Restaurant r = new Restaurant();
-		mvc.perform(get("/delete/1")).andExpect(view().name("error"));
+		String id = "1";
+		mvc.perform(get("/edit?id=" + id)).andExpect(view().name("edit"))
+		.andExpect(model().attribute("message", "No restaurant found with id: 1"));;
 		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(1));
 		verify(restaurantService, times(0)).delete(r);
 	}
@@ -127,7 +131,8 @@ public class RestaurantWebControllerTest {
 	public void testDeleteRestaurant() throws Exception {
 		Restaurant r = new Restaurant(BigInteger.valueOf(1), "CacioEPepe", 30);
 		when(restaurantService.getRestaurantById(BigInteger.valueOf(1))).thenReturn(r);
-		mvc.perform(get("/delete/1")).andExpect(view().name("redirect:/"));
+		String id = "1";
+		mvc.perform(get("/delete?id=" + id)).andExpect(view().name("redirect:/"));
 		verify(restaurantService, times(1)).getRestaurantById(BigInteger.valueOf(1));
 		verify(restaurantService, times(1)).delete(r);
 	}
