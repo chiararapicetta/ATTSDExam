@@ -18,7 +18,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import attsd.exam.spring.project.exceptions.UserAlreadyExistsException;
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
 
@@ -53,16 +52,6 @@ public class UserServiceWithMockBeanTest {
 		assertEquals("password", u.getPassword());
 		assertEquals("fullname", u.getUsername());
 		verify(userRepository, times(1)).save(isA(User.class));
-	}
-
-	@Test(expected = UserAlreadyExistsException.class)
-	public void testSaveUserWhenUserAlreadyExists() { 
-		User u = new User();
-		u.setEmail("email");
-		when(userRepository.findByEmail("email")).thenReturn(u);
-		User user2 = new User();
-		user2.setEmail("email");
-		userService.saveUser(user2);
 	}
 	
 

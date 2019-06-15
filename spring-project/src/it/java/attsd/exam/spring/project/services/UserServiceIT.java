@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import attsd.exam.spring.project.exceptions.UserAlreadyExistsException;
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
 
@@ -60,7 +59,7 @@ public class UserServiceIT {
 		assertEquals(u.getUsername(), user.getUsername());
 	}
 	
-	@Test(expected = UserAlreadyExistsException.class)
+	@Test
 	public void testSaveUserWhenUserAlreadyExists() { 
 		User user1 = new User();
 		user1.setEmail("email");

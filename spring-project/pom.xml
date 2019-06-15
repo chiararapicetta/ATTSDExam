@@ -36,8 +36,7 @@
 			**/model/**,
 			**/pages/**,
 			**/SpringProjectApplication.java,
-			**/config/**,
-			**/exceptions/**
+			**/config/**
 		</sonar.coverage.exclusions>
 
 		<sonar.sources>
@@ -272,7 +271,6 @@
 								<exclude>**/SpringProjectApplication.*</exclude>
 								<exclude>**/config/**</exclude>
 								<exclude>**/pages/**</exclude>
-								<exclude>**/exceptions/**</exclude>
 							</excludes>
 						</configuration>
 						<executions>

@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import attsd.exam.spring.project.exceptions.UserAlreadyExistsException;
 import attsd.exam.spring.project.model.User;
 import attsd.exam.spring.project.repositories.UserRepository;
 
@@ -29,14 +28,11 @@ public class UserService implements UserDetailsService {
 	}
 
 	public User saveUser(User user){
-		if (userRepository.findByEmail(user.getEmail()) == null){
 			user.setPassword(encoder.encode(user.getPassword()));
 			user.setEnabled(true);
 			userRepository.save(user);
 			return user;
 		}
-		throw new UserAlreadyExistsException("user already exists");
-	}
 
 	@Override
 	public UserDetails loadUserByUsername(String email) {
