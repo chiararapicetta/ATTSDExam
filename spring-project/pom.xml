@@ -399,6 +399,9 @@
 							<execution>
 								<id>e2e-tests</id>
 								<configuration>
+									<excludes>
+										<exclude>**/*IT.java</exclude>
+									</excludes>
 									<includes>
 										<include>**/*E2ETest.java</include>
 									</includes>
