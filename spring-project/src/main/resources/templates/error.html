@@ -1,15 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title>Errors</title>
+<title>Error</title>
 <link rel="stylesheet" href="login.css" TYPE="text/css" media="screen">
-</head>  
-    <body>
-        <div >
-            <h1>ERROR</h1>
-            <h2>Invalid command</h2>
-             <p>Click <a th:href="@{/}">here</a> to return to the homepage</p>
-        </div>
-    </body>
+</head>
+<body>
+	<div th:if="${message.empty}">
+		<h1>ERROR</h1>
+		<h2>This email is already registered!</h2>
+		<p>
+			Click <a th:href="@{/signup}">here</a> to signup with another email.
+		</p>
+	</div>
+
+
+	<div th:unless="${message.empty}">
+		<h1>ERROR</h1>
+		<h2>Invalid command, you typed a restaurant that doesn't exist</h2>
+		<p>
+			Click <a th:href="@{/}">here</a> to return to the homepage
+		</p>
+	</div>
+
+</body>
 </html>

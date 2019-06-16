@@ -83,7 +83,7 @@ public class RestaurantWebControllerTest {
 		when(restaurantService.getRestaurantById(BigInteger.valueOf(1))).thenReturn(restaurant);
 		String id = "1";
 		mvc.perform(get("/edit?id="+id)).andExpect(view().name("edit"))
-				.andExpect(model().attribute("restaurant", restaurant)).andExpect(model().attribute("message", ""));
+				.andExpect(model().attribute("restaurant", restaurant)).andExpect(model().attribute("message", "Edit restaurant"));
 		verify(restaurantService).getRestaurantById(BigInteger.valueOf(1));
 	}
 
