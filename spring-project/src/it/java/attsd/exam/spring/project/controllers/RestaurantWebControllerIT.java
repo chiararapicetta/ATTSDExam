@@ -100,10 +100,9 @@ public class RestaurantWebControllerIT {
 	@Test
 	@WithMockUser
 	public void testSingleRestaurant() throws Exception {
-		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "Zorba", 23);
+		Restaurant restaurant = new Restaurant(null, "Zorba", 23);
 		repository.save(restaurant);
-		String id ="1";
-		mvc.perform(get("/edit?id="+id)).andExpect(view().name("edit"))
+		mvc.perform(get("/edit?id="+restaurant.getId())).andExpect(view().name("edit"))
 				.andExpect(model().attribute("restaurant", restaurant)).andExpect(model().attribute("message", "Edit restaurant"));
 		assertEquals(1, repository.count());
 	}
@@ -141,13 +140,10 @@ public class RestaurantWebControllerIT {
 	@Test
 	@WithMockUser
 	public void testDeleteRestaurant() throws Exception {
-		Restaurant restaurant = new Restaurant(BigInteger.valueOf(1), "LaFiaccola", 45);
+		Restaurant restaurant = new Restaurant(null, "LaFiaccola", 45);
 		repository.save(restaurant);
-		Restaurant r = new Restaurant(BigInteger.valueOf(2), "CacioEPepe", 28);
-		repository.save(r);
-		String id = "1";
-		mvc.perform(get("/delete?id="+id)).andExpect(view().name("redirect:/"));
-		assertEquals(1, repository.count());
+		mvc.perform(get("/delete?id="+restaurant.getId())).andExpect(view().name("redirect:/"));
+		assertEquals(0, repository.count());
 	}
 	
 	@Test

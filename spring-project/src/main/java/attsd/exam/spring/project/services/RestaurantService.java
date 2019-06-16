@@ -1,7 +1,6 @@
 package attsd.exam.spring.project.services;
 
 import java.math.BigInteger;
-import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +15,6 @@ public class RestaurantService {
 
 	@Autowired
 	private RestaurantRepository restaurantRepository;
-	
-	public Restaurant getMaxAveragePriceRestaurant() {
-		List<Restaurant> restaurants = restaurantRepository.findAll();
-		return restaurants.stream().max(Comparator.comparing(Restaurant::getAveragePrice)).orElse(null);
-	}
 
 	public List<Restaurant> getAllRestaurants() {
 		return restaurantRepository.findAll();
@@ -41,4 +35,6 @@ public class RestaurantService {
 	public void deleteAll() {
 		restaurantRepository.deleteAll();
 	}
+	
+	
 }

@@ -1,6 +1,5 @@
 package attsd.exam.spring.project.controllers;
 
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;

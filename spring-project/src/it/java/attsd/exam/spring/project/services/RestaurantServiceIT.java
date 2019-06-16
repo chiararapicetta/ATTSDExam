@@ -61,14 +61,5 @@ public class RestaurantServiceIT {
 		assertEquals(0, repository.count());
 	}
 	
-	@Test
-	public void testMaxAveragePrice() {
-		Restaurant restaurant1 = service.storeInDb(new Restaurant(BigInteger.valueOf(1), "PizzeriaSpera", 15));
-		service.storeInDb(new Restaurant(BigInteger.valueOf(2), "VinoERavioli", 10));
-		assertEquals(2, repository.count());
-		assertEquals(restaurant1, service.getMaxAveragePriceRestaurant());
-	}
-	
-	
 
 }

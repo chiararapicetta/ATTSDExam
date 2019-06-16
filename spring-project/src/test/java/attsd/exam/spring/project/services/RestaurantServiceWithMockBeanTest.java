@@ -33,30 +33,6 @@ public class RestaurantServiceWithMockBeanTest {
 	private RestaurantService restaurantService;
 
 	@Test
-	public void testGetMaxAveregePriceRestaurantwithNoRestaurants() {
-		assertNull(restaurantService.getMaxAveragePriceRestaurant());
-		verify(restaurantRepository, times(1)).findAll();
-	}
-
-	@Test
-	public void testGetMaxAveragePriceRestaurantwithOneRestaurant() {
-		Restaurant r= new Restaurant(BigInteger.valueOf(1), "test", 20);
-		when(restaurantRepository.findAll())
-				.thenReturn(Arrays.asList(r));
-		assertEquals(r, restaurantService.getMaxAveragePriceRestaurant());
-		verify(restaurantRepository, times(1)).findAll();
-	}
-
-	@Test
-	public void testGetMaxAveragePriceRestaurant() {
-		Restaurant r = new Restaurant(BigInteger.valueOf(2), "test", 30);
-		when(restaurantRepository.findAll())
-				.thenReturn(Arrays.asList(new Restaurant(BigInteger.valueOf(1), "test1", 20),r));
-		assertEquals(r, restaurantService.getMaxAveragePriceRestaurant());
-		verify(restaurantRepository, times(1)).findAll();
-	}
-
-	@Test
 	public void testGetAllRestaurantswithNoRestaurants() {
 		assertEquals(0, restaurantService.getAllRestaurants().size());
 		verify(restaurantRepository, times(1)).findAll();
