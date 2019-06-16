@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.3.RELEASE</version>
+		<version>2.1.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>attsd.exam.project</groupId>
@@ -30,21 +30,17 @@
 		<jacoco.report.path>${project.reporting.outputDirectory}/jacoco.xml</jacoco.report.path>
 		<sonar.language>java</sonar.language>
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
-
-
 		<sonar.coverage.exclusions>
 			**/model/**,
 			**/pages/**,
 			**/SpringProjectApplication.java,
 			**/config/**
 		</sonar.coverage.exclusions>
-
 		<sonar.sources>
 			pom.xml,
 			${project.build.sourceDirectory},
 			${basedir}/src/main/resources
 		</sonar.sources>
-
 		<sonar.issue.ignore.multicriteria>e11, e12</sonar.issue.ignore.multicriteria>
 		<!-- Disable rule for "Add at least one assertion for the contextLoads 
 			test case" -->
@@ -54,10 +50,9 @@
 		<sonar.issue.ignore.multicriteria.e12.ruleKey>squid:S3776</sonar.issue.ignore.multicriteria.e12.ruleKey>
 		<sonar.issue.ignore.multicriteria.e12.resourceKey>**/model/**</sonar.issue.ignore.multicriteria.e12.resourceKey>
 
-		<cucumber.version>1.2.5</cucumber.version>
+		<skip.unit-tests>false</skip.unit-tests>
 		<skip.integration-tests>false</skip.integration-tests>
 	</properties>
-
 
 
 	<dependencies>
@@ -65,57 +60,48 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
-			<version>2.1.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-			<version>2.1.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<version>2.1.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-			<version>2.1.5.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
-			<version>2.1.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>3.3.0</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-			<version>2.1.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
-			<version>2.1.5.RELEASE</version>
 		</dependency>
 
 		<dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>spring-mock-mvc</artifactId>
-			<version>3.3.0</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -138,30 +124,29 @@
 		</dependency>
 
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-spring</artifactId>
-			<version>${cucumber.version}</version>
+			<version>4.4.0</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
-			<version>${cucumber.version}</version>
+			<version>4.4.0</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit</artifactId>
-			<version>${cucumber.version}</version>
+			<version>4.4.0</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
-			<version>5.1.5.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -170,11 +155,11 @@
 			<artifactId>selenium-java</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.github.bonigarcia</groupId>
 			<artifactId>webdrivermanager</artifactId>
-			<version>3.5.0</version>
+			<version>3.6.1</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -225,16 +210,36 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<excludes>
-						<exclude>**E2ETest.java</exclude>
-					</excludes>
+					<skipTests>${skip.unit-tests}</skipTests>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
 				</configuration>
 			</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<executions>
+					<execution>
+						<configuration>
+							<skipTests>${skip.integration-tests}</skipTests>
+							<includes>
+								<include>**/*ApplicationTests.java</include>
+								<include>**/*IT.java</include>
+							</includes>
+						</configuration>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
-<profiles>
+	<profiles>
 		<profile>
 			<id>jacoco</id>
 			<activation>
@@ -256,7 +261,7 @@
 						<plugin>
 							<groupId>org.sonarsource.scanner.maven</groupId>
 							<artifactId>sonar-maven-plugin</artifactId>
-							<version>3.4.0.905</version>
+							<version>3.6.0.1398</version>
 						</plugin>
 					</plugins>
 				</pluginManagement>
@@ -264,7 +269,7 @@
 					<plugin>
 						<groupId>org.jacoco</groupId>
 						<artifactId>jacoco-maven-plugin</artifactId>
-						<version>0.7.9</version>
+						<version>0.8.4</version>
 						<configuration>
 							<excludes>
 								<exclude>**/model/**</exclude>
@@ -317,7 +322,7 @@
 					<plugin>
 						<groupId>io.fabric8</groupId>
 						<artifactId>docker-maven-plugin</artifactId>
-						<version>0.23.0</version>
+						<version>0.30.0</version>
 						<configuration>
 							<images>
 								<image>
@@ -430,7 +435,7 @@
 					<plugin>
 						<groupId>io.fabric8</groupId>
 						<artifactId>docker-maven-plugin</artifactId>
-						<version>0.23.0</version>
+						<version>0.30.0</version>
 						<configuration>
 							<images>
 								<image>
