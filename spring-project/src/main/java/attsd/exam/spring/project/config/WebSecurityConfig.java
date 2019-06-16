@@ -24,7 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	private static final String HOMEPAGE = "/";
 	private static final String LOGIN = "/login";
-	private static final String[] PRIVATE = { HOMEPAGE, "/edit/**", "/new", "/delete/**", "/reset", "/save" };
+	private static final String[] PRIVATE = { HOMEPAGE, "/edit/**", "/new", "/delete/**", "/reset" };
 	private static final String[] PUBLIC = { LOGIN, "/signup" };
 
 	
@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.failureUrl("/login?error=true").usernameParameter("email").passwordParameter("password").and().logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl(LOGIN).and()
 				.exceptionHandling();
-	}
+}
 	
 	
 	

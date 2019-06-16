@@ -39,11 +39,12 @@ public class RestaurantWebController {
 	@GetMapping(value = "/edit")
 	public String editRestaurant(@RequestParam(name = "id") BigInteger id, Model model) {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
-		model.addAttribute("restaurant", restaurantById);
 		if (restaurantById != null) {
+			model.addAttribute("restaurant", restaurantById);
 			model.addAttribute(MESSAGE, "Edit restaurant");
 			return EDIT;
 		} else {
+			model.addAttribute(MESSAGE, "Error");
 			return ERROR;
 		}
 	}
@@ -63,12 +64,13 @@ public class RestaurantWebController {
 	}
 
 	@GetMapping(value = "/delete")
-	public String deleteRestaurant(@RequestParam(name = "id") BigInteger id) {
+	public String deleteRestaurant(@RequestParam(name = "id") BigInteger id, Model model) {
 		Restaurant restaurantById = restaurantService.getRestaurantById(id);
 		if (restaurantById != null) {
 			restaurantService.delete(restaurantById);
 			return REDIRECT;
 		} else {
+			model.addAttribute(MESSAGE, "Error");
 			return ERROR;
 		}
 	}
