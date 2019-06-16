@@ -54,16 +54,6 @@ public class UserServiceWithMockBeanTest {
 		verify(userRepository, times(1)).save(isA(User.class));
 	}
 
-	@Test
-	public void testSaveUserWhenUserAlreadyExists() { 
-		User u = new User();
-		u.setEmail("email");
-		when(userRepository.findByEmail("email")).thenReturn(u);
-		User user2 = new User();
-		user2.setEmail("email");
-		userService.saveUser(user2);
-	}
-	
 
 	@Test(expected = UsernameNotFoundException.class)
 	public void testLoadUserByUsernameNotFound() {
