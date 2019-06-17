@@ -49,8 +49,8 @@
 		<!-- Disable rule for if cases in methods equals -->
 		<sonar.issue.ignore.multicriteria.e12.ruleKey>squid:S3776</sonar.issue.ignore.multicriteria.e12.ruleKey>
 		<sonar.issue.ignore.multicriteria.e12.resourceKey>**/model/**</sonar.issue.ignore.multicriteria.e12.resourceKey>
-		<skip.unit.tests>false</skip.unit.tests>
-		<skip.integration-test>false</skip.integration-test>
+		<skip.unit-tests>false</skip.unit-tests>
+		<skip.integration-tests>false</skip.integration-tests>
 	</properties>
 
 
@@ -209,7 +209,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<skipTests>${skip.unit.tests}</skipTests>
+					<skipTests>${skip.unit-tests}</skipTests>
 					<excludes>
 						<exclude>**E2ETest.java</exclude>
 					</excludes>
@@ -277,7 +277,7 @@
 		<profile>
 			<id>failsafe</id>
 			<properties>
-				<skip.unit.tests>true</skip.unit.tests>
+				<skip.unit-tests>true</skip.unit-tests>
 			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -342,66 +342,23 @@
 
 		<profile>
 			<id>e2e</id>
-			<properties>
-				<skip.unit.tests>true</skip.unit.tests>
-				<skip.integration-test>true</skip.integration-test>
-			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
+			<properties>
+				<skip.unit-tests>true</skip.unit-tests>
+				<skip.integration-tests>true</skip.integration-tests>
+			</properties>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.codehaus.mojo</groupId>
-						<artifactId>build-helper-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>reserve-tomcat-port</id>
-								<goals>
-									<goal>reserve-network-port</goal>
-								</goals>
-								<phase>process-resources</phase>
-								<configuration>
-									<portNames>
-										<portName>tomcat.http.port</portName>
-									</portNames>
-								</configuration>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.springframework.boot</groupId>
-						<artifactId>spring-boot-maven-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>pre-integration-test</id>
-								<goals>
-									<goal>start</goal>
-								</goals>
-								<configuration>
-									<arguments>
-										<argument>--server.port=${tomcat.http.port}</argument>
-									</arguments>
-								</configuration>
-							</execution>
-							<execution>
-								<id>post-integration-test</id>
-								<goals>
-									<goal>stop</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
+
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>e2e</id>
+								<id>e2e-tests</id>
 								<configuration>
-									<excludes>
-										<exclude>**/*IT.java</exclude>
-									</excludes>
 									<includes>
 										<include>**/*E2ETest.java</include>
 									</includes>
@@ -412,12 +369,8 @@
 								</goals>
 							</execution>
 						</executions>
-						<configuration>
-							<systemPropertyVariables>
-								<server.port>${tomcat.http.port}</server.port>
-							</systemPropertyVariables>
-						</configuration>
 					</plugin>
+					
 					<plugin>
 						<groupId>io.fabric8</groupId>
 						<artifactId>docker-maven-plugin</artifactId>
