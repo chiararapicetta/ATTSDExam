@@ -50,7 +50,7 @@
 		<sonar.issue.ignore.multicriteria.e12.ruleKey>squid:S3776</sonar.issue.ignore.multicriteria.e12.ruleKey>
 		<sonar.issue.ignore.multicriteria.e12.resourceKey>**/model/**</sonar.issue.ignore.multicriteria.e12.resourceKey>
 		<skip.unit.tests>false</skip.unit.tests>
-		<skip.integration.tests>false</skip.integration.tests>
+		<skip.integration-test>false</skip.integration-test>
 	</properties>
 
 
@@ -216,26 +216,6 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<configuration>
-							<skipTests>${skip.integration.tests}</skipTests>
-							<includes>
-								<include>**/*ApplicationTests.java</include>
-								<include>**/*IT.java</include>
-							</includes>
-						</configuration>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 		</plugins>
 	</build>
 
@@ -312,7 +292,15 @@
 								<exclude>src/e2e/java</exclude>
 							</excludes>
 						</configuration>
-						
+						<executions>
+							<execution>
+								<phase>integration-test</phase>
+								<goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 					<plugin>
 						<groupId>io.fabric8</groupId>
@@ -356,7 +344,7 @@
 			<id>e2e</id>
 			<properties>
 				<skip.unit.tests>true</skip.unit.tests>
-				<skip.integration.tests>true</skip.integration.tests>
+				<skip.integration-test>true</skip.integration-test>
 			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
