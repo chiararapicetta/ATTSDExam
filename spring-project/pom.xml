@@ -216,26 +216,6 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>integration-tests</id>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>**/*.java</include>
-							</includes>
-							<groups>${junit.category}</groups>
-							<skipTests>${skip.failsafe.plugin}</skipTests>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
 	</build>
 
@@ -298,7 +278,6 @@
 			<id>failsafe</id>
 			<properties>
 				<skip.unit.tests>true</skip.unit.tests>
-				<junit.category>com.testwithspring.intermediate.IntegrationTest</junit.category>
 			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -364,7 +343,6 @@
 		<profile>
 			<id>e2e</id>
 			<properties>
-				<junit.category>com.testwithspring.intermediate.EndToEndTest</junit.category>
 				<skip.unit.tests>true</skip.unit.tests>
 				<skip.failsafe.plugin>false</skip.failsafe.plugin>
 			</properties>
@@ -422,7 +400,7 @@
 								<id>e2e-tests</id>
 								<configuration>
 									<excludes>
-										<exclude>src/it/java</exclude>
+										<exclude>**/*IT.java</exclude>
 									</excludes>
 									<includes>
 										<include>**/*E2ETest.java</include>
