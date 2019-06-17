@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import attsd.exam.spring.project.model.Restaurant;
+import attsd.exam.spring.project.model.RestaurantDTO;
 import attsd.exam.spring.project.services.RestaurantService;
 
 @RestController
@@ -38,7 +39,11 @@ public class RestaurantRestController {
 	}
 
 	@PostMapping("/restaurants/new")
-	public Restaurant newRestaurant(@RequestBody Restaurant restaurant) {
+	public Restaurant newRestaurant(@RequestBody RestaurantDTO restaurantDTO) {
+		Restaurant restaurant = new Restaurant();
+		restaurant.setId(restaurantDTO.getId());
+		restaurant.setName(restaurantDTO.getName());
+		restaurant.setAveragePrice(restaurantDTO.getAveragePrice());
 		return restaurantService.storeInDb(restaurant);
 	}
 
