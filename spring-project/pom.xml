@@ -397,7 +397,7 @@
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>e2e-tests</id>
+								<id>e2e</id>
 								<configuration>
 									<excludes>
 										<exclude>**/*IT.java</exclude>
