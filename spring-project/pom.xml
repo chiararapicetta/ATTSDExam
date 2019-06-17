@@ -344,7 +344,7 @@
 			<id>e2e</id>
 			<properties>
 				<skip.unit.tests>true</skip.unit.tests>
-				<skip.failsafe.plugin>false</skip.failsafe.plugin>
+				<skip.failsafe.plugin>true</skip.failsafe.plugin>
 			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
