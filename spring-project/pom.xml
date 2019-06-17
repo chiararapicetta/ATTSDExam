@@ -49,8 +49,8 @@
 		<!-- Disable rule for if cases in methods equals -->
 		<sonar.issue.ignore.multicriteria.e12.ruleKey>squid:S3776</sonar.issue.ignore.multicriteria.e12.ruleKey>
 		<sonar.issue.ignore.multicriteria.e12.resourceKey>**/model/**</sonar.issue.ignore.multicriteria.e12.resourceKey>
-		<skip.unit-tests>false</skip.unit-tests>
-		<skip.integration-tests>false</skip.integration-tests>
+		<skip.unit.tests>false</skip.unit.tests>
+		<skip.failsafe.plugin>false</skip.failsafe.plugin>
 	</properties>
 
 
@@ -209,7 +209,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
-					<skipTests>${skip.unit-tests}</skipTests>
+					<skipTests>${skip.unit.tests}</skipTests>
 					<excludes>
 						<exclude>**E2ETest.java</exclude>
 					</excludes>
@@ -276,12 +276,13 @@
 
 		<profile>
 			<id>failsafe</id>
+			<properties>
+				<skip.unit.tests>true</skip.unit.tests>
+				<junit.category>com.testwithspring.intermediate.IntegrationTest</junit.category>
+			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-			<properties>
-				<skip.unit-tests>true</skip.unit-tests>
-			</properties>
 			<build>
 				<plugins>
 					<plugin>
@@ -342,13 +343,14 @@
 
 		<profile>
 			<id>e2e</id>
+			<properties>
+				<junit.category>com.testwithspring.intermediate.EndToEndTest</junit.category>
+				<skip.unit.tests>true</skip.unit.tests>
+				<skip.failsafe.plugin>false</skip.failsafe.plugin>
+			</properties>
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>
-			<properties>
-				<skip.unit-tests>true</skip.unit-tests>
-				<skip.integration-tests>true</skip.integration-tests>
-			</properties>
 			<build>
 				<plugins>
 					<plugin>
