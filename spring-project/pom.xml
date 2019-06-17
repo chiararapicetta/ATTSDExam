@@ -406,6 +406,7 @@
 							<execution>
 								<id>e2e-tests</id>
 								<configuration>
+									<skipITs>false</skipITs>
 									<includes>
 										<include>**/*E2ETest.java</include>
 									</includes>
