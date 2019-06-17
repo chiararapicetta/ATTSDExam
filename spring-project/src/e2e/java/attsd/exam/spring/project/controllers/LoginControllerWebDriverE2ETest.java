@@ -3,33 +3,20 @@ package attsd.exam.spring.project.controllers;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 
-import java.math.BigInteger;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import attsd.exam.spring.project.controllers.webdriver.pages.EditPage;
-import attsd.exam.spring.project.controllers.webdriver.pages.HomePage;
-import attsd.exam.spring.project.controllers.webdriver.pages.LoginPage;
-import attsd.exam.spring.project.controllers.webdriver.pages.SignUpPage;
-import attsd.exam.spring.project.model.Restaurant;
 import attsd.exam.spring.project.repositories.RestaurantRepository;
 import attsd.exam.spring.project.repositories.UserRepository;
-import attsd.exam.spring.project.services.RestaurantService;
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @RunWith(SpringRunner.class)
@@ -68,8 +55,7 @@ public class LoginControllerWebDriverE2ETest {
 
 	@Test
 	public void testSignUp() {
-		driver.get(baseUrl + "/signup");
-		saveNewUser("giulia1@gmail", "pass", "giulia");
+		saveNewUser("sara@gmail", "pass", "sara30");
 		assertThat(driver.getTitle()).contains("Login");
 		assertEquals(1, urepository.count());
 
@@ -77,17 +63,15 @@ public class LoginControllerWebDriverE2ETest {
 
 	@Test
 	public void loginWithParamError() throws Exception {
-		driver.get(baseUrl + "/signup");
 		saveNewUser("francesco1@gmail", "password", "Francesco");
 		driver.get(baseUrl + "/signup");
-		saveNewUser("francesco1@gmail", "password", "Francesco");
+		saveNewUser("francesco1@gmail", "passw", "Francesco20");
 		assertThat(driver.getPageSource()).contains("ERROR");
 
 	}
 
 	@Test
 	public void testLoginWithNoRestaurant() throws Exception {
-		driver.get(baseUrl + "/signup");
 		saveNewUser("francesco@gmail", "password", "Francesco");
 		login("francesco@gmail", "password");
 		assertThat(driver.getPageSource()).contains("No restaurant");
@@ -104,7 +88,6 @@ public class LoginControllerWebDriverE2ETest {
 
 	@Test
 	public void testHomePageWithRestaurants() throws Exception {
-		driver.get(baseUrl + "/signup");
 		saveNewUser("giada@gmail", "password", "Giada");
 		login("giada@gmail", "password");
 		driver.findElement(By.cssSelector("a[href*='/new")).click();
