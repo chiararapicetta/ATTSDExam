@@ -157,26 +157,13 @@
 
 	<build>
 		<plugins>
-
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>build-helper-maven-plugin</artifactId>
 				<executions>
 					<execution>
 						<id>add-test-source</id>
-						<phase>process-resources</phase>
+						<phase>generate-test-sources</phase>
 						<goals>
 							<goal>add-test-source</goal>
 						</goals>
@@ -203,7 +190,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
@@ -214,7 +200,17 @@
 					</excludes>
 				</configuration>
 			</plugin>
-
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
@@ -349,7 +345,7 @@
 			</properties>
 			<build>
 				<plugins>
-				<plugin>
+					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-failsafe-plugin</artifactId>
 						<executions>
@@ -362,9 +358,9 @@
 									</includes>
 								</configuration>
 								<goals>
-										<goal>integration-test</goal>
-										<goal>verify</goal>
-									</goals>
+									<goal>integration-test</goal>
+									<goal>verify</goal>
+								</goals>
 							</execution>
 						</executions>
 					</plugin>
@@ -402,8 +398,8 @@
 							</execution>
 						</executions>
 					</plugin>
-					
-		
+
+
 				</plugins>
 			</build>
 		</profile>
