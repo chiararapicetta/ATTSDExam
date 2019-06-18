@@ -345,6 +345,7 @@
 			</activation>
 			<properties>
 				<skip.unit-tests>true</skip.unit-tests>
+				<skipITs>true</skipITs>
 			</properties>
 			<build>
 				<plugins>
@@ -430,7 +431,6 @@
 							<execution>
 								<id>e2e-tests</id>
 								<configuration>
-									<skipITs>false</skipITs>
 									<includes>
 										<include>**/*E2ETest.java</include>
 									</includes>
