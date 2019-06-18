@@ -41,10 +41,6 @@ public class RestaurantWebControllerSteps {
 
 	private WebDriver driver;
 
-	@BeforeClass
-	public static void setupClass() {
-		WebDriverManager.chromedriver().setup();
-	}
 
 	@Before
 	public void setup() {
