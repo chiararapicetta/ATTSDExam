@@ -345,7 +345,6 @@
 			</activation>
 			<properties>
 				<skip.unit-tests>true</skip.unit-tests>
-				<skipITs>true</skipITs>
 			</properties>
 			<build>
 				<plugins>
