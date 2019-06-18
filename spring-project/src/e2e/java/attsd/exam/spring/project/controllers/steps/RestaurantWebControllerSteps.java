@@ -8,8 +8,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.test.context.ContextConfiguration;
@@ -27,39 +29,42 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @ContextConfiguration(loader = SpringBootContextLoader.class)
 public class RestaurantWebControllerSteps {
 
-
 	@Autowired
 	private UserRepository urepository;
-	
+
 	@Autowired
 	RestaurantRepository restaurantRepository;
-	
-	private static int port = Integer.parseInt(System.getProperty("server.port", "8080"));
-	
-	private static String baseUrl = "http://localhost:" + port;
-	
+
+	@LocalServerPort
+	private int port;
+
+	// private static int port = Integer.parseInt(System.getProperty("server.port",
+	// "8080"));
+
+	private static String baseUrl = "http://localhost:";
 
 	private WebDriver driver;
 
-
 	@Before
 	public void setup() {
-		baseUrl = "http://localhost:" + port;
-		driver = new ChromeDriver();
+		ChromeOptions chromeOptions = new ChromeOptions();
+		chromeOptions.addArguments("--headless");
+		chromeOptions.addArguments("--disable-gpu");
+		driver = new ChromeDriver(chromeOptions);
 		urepository.deleteAll();
 		restaurantRepository.deleteAll();
 	}
 
 	@After
-	public void teardown() {
-		driver.quit();
+	public void tearDown() {
+		if (driver != null) {
+			driver.quit();
+		}
 	}
-
-
 
 	@Given("^The User is on SignUp Page$")
 	public void the_User_is_on_SignUp_Page() throws Throwable {
-		driver.get(baseUrl + "/signup");
+		driver.get(baseUrl +port+"/signup");
 	}
 
 	@When("^Enters email \"([^\"]*)\" , password \"([^\"]*)\" and username \"([^\"]*)\"$")
@@ -89,20 +94,19 @@ public class RestaurantWebControllerSteps {
 
 	@When("^The user logout$")
 	public void the_User_make_logout() throws Throwable {
-		driver.get(baseUrl + "/logout");
+		driver.get(baseUrl + port+"/logout");
 	}
-	
+
 	@Then("^The message \"([^\"]*)\" must be shown$")
 	public void a_message_must_be_shown(String expectedMessage) throws Throwable {
 		assertThat(driver.getPageSource()).contains(expectedMessage);
 	}
 
-
 	@When("^The User clicks to add a new restaurant$")
 	public void the_User_click_to_add_a_new_restaurant() throws Throwable {
 		driver.findElement(By.cssSelector("a[href*='/new")).click();
 	}
-	
+
 	@When("^Enters a restaurant with name \"([^\"]*)\" and average price \"([^\"]*)\"$")
 	public void enters_a_restaurant_with_name_and_average_price(String name, String averagePrice) throws Throwable {
 		driver.findElement(By.name("name")).sendKeys(name);
@@ -110,12 +114,13 @@ public class RestaurantWebControllerSteps {
 		driver.findElement(By.name("btn_submit")).click();
 	}
 
-
 	@Then("^The table must show the restaurant with name \"([^\"]*)\" and average price \"([^\"]*)\"$")
-	public void the_table_must_show_the_restaurant_with_name_and_average_price(String name, String averagePrice) throws Throwable {
-		assertThat(driver.findElement(By.id("restaurant_table")).getText()).contains(name+" "+averagePrice+" Edit Delete");
+	public void the_table_must_show_the_restaurant_with_name_and_average_price(String name, String averagePrice)
+			throws Throwable {
+		assertThat(driver.findElement(By.id("restaurant_table")).getText())
+				.contains(name + " " + averagePrice + " Edit Delete");
 	}
-	
+
 	@Then("^The buttons \"([^\"]*)\" and \"([^\"]*)\" are displayed$")
 	public void the_buttons_and_are_displayed(String buttonOne, String buttonTwo) throws Throwable {
 		WebElement editButton = driver.findElement(By.id("edit"));
@@ -127,12 +132,11 @@ public class RestaurantWebControllerSteps {
 		assertTrue(deleteButton.isDisplayed());
 		assertTrue(deleteButton.isEnabled());
 	}
-	
+
 	@When("^The User clicks to \"([^\"]*)\" the restaurant$")
 	public void the_User_clicks_to_edit_the_restaurant(String button) throws Throwable {
 		driver.findElement(By.id(button)).click();
 	}
-
 
 	@When("^updates the average price to \"([^\"]*)\"$")
 	public void updates_the_average_price_to(String aprice) throws Throwable {
@@ -140,19 +144,19 @@ public class RestaurantWebControllerSteps {
 		driver.findElement(By.name("averagePrice")).sendKeys(aprice);
 		driver.findElement(By.name("btn_submit")).click();
 	}
-	
+
 	@When("^The User clicks to reset link to delete all restaurants$")
 	public void the_User_click_to_reset_link_to_delete_all_restaurants() throws Throwable {
 		driver.findElement(By.cssSelector("a[href*='/reset")).click();
 	}
-	
+
 	@When("^The User tries to \"([^\"]*)\" a not existing restaurant$")
 	public void the_User_tries_to_edit_a_not_existing_restaurant(String name) throws Throwable {
-		driver.get(baseUrl + "/"+name+"?id=10");
+		driver.get(baseUrl + port+"/" + name + "?id=10");
 	}
-	
+
 	@Given("^The User is on HomePage$")
 	public void the_User_is_on_HomePage() throws Throwable {
-		driver.get(baseUrl);
+		driver.get(baseUrl+port);
 	}
 }
