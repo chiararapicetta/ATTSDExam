@@ -1,5 +1,4 @@
 package attsd.exam.spring.project.controllers.steps;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -38,6 +37,9 @@ public class RestaurantWebControllerSteps {
 	@LocalServerPort
 	private int port;
 
+	// private static int port = Integer.parseInt(System.getProperty("server.port",
+	// "8080"));
+
 	private static String baseUrl = "http://localhost:";
 
 	private WebDriver driver;
@@ -52,7 +54,7 @@ public class RestaurantWebControllerSteps {
 		driver = new ChromeDriver(chromeOptions);
 		urepository.deleteAll();
 		restaurantRepository.deleteAll();
-}
+	}
 
 	@After
 	public void tearDown() {
