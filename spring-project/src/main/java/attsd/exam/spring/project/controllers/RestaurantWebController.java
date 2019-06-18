@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import attsd.exam.spring.project.model.Restaurant;
+import attsd.exam.spring.project.model.RestaurantDTO;
 import attsd.exam.spring.project.services.RestaurantService;
 
 @Controller
@@ -50,8 +51,12 @@ public class RestaurantWebController {
 	}
 
 	@PostMapping("/save")
-	public String saveRestaurant(Restaurant restaurant) {
-		restaurantService.storeInDb(restaurant);
+	public String saveRestaurant(RestaurantDTO restaurantDTO) {
+		Restaurant r = new Restaurant();
+		r.setId(restaurantDTO.getId());
+		r.setName(restaurantDTO.getName());
+		r.setAveragePrice(restaurantDTO.getAveragePrice());
+		restaurantService.storeInDb(r);
 		return REDIRECT;
 	}
 
