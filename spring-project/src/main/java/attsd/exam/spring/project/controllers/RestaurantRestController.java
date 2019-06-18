@@ -48,7 +48,10 @@ public class RestaurantRestController {
 	}
 
 	@PutMapping("/restaurants/update/{id}")
-	public Restaurant updateRestaurant(@PathVariable BigInteger id, @RequestBody Restaurant restaurant) {
+	public Restaurant updateRestaurant(@PathVariable BigInteger id, @RequestBody RestaurantDTO restaurantDTO) {
+		Restaurant restaurant = new Restaurant();
+		restaurant.setName(restaurantDTO.getName());
+		restaurant.setAveragePrice(restaurantDTO.getAveragePrice());
 		restaurant.setId(id);
 		return restaurantService.storeInDb(restaurant);
 	}

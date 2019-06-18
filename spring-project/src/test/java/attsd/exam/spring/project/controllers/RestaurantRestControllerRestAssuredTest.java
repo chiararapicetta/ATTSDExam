@@ -4,18 +4,22 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.standaloneSetup;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.springframework.http.MediaType;
 import java.math.BigInteger;
 import java.util.Arrays;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.springframework.http.MediaType;
 
 import attsd.exam.spring.project.model.Restaurant;
+import attsd.exam.spring.project.model.RestaurantDTO;
 import attsd.exam.spring.project.services.RestaurantService;
 
 public class RestaurantRestControllerRestAssuredTest {
@@ -56,11 +60,20 @@ public class RestaurantRestControllerRestAssuredTest {
 
 	@Test
 	public void testNewRestaurant() throws Exception {
-		Restaurant r = new Restaurant(null, "Pizzeria", 13);
-		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(r).when().post("/api/restaurants/new").then()
+		RestaurantDTO rDTO = new RestaurantDTO(null, "Pizzeria", 13);
+		Restaurant r = new Restaurant();
+		r.setId(rDTO.getId());
+		r.setName(rDTO.getName());
+		r.setAveragePrice(rDTO.getAveragePrice());
+		given().contentType(MediaType.APPLICATION_JSON_VALUE).body(rDTO).when().post("/api/restaurants/new").then()
 				.statusCode(200);
-		verify(restaurantService, times(1)).storeInDb(r);
+		ArgumentCaptor<Restaurant> captor = ArgumentCaptor.forClass(Restaurant.class);
+		verify(restaurantService, times(1)).storeInDb(captor.capture());
+		assertEquals(captor.getValue().getId(), r.getId());
+		assertEquals(captor.getValue().getName(), r.getName());
+		assertEquals(captor.getValue().getAveragePrice(), r.getAveragePrice());
 	}
+	
 
 	@Test
 	public void testUpdateRestaurant() throws Exception {  

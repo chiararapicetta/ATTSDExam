@@ -1,5 +1,6 @@
 package attsd.exam.spring.project.controllers;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
@@ -17,6 +18,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,11 +28,13 @@ import org.springframework.test.web.ModelAndViewAssert;
 import org.springframework.test.web.servlet.MockMvc;
 
 import attsd.exam.spring.project.model.Restaurant;
+import attsd.exam.spring.project.model.RestaurantDTO;
 import attsd.exam.spring.project.services.RestaurantService;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(controllers = RestaurantWebController.class)
 public class RestaurantWebControllerTest {
+
 
 	@Autowired
 	private MockMvc mvc;
@@ -97,10 +101,14 @@ public class RestaurantWebControllerTest {
 	@Test
 	@WithMockUser
 	public void testPostRestaurant() throws Exception {
-		Restaurant restaurant = new Restaurant(null, "LaFiaccola", 45);
-		mvc.perform(post("/save").param("name", restaurant.getName())
-				.param("averagePrice", "" + restaurant.getAveragePrice())).andExpect(view().name("redirect:/"));
-		verify(restaurantService).storeInDb(restaurant);
+		RestaurantDTO restaurantDTO = new RestaurantDTO(null, "LaFiaccola", 45);
+		mvc.perform(post("/save").param("name", restaurantDTO.getName())
+				.param("averagePrice", "" + restaurantDTO.getAveragePrice())).andExpect(view().name("redirect:/"));
+		Restaurant r = new Restaurant();
+		r.setId(restaurantDTO.getId());
+		r.setName(restaurantDTO.getName());
+		r.setAveragePrice(restaurantDTO.getAveragePrice());
+		verify(restaurantService, times(1)).storeInDb(r);
 	}
 
 	@Test

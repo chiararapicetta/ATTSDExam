@@ -13,6 +13,9 @@ public class RestaurantDTO {
 		this.name = name;
 		this.averagePrice = averagePrice;
 	}
+	
+	public RestaurantDTO() {	
+	}
 
 	public BigInteger getId() {
 		return id;
