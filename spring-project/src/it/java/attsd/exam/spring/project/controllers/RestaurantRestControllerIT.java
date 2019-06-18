@@ -62,7 +62,6 @@ public class RestaurantRestControllerIT {
 	@Test
 	public void testFindByIdWithExistingRestaurant() throws Exception {
 		Restaurant saved = restaurantRepository.save(new Restaurant(null, "Il Capriccio", 20));
-		System.out.println(saved.getId());
 		given().when().get(url + "/api/restaurants/" + saved.getId()).then().statusCode(200).assertThat().body("name", equalTo("Il Capriccio"), "averagePrice", equalTo(20));
 	}
 
