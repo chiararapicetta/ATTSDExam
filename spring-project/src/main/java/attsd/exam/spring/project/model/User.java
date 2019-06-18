@@ -20,6 +20,7 @@ public class User implements UserDetails {
     private String password;
     private String username;
     private boolean enabled;
+
     
     public User() {
 		super();
