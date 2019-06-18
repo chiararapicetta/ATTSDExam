@@ -32,7 +32,6 @@
 		<sonar.jacoco.reportPaths>${jacoco.data.file}</sonar.jacoco.reportPaths>
 		<sonar.coverage.exclusions>
 			**/model/**,
-			**/pages/**,
 			**/SpringProjectApplication.java,
 			**/config/**
 		</sonar.coverage.exclusions>
@@ -272,7 +271,6 @@
 								<exclude>**/model/**</exclude>
 								<exclude>**/SpringProjectApplication.*</exclude>
 								<exclude>**/config/**</exclude>
-								<exclude>**/pages/**</exclude>
 							</excludes>
 						</configuration>
 						<executions>
@@ -329,7 +327,7 @@
 									<name>mongo</name>
 									<run>
 										<ports>
-											<port>27017:27017</port>
+											<port>27018:27018</port>
 										</ports>
 									</run>
 								</image>
