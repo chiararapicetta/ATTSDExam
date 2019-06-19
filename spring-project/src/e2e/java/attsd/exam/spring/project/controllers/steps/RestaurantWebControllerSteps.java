@@ -37,21 +37,13 @@ public class RestaurantWebControllerSteps {
 	@LocalServerPort
 	private int port;
 
-	// private static int port = Integer.parseInt(System.getProperty("server.port",
-	// "8080"));
-
 	private static String baseUrl = "http://localhost:";
 
 	private WebDriver driver;
 
 	@Before
 	public void setup() {
-		ChromeOptions chromeOptions = new ChromeOptions();
-		chromeOptions.addArguments("--headless");
-		chromeOptions.addArguments("--disable-gpu");
-		chromeOptions.addArguments("--log-level=3");
-		chromeOptions.addArguments("--silent");
-		driver = new ChromeDriver(chromeOptions);
+		driver = new ChromeDriver();
 		urepository.deleteAll();
 		restaurantRepository.deleteAll();
 	}
