@@ -31,7 +31,7 @@ public class LoginController {
 	}
 	
 	@PostMapping("/signup")
-	public String createNewUser(@Valid UserDTO user, Model model) {
+	public String createNewUser(UserDTO user, Model model) {
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
 			model.addAttribute(MESSAGE, "");
