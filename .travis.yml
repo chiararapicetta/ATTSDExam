@@ -24,7 +24,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
 
 script:
-  - mvn -f spring-project/pom.xml verify -Pe2e > /dev/null
+  - mvn -f spring-project/pom.xml verify -Pe2e 
 cache:
   directories:
     - '$HOME/.m2'
